@@ -106,13 +106,36 @@
       window.gtag('config', adsConv, { anonymize_ip: true });
     }
     // Snippet numero di inoltro — formato esatto richiesto da Google
-    if (c.phoneConversionLabel) {
-      var phoneShown = c.phoneConversionNumber || '320 114 7517';
-      window.gtag('config', c.phoneConversionLabel, {
-        phone_conversion_number: phoneShown
-      });
-    }
+    applyPhoneConversionConfig();
     if (c.conversions) window.GADS_CONVERSIONS = c.conversions;
+  }
+
+  function isPhoneDebug() {
+    try {
+      return /(?:\?|&)google_phone_conversion_debug=true(?:&|$)/.test(location.search);
+    } catch (e) { return false; }
+  }
+
+  /** Re-applica lo snippet chiamate (serve dopo il render DreamCanvas, altrimenti Google non trova il numero). */
+  function applyPhoneConversionConfig() {
+    var c = cfg();
+    if (!c.phoneConversionLabel) return;
+    if (getConsent() !== 'all') return;
+    ensureGtagStub();
+    var phoneShown = c.phoneConversionNumber || '320 114 7517';
+    window.gtag('config', c.phoneConversionLabel, {
+      phone_conversion_number: phoneShown
+    });
+    if (isPhoneDebug() && typeof console !== 'undefined' && console.info) {
+      console.info('[GF] phone conversion debug attivo — cerco il numero esatto:', phoneShown);
+    }
+  }
+
+  function schedulePhoneConversionRefresh() {
+    if (!cfg().phoneConversionLabel) return;
+    [500, 1200, 2500, 4500].forEach(function (ms) {
+      setTimeout(applyPhoneConversionConfig, ms);
+    });
   }
 
   function loadMarketing() {
@@ -120,11 +143,14 @@
     updateConsentMode(true);
     loadGtagLibrary(function () {
       if (window.__gfMarketingLoaded) {
+        applyPhoneConversionConfig();
+        schedulePhoneConversionRefresh();
         flushQueue();
         return;
       }
       window.__gfMarketingLoaded = true;
       applyTagConfigs();
+      schedulePhoneConversionRefresh();
       flushQueue();
       setTimeout(flushQueue, 800);
     });
@@ -304,11 +330,11 @@
     bar.setAttribute('aria-label', 'Consenso cookie');
     bar.innerHTML =
       '<div class="gf-cookie-inner">' +
-        '<p>Cookie tecnici sempre attivi. Statistica (GA4) e marketing (Google Ads) solo col tuo consenso — servono a misurare le <strong>chiamate</strong>. ' +
-        '<a href="cookie.html">Cookie</a> · <a href="privacy.html">Privacy</a></p>' +
+        '<p>Utilizziamo cookie tecnici necessari al funzionamento del sito. Con il tuo consenso attiviamo anche cookie di statistica e marketing (Google Analytics e Google Ads) per misurare le visite e le conversioni, comprese le chiamate. ' +
+        '<a href="cookie.html">Cookie Policy</a> · <a href="privacy.html">Privacy</a></p>' +
         '<div class="gf-cookie-actions">' +
           '<button type="button" data-gf="reject" class="gf-cookie-btn gf-cookie-btn--ghost">Solo necessari</button>' +
-          '<button type="button" data-gf="accept" class="gf-cookie-btn gf-cookie-btn--ok">Accetta e misura</button>' +
+          '<button type="button" data-gf="accept" class="gf-cookie-btn gf-cookie-btn--ok">Accetta</button>' +
         '</div>' +
       '</div>';
     bar.addEventListener('click', function (e) {
@@ -335,8 +361,9 @@
       '#gf-cookie-banner .gf-cookie-btn--ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.28);}' +
       'html.gf-cookie-open .gf-sticky-call{visibility:hidden;pointer-events:none;}' +
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
+      'html,body{background:#030912;overscroll-behavior-y:none;}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
-      'body.ads-traffic #top.gf-page-hero{min-height:calc(100vh - 64px)!important;min-height:calc(100dvh - 64px)!important;}' +
+      'body.ads-traffic #top.gf-page-hero{min-height:calc(100vh - 64px)!important;min-height:calc(100svh - 64px)!important;}' +
       '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
       '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;padding:0 12px;margin:0;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;line-height:1;animation:gfStickyPulse 2.6s ease-in-out infinite;}' +
       '.gf-sticky-call strong{font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:20px;letter-spacing:0.03em;line-height:1;white-space:nowrap;text-align:center;}' +
@@ -436,8 +463,14 @@
       loadMarketing();
     } else if (c === 'necessary') {
       updateConsentMode(false);
+      if (isPhoneDebug() && typeof console !== 'undefined' && console.warn) {
+        console.warn('[GF] Debug chiamate: hai scelto Solo necessari. Premi «Gestisci cookie» → Accetta, poi ricarica con ?google_phone_conversion_debug=true');
+      }
     } else {
       showBanner();
+      if (isPhoneDebug() && typeof console !== 'undefined' && console.warn) {
+        console.warn('[GF] Debug chiamate: prima Accetta i cookie, poi aspetta 3–5 secondi. I numeri diventano 999-999-9999 se lo snippet funziona.');
+      }
     }
   }
 
