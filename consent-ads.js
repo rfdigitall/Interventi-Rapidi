@@ -337,10 +337,12 @@
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
       'body.ads-traffic #top{min-height:auto!important;}' +
-      '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -6px 24px rgba(0,0,0,0.28);}' +
-      '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;padding:0 14px;margin:0;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;line-height:1;}' +
-      '.gf-sticky-call strong{font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:22px;letter-spacing:0.02em;line-height:1;white-space:nowrap;}' +
-      '.gf-sticky-call .gf-sticky-badge{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1;padding:5px 8px;border:1px solid rgba(255,255,255,0.4);border-radius:3px;white-space:nowrap;}' +
+      '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
+      '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;padding:0 12px;margin:0;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;line-height:1;animation:gfStickyPulse 2.6s ease-in-out infinite;}' +
+      '.gf-sticky-call strong{font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:20px;letter-spacing:0.03em;line-height:1;white-space:nowrap;text-align:center;}' +
+      '.gf-sticky-call svg{width:16px;height:16px;flex-shrink:0;display:block;}' +
+      '@keyframes gfStickyPulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(74,174,232,0)}50%{box-shadow:inset 0 0 28px 0 rgba(74,174,232,0.28)}}' +
+      '@media (prefers-reduced-motion:reduce){.gf-sticky-call>a{animation:none!important;}}' +
       '@media (max-width:600px){#gf-cookie-banner p{font-size:12px;}}';
     document.head.appendChild(css);
   }

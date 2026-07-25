@@ -242,44 +242,37 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   z-index: 400;
   background: #1259b0;
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.28);
 }
 .gf-sticky-call > a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  height: 52px;
-  padding: 0 14px;
+  height: 44px;
+  padding: 0 12px;
   margin: 0;
   box-sizing: border-box;
   color: #fff;
   background: #1259b0;
   border-radius: 0;
   line-height: 1;
+  animation: gfStickyPulse 2.6s ease-in-out infinite;
 }
 .gf-sticky-call > a:hover { background: #0d3f80; color: #fff; }
-.gf-sticky-call svg { flex-shrink: 0; display: block; }
+.gf-sticky-call svg { flex-shrink: 0; display: block; width: 16px; height: 16px; }
 .gf-sticky-call strong {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 0.02em;
+  font-size: 20px;
+  letter-spacing: 0.03em;
   line-height: 1;
   white-space: nowrap;
+  text-align: center;
 }
-.gf-sticky-call .gf-sticky-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 5px 8px;
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 3px;
-  opacity: 0.95;
-  white-space: nowrap;
+@keyframes gfStickyPulse {
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(74,174,232,0); }
+  50% { box-shadow: inset 0 0 28px 0 rgba(74,174,232,0.28); }
 }
 .idra-wa-btn {
   display: inline-flex;
@@ -315,14 +308,14 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (max-width:900px) {
   .gf-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; padding: 40px 20px 32px; }
-  .gf-footer-legal { padding-bottom: calc(18px + 56px + env(safe-area-inset-bottom)); }
+  .gf-footer-legal { padding-bottom: calc(18px + 48px + env(safe-area-inset-bottom)); }
 }
 @media (max-width:640px) {
   #top { padding: 40px 0 48px !important; }
   .gf-footer-grid { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
 img { max-width: 100%; height: auto; }
 </style>
 </helmet>
@@ -340,68 +333,62 @@ img { max-width: 100%; height: auto; }
     </a>
   </nav>
 
-  <section id="top" style="position:relative; min-height:auto; display:flex; align-items:center; overflow:hidden; background:var(--deep); padding:40px 0 56px;">
-    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 50% 20%, rgba(26,114,212,0.22) 0%, transparent 68%); pointer-events:none;"></div>
-    <div style="position:absolute; bottom:0; left:0; right:0; height:55%; background:linear-gradient(to top, rgba(3,9,18,1) 0%, rgba(3,9,18,0.9) 45%, transparent 100%); pointer-events:none;"></div>
-    <div style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:28px 22px 36px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <div style="font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--blue-l); margin-bottom:16px; padding-bottom:7px; border-bottom:1px solid rgba(26,114,212,0.5);">Fabbro · Pronto intervento · H24</div>
-      <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; color:#fff; font-size:clamp(2.2rem,8vw,4.1rem); line-height:0.96; margin:0 0 10px; letter-spacing:0.005em; max-width:12ch;">
-        {{ heroTitle }}
-      </h1>
-      <p style="margin:0 0 22px; font-size:16px; line-height:1.5; color:rgba(255,255,255,0.75); max-width:360px;">Ti raggiungiamo subito.</p>
-
-      <div class="gf-hero-services" aria-hidden="true">
-        <div class="gf-hero-svc">
-          <svg viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="fabLock" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#2f8fe0"></stop><stop offset="55%" stop-color="#1259b0"></stop><stop offset="100%" stop-color="#0a1e40"></stop>
-              </linearGradient>
-              <radialGradient id="fabLockShine" cx="32%" cy="22%" r="60%">
-                <stop offset="0%" stop-color="#fff" stop-opacity="0.4"></stop><stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
-              </radialGradient>
-              <radialGradient id="fabLockPool" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#1a72d4" stop-opacity="0"></stop><stop offset="60%" stop-color="#1a72d4" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1a72d4" stop-opacity="0"></stop>
-              </radialGradient>
-              <filter id="fabLockGlow"><feGaussianBlur stdDeviation="9" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              <filter id="fabLockSoft"><feGaussianBlur stdDeviation="2.5" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-            </defs>
-            <g transform="translate(0,-14)">
-              <ellipse cx="280" cy="470" rx="150" ry="26" fill="url(#fabLockPool)" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.15;0.4" dur="4.5s" repeatCount="indefinite"></animate>
-              </ellipse>
-              <g filter="url(#fabLockGlow)">
-                <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,-22;0,-22;0,0" keyTimes="0;0.4;0.55;0.9;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
-                <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#2f6fb0" stroke-width="26" stroke-linecap="round"></path>
-                <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#6fb2e6" stroke-width="7" stroke-linecap="round" opacity="0.5"></path>
-              </g>
-              <g filter="url(#fabLockGlow)">
-                <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#fabLock)"></rect>
-                <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#fabLockShine)"></rect>
-                <circle cx="280" cy="322" r="26" fill="#071733"></circle>
-                <path d="M266 336 L294 336 L302 396 L258 396 Z" fill="#071733"></path>
-              </g>
-              <g opacity="0">
-                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.18;0.85;0.93;1" dur="4.5s" repeatCount="indefinite"></animate>
-                <g>
-                  <animateTransform attributeName="transform" type="translate" values="0,150;0,0;0,0;0,150" keyTimes="0;0.3;0.85;1" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.3 1;0 0 1 1;0.6 0 0.4 1"></animateTransform>
-                  <g filter="url(#fabLockSoft)">
-                    <animateTransform attributeName="transform" type="rotate" values="0 280 322;0 280 322;28 280 322;28 280 322;0 280 322" keyTimes="0;0.4;0.55;0.85;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
-                    <rect x="273" y="300" width="14" height="150" rx="6" fill="#5cc2e6"></rect>
-                    <rect x="287" y="404" width="16" height="10" rx="2" fill="#5cc2e6"></rect>
-                    <rect x="287" y="424" width="24" height="10" rx="2" fill="#5cc2e6"></rect>
-                    <circle cx="280" cy="474" r="30" fill="none" stroke="#5cc2e6" stroke-width="12"></circle>
-                    <circle cx="280" cy="300" r="7" fill="#8fd6e5"></circle>
-                  </g>
-                </g>
+  <section id="top" style="position:relative; min-height:auto; display:flex; align-items:center; overflow:hidden; background:var(--deep); padding:48px 0 56px;">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 68% 30%, rgba(26,114,212,0.24) 0%, transparent 68%); pointer-events:none;"></div>
+    <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:flex-start; justify-content:center; pointer-events:none;">
+      <svg width="440" height="440" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55; max-width:72vw; margin-top:0;">
+        <defs>
+          <linearGradient id="gfLock" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2f8fe0"></stop><stop offset="55%" stop-color="#1259b0"></stop><stop offset="100%" stop-color="#0a1e40"></stop>
+          </linearGradient>
+          <radialGradient id="gfShine" cx="32%" cy="22%" r="60%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.4"></stop><stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
+          </radialGradient>
+          <radialGradient id="gfPool" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a72d4" stop-opacity="0"></stop><stop offset="60%" stop-color="#1a72d4" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1a72d4" stop-opacity="0"></stop>
+          </radialGradient>
+          <filter id="gfGlow"><feGaussianBlur stdDeviation="9" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+          <filter id="gfSoft"><feGaussianBlur stdDeviation="2.5" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+        </defs>
+        <g transform="translate(0,-14)">
+          <ellipse cx="280" cy="470" rx="150" ry="26" fill="url(#gfPool)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.15;0.4" dur="4.5s" repeatCount="indefinite"></animate>
+          </ellipse>
+          <g filter="url(#gfGlow)">
+            <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,-22;0,-22;0,0" keyTimes="0;0.4;0.55;0.9;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+            <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#2f6fb0" stroke-width="26" stroke-linecap="round"></path>
+            <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#6fb2e6" stroke-width="7" stroke-linecap="round" opacity="0.5"></path>
+          </g>
+          <g filter="url(#gfGlow)">
+            <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#gfLock)"></rect>
+            <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#gfShine)"></rect>
+            <circle cx="280" cy="322" r="26" fill="#071733"></circle>
+            <path d="M266 336 L294 336 L302 396 L258 396 Z" fill="#071733"></path>
+          </g>
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.18;0.85;0.93;1" dur="4.5s" repeatCount="indefinite"></animate>
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0,150;0,0;0,0;0,150" keyTimes="0;0.3;0.85;1" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.3 1;0 0 1 1;0.6 0 0.4 1"></animateTransform>
+              <g filter="url(#gfSoft)">
+                <animateTransform attributeName="transform" type="rotate" values="0 280 322;0 280 322;28 280 322;28 280 322;0 280 322" keyTimes="0;0.4;0.55;0.85;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+                <rect x="273" y="300" width="14" height="150" rx="6" fill="#5cc2e6"></rect>
+                <rect x="287" y="404" width="16" height="10" rx="2" fill="#5cc2e6"></rect>
+                <rect x="287" y="424" width="24" height="10" rx="2" fill="#5cc2e6"></rect>
+                <circle cx="280" cy="474" r="30" fill="none" stroke="#5cc2e6" stroke-width="12"></circle>
+                <circle cx="280" cy="300" r="7" fill="#8fd6e5"></circle>
               </g>
             </g>
-          </svg>
-          <span>Fabbro</span>
-          <small>Porte · Serrature</small>
-        </div>
-      </div>
-
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div style="position:absolute; bottom:0; left:0; right:0; height:70%; background:linear-gradient(to top, rgba(3,9,18,1) 0%, rgba(3,9,18,0.94) 45%, transparent 100%); pointer-events:none;"></div>
+    <div style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:52px 22px 36px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+      <div style="font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--blue-l); margin-bottom:16px; padding-bottom:7px; border-bottom:1px solid rgba(26,114,212,0.5);">Fabbro · Pronto intervento · H24</div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; color:#fff; font-size:clamp(2.2rem,8vw,4.1rem); line-height:0.96; margin:0 0 14px; letter-spacing:0.005em; max-width:12ch;">
+        {{ heroTitle }}
+      </h1>
+      <p style="margin:0 0 28px; font-size:16px; line-height:1.5; color:rgba(255,255,255,0.75); max-width:360px;">Ti raggiungiamo subito.</p>
       <div class="idra-cta">
         <a class="idra-dial" href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
           <small>Tocca e chiama ora</small>
@@ -657,9 +644,8 @@ img { max-width: 100%; height: auto; }
 
   <div class="gf-sticky-call">
     <a href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Chiama fabbro urgente 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
       <strong>{{ phoneDisplay }}</strong>
-      <span class="gf-sticky-badge">Chiama ora</span>
     </a>
   </div>
 
