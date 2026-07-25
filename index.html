@@ -8,6 +8,10 @@
 <script src="./consent-ads.js" defer></script>
 </head>
 <body>
+<!-- Seed statico numero per Google Ads DNI (fuori da DreamCanvas / React) -->
+<div id="gf-ads-phone-seed" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+<a href="tel:+393201147517">320 114 7517</a>
+</div>
 <x-dc>
 <helmet>
 <meta charset="utf-8">
@@ -142,7 +146,6 @@
 <style>
 html, body {
   background: #030912;
-  overscroll-behavior-y: none;
 }
 body { margin: 0; }
 a { color: inherit; text-decoration: none; }
@@ -351,7 +354,8 @@ img { max-width: 100%; height: auto; }
 </style>
 </helmet>
 
-<div style="--ink:#050c18; --ink2:#0a1828; --deep:#030912; --paper:#f5f8fc; --paper2:#ffffff; --ice:#e8f2fd; --line:#c4d3e6; --blue:#1259b0; --blue-d:#0d3f80; --blue-l:#1a72d4; --aqua:#4aaee8; --text:#0a1828; --muted:#6b85a0; --wa:#25d366; --wa-d:#1fb558; font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:var(--paper); color:var(--text); overflow-x:hidden; width:100%; padding-top:64px; overscroll-behavior-y:none;">
+<div style="--ink:#050c18; --ink2:#0a1828; --deep:#030912; --paper:#f5f8fc; --paper2:#ffffff; --ice:#e8f2fd; --line:#c4d3e6; --blue:#1259b0; --blue-d:#0d3f80; --blue-l:#1a72d4; --aqua:#4aaee8; --text:#0a1828; --muted:#6b85a0; --wa:#25d366; --wa-d:#1fb558; font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:var(--paper); color:var(--text); overflow-x:hidden; width:100%; padding-top:64px;
+">
 
   <nav style="position:fixed; top:0; left:0; right:0; z-index:500; height:64px; display:flex; align-items:center; gap:12px; padding:0 18px; background:rgba(5,12,24,0.97); border-bottom:1px solid rgba(255,255,255,0.08);">
     <a href="#top" style="display:flex; align-items:center; min-width:0;"><img src="assets/logo-white.png" alt="Gianfranco Tuttofare — Idraulico e Fabbro Veneto e Friuli" width="160" height="44" decoding="async" fetchpriority="high" style="height:44px; width:auto; flex-shrink:0;"></a>
@@ -359,8 +363,8 @@ img { max-width: 100%; height: auto; }
       <a href="fabbro.html">Fabbro</a>
       <a href="idraulico.html">Idraulico</a>
     </div>
-    <a href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Chiama subito 320 114 7517" style="display:inline-flex; align-items:center; gap:7px; background:var(--blue); color:#fff; padding:11px 16px; min-height:44px; border-radius:3px; font-size:13px; font-weight:700; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0;" style-hover="background:var(--blue-d); color:#fff;">
-      <span style="width:7px; height:7px; border-radius:50%; background:var(--aqua); flex-shrink:0;"></span>{{ phoneDisplay }}
+    <a href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama subito 320 114 7517" style="display:inline-flex; align-items:center; gap:7px; background:var(--blue); color:#fff; padding:11px 16px; min-height:44px; border-radius:3px; font-size:13px; font-weight:700; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0;" style-hover="background:var(--blue-d); color:#fff;">
+      <span style="width:7px; height:7px; border-radius:50%; background:var(--aqua); flex-shrink:0;"></span>320 114 7517
     </a>
   </nav>
 
@@ -470,9 +474,9 @@ img { max-width: 100%; height: auto; }
       </div>
 
       <div class="idra-cta">
-        <a class="idra-dial" href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
+        <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
           <small>Tocca e chiama ora</small>
-          <strong>{{ phoneDisplay }}</strong>
+          <strong>320 114 7517</strong>
         </a>
         <a class="idra-wa-btn" href="{{ waHref }}" target="_blank" rel="noopener noreferrer" onClick="{{ trackWa }}" aria-label="WhatsApp">
           <img src="assets/whatsapp.svg" width="30" height="30" alt="" decoding="async">
@@ -504,9 +508,9 @@ img { max-width: 100%; height: auto; }
             <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:#fff; line-height:1.05;">{{ pickedLabel }}</div>
           </div>
           <div class="idra-cta">
-            <a class="idra-dial" href="{{ telHref }}" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517">
+            <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517">
               <small>Tocca e chiama ora</small>
-              <strong>{{ phoneDisplay }}</strong>
+              <strong>320 114 7517</strong>
             </a>
             <a class="idra-wa-btn" href="{{ waHrefPicked }}" target="_blank" rel="noopener noreferrer" onClick="{{ trackWa }}" aria-label="WhatsApp">
               <img src="assets/whatsapp.svg" width="30" height="30" alt="" decoding="async">
@@ -524,25 +528,25 @@ img { max-width: 100%; height: auto; }
       <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 12px; color:var(--ink);">Ogni intervento.<br>Un solo numero.</h2>
       <p style="color:var(--muted); font-size:15px; line-height:1.75; max-width:560px; margin:0;">Scegli, chiama, risolto.</p>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:var(--line); margin-top:26px; border:1px solid var(--line);">
-        <a href="{{ telHref }}" onClick="{{ trackUrgente }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a href="tel:+393201147517" onClick="{{ trackUrgente }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:rgba(18,89,176,0.12); line-height:1; margin-bottom:6px;">01</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Idraulico Urgente H24</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Tubo rotto, allagamento, guasto improvviso. Rispondiamo H24, tutti i giorni, anche adesso.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama per un'urgenza →</span>
         </a>
-        <a href="{{ telHref }}" onClick="{{ trackPerdite }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a href="tel:+393201147517" onClick="{{ trackPerdite }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:rgba(18,89,176,0.12); line-height:1; margin-bottom:6px;">02</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Perdite e Scarichi</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Perdite, WC bloccato, scarichi otturati: troviamo il punto e risolviamo senza rompere tutta casa.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama per l'acqua →</span>
         </a>
-        <a href="{{ telHref }}" onClick="{{ trackScarichi }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a href="tel:+393201147517" onClick="{{ trackScarichi }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:rgba(18,89,176,0.12); line-height:1; margin-bottom:6px;">03</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Apertura Porte H24</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Chiuso fuori, chiave rotta nella toppa, porta blindata: apriamo senza rovinare, a qualsiasi ora.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama, apriamo subito →</span>
         </a>
-        <a href="{{ telHref }}" onClick="{{ trackGenerico }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a href="tel:+393201147517" onClick="{{ trackGenerico }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:rgba(18,89,176,0.12); line-height:1; margin-bottom:6px;">04</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Serrature e Sicurezza</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Cambio serrature, cilindri, basculanti e tapparelle. Messa in sicurezza dopo scasso o furto.</p>
@@ -625,7 +629,7 @@ img { max-width: 100%; height: auto; }
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Qual è il modo più rapido per avere aiuto?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il telefono. Se preferisci scrivere, siamo anche su WhatsApp e ti rispondiamo subito.</div></details>
       </div>
       <div style="margin-top:22px; text-align:center;">
-        <a href="{{ telHref }}" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama {{ phoneDisplay }}</a>
+        <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama 320 114 7517</a>
       </div>
     </div>
   </section>
@@ -638,7 +642,7 @@ img { max-width: 100%; height: auto; }
         <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono è sempre la via più rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:4px;">Telefono</div>
-          <a href="{{ telHref }}" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">{{ phoneDisplay }}</a>
+          <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">320 114 7517</a>
         </div>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:4px;">Zona di intervento</div>
@@ -652,9 +656,9 @@ img { max-width: 100%; height: auto; }
           </sc-if>
         </div>
         <div class="idra-cta" style="justify-content:flex-start; margin-top:18px;">
-          <a class="idra-dial" href="{{ telHref }}" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517" style="box-shadow:none;">
+          <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517" style="box-shadow:none;">
             <small>Tocca e chiama ora</small>
-            <strong>{{ phoneDisplay }}</strong>
+            <strong>320 114 7517</strong>
           </a>
           <a class="idra-wa-btn" href="{{ waHref }}" target="_blank" rel="noopener noreferrer" onClick="{{ trackWa }}" aria-label="WhatsApp" style="box-shadow:none;">
             <img src="assets/whatsapp.svg" width="30" height="30" alt="" decoding="async">
@@ -663,7 +667,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div style="background:var(--ink2); padding:52px 24px;">
         <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:800; text-transform:uppercase; color:#fff; margin-bottom:4px;">Scrivici il problema</div>
-        <div style="font-size:12px; color:rgba(255,255,255,0.4); margin-bottom:20px;">Per urgenze chiama subito <a href="{{ telHref }}" onClick="{{ trackContatto }}" style="color:var(--blue-l); font-weight:700;">{{ phoneDisplay }}</a>. Il modulo è per richieste non urgenti.</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.4); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:var(--blue-l); font-weight:700;">320 114 7517</a>. Il modulo è per richieste non urgenti.</div>
         <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:14px;">
           <div style="display:flex; flex-direction:column; gap:5px;">
             <label style="font-size:11px; font-weight:600; color:rgba(255,255,255,0.55);">Nome</label>
@@ -710,7 +714,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#fff; margin-bottom:16px;">Contatti</div>
-        <a href="{{ telHref }}" onClick="{{ trackContatto }}" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--blue-l); padding:5px 0;" style-hover="color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{{ phoneDisplay }}</a>
+        <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--blue-l); padding:5px 0;" style-hover="color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>320 114 7517</a>
         <a href="{{ waHref }}" target="_blank" rel="noopener" onClick="{{ trackWa }}" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--wa); padding:5px 0;" style-hover="opacity:0.85;"><img src="assets/whatsapp.svg" width="16" height="16" alt="" decoding="async">WhatsApp</a>
         <div style="display:flex; align-items:center; gap:10px; font-size:13.5px; color:rgba(255,255,255,0.5); padding:5px 0;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Veneto e Friuli — intervento in zona</div>
         <div style="display:flex; align-items:center; gap:10px; font-size:13.5px; color:rgba(255,255,255,0.5); padding:5px 0;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Aperto 24/7 — 365 giorni</div>
@@ -725,9 +729,9 @@ img { max-width: 100%; height: auto; }
   </footer>
 
   <div class="gf-sticky-call">
-    <a href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Chiama idraulico e fabbro 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
+    <a href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama idraulico e fabbro 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-      <strong>{{ phoneDisplay }}</strong>
+      <strong>320 114 7517</strong>
     </a>
   </div>
 

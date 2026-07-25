@@ -116,26 +116,61 @@
     } catch (e) { return false; }
   }
 
-  /** Re-applica lo snippet chiamate (serve dopo il render DreamCanvas, altrimenti Google non trova il numero). */
+  /** Re-applica lo snippet chiamate dopo il render DreamCanvas. */
   function applyPhoneConversionConfig() {
     var c = cfg();
     if (!c.phoneConversionLabel) return;
     if (getConsent() !== 'all') return;
     ensureGtagStub();
-    var phoneShown = c.phoneConversionNumber || '320 114 7517';
-    window.gtag('config', c.phoneConversionLabel, {
-      phone_conversion_number: phoneShown
-    });
+    var phoneShown = (c.phoneConversionNumber || '320 114 7517').trim();
+    var opts = {
+      phone_conversion_number: phoneShown,
+      phone_conversion_callback: function (replaced, formattedNumber, originalNumber) {
+        try {
+          window.__gfPhoneReplaced = !!replaced;
+          if (typeof console !== 'undefined' && console.info) {
+            console.info('[GF] phone replace:', replaced ? ('OK → ' + formattedNumber) : ('NO MATCH per "' + originalNumber + '"'));
+          }
+        } catch (e) {}
+      }
+    };
+    window.gtag('config', c.phoneConversionLabel, opts);
+    // Alcuni account Ads rispondono meglio se il config è anche sull'AW account + label separata
+    if (c.adsIdConversion && c.phoneConversionLabel.indexOf('/') > -1) {
+      var labelOnly = c.phoneConversionLabel.split('/').slice(1).join('/');
+      if (labelOnly) {
+        window.gtag('config', c.adsIdConversion, {
+          phone_conversion_number: phoneShown,
+          phone_conversion_label: labelOnly
+        });
+      }
+    }
     if (isPhoneDebug() && typeof console !== 'undefined' && console.info) {
-      console.info('[GF] phone conversion debug attivo — cerco il numero esatto:', phoneShown);
+      console.info('[GF] debug chiamate attivo. Accetta cookie, attendi 5s. Numero cercato:', phoneShown);
     }
   }
 
   function schedulePhoneConversionRefresh() {
     if (!cfg().phoneConversionLabel) return;
-    [500, 1200, 2500, 4500].forEach(function (ms) {
+    [800, 2000, 4000, 7000].forEach(function (ms) {
       setTimeout(applyPhoneConversionConfig, ms);
     });
+    // Dopo mutazioni DOM (DreamCanvas)
+    try {
+      if (window.__gfPhoneMo) return;
+      var scheduled = null;
+      window.__gfPhoneMo = new MutationObserver(function () {
+        if (scheduled) return;
+        scheduled = setTimeout(function () {
+          scheduled = null;
+          applyPhoneConversionConfig();
+        }, 400);
+      });
+      window.__gfPhoneMo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+      setTimeout(function () {
+        try { window.__gfPhoneMo.disconnect(); } catch (e) {}
+      }, 12000);
+    } catch (e) {}
   }
 
   function loadMarketing() {
@@ -337,6 +372,16 @@
           '<button type="button" data-gf="accept" class="gf-cookie-btn gf-cookie-btn--ok">Accetta</button>' +
         '</div>' +
       '</div>';
+    if (isPhoneDebug()) {
+      bar.innerHTML =
+        '<div class="gf-cookie-inner">' +
+          '<p><strong>Test chiamate Google Ads:</strong> premi <strong>Accetta</strong>, poi attendi 5 secondi. I numeri devono diventare 999-999-9999. ' +
+          '<a href="cookie.html">Cookie Policy</a></p>' +
+          '<div class="gf-cookie-actions">' +
+            '<button type="button" data-gf="accept" class="gf-cookie-btn gf-cookie-btn--ok">Accetta</button>' +
+          '</div>' +
+        '</div>';
+    }
     bar.addEventListener('click', function (e) {
       var t = e.target.closest('[data-gf]');
       if (!t) return;
@@ -361,7 +406,7 @@
       '#gf-cookie-banner .gf-cookie-btn--ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.28);}' +
       'html.gf-cookie-open .gf-sticky-call{visibility:hidden;pointer-events:none;}' +
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
-      'html,body{background:#030912;overscroll-behavior-y:none;}' +
+      'html,body{background:#030912;}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
       'body.ads-traffic #top.gf-page-hero{min-height:calc(100vh - 64px)!important;min-height:calc(100svh - 64px)!important;}' +
       '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
