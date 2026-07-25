@@ -48,12 +48,15 @@
 <script src="./consent-ads.js" defer></script>
 </head>
 <body>
-<!-- Seed statico numero per Google Ads DNI. Fuori da <x-dc> perche support.js
-     sostituisce l'intero elemento x-dc con <div id="dc-root"> al boot React
-     (dc.replaceWith), distruggendo qualsiasi seed interno prima che gtag
-     registri phone_conversion_number. NON usare clip:rect / width:1px:
-     lo scanner DNI di Google verifica offsetParent + dimensioni > 0 e
-     ignora i nodi visually clipped. Off-screen fisso ma renderizzato. -->
+<!-- Seed statico numero per Google Ads DNI. Fuori dal template DreamCanvas
+     (support.js sostituisce l'intero elemento template con un div dc-root al
+     boot React tramite dc.replaceWith, distruggendo qualsiasi seed interno
+     prima che gtag registri phone_conversion_number). NON usare clip:rect o
+     width:1px: lo scanner DNI di Google verifica offsetParent + dimensioni
+     maggiori di zero e ignora i nodi visually clipped. Off-screen fisso ma
+     renderizzato. ATTENZIONE: non includere mai il tag letterale del template
+     in questo commento perche parseDcText in support.js usa una regex che non
+     salta i commenti HTML e matcherebbe qui, corrompendo l'intero render. -->
 <div id="gf-ads-phone-seed" style="position:fixed;left:-9999px;top:0;z-index:-1;width:280px;height:auto;padding:6px;font:14px/1.4 sans-serif;pointer-events:none;">
   Emergenza casa H24 &mdash; chiama <a href="tel:+393201147517" style="text-decoration:underline;">320 114 7517</a>
 </div>
