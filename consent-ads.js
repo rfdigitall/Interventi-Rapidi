@@ -53,6 +53,13 @@
       ad_personalization: state,
       analytics_storage: state
     });
+    // Post-grant: disattiva la redazione dati Ads (altrimenti gclid/URL passthrough
+    // rimangono forzati e il phone conversion snippet gira con contesto "restricted"
+    // che, su alcuni account, blocca lo swap DNI).
+    if (granted) {
+      window.gtag('set', 'ads_data_redaction', false);
+      window.gtag('set', 'url_passthrough', false);
+    }
   }
 
   function hasTrackingIds() {
@@ -123,8 +130,11 @@
     if (adsConv && adsConv !== adsId) {
       window.gtag('config', adsConv, { anonymize_ip: true });
     }
-    // Snippet numero di inoltro — formato esatto richiesto da Google
-    applyPhoneConversionConfig();
+    // Snippet numero di inoltro — formato esatto richiesto da Google.
+    // Prima chiamata immediata (probabilmente trova solo il seed); poi
+    // loadMarketing rieseguira' dopo aver aspettato il render React
+    // e la MutationObserver continuera' a re-inviare il config.
+    applyPhoneConversionConfig('tag-configs');
     if (c.conversions) window.GADS_CONVERSIONS = c.conversions;
   }
 
@@ -134,26 +144,97 @@
     } catch (e) { return false; }
   }
 
-  /** Re-applica lo snippet chiamate dopo il render DreamCanvas. */
-  function applyPhoneConversionConfig() {
+  /** Console prefixed logger — l'utente puo aprire DevTools e filtrare "[GF]". */
+  function logGf() {
+    try {
+      if (typeof console === 'undefined' || !console.info) return;
+      var args = ['[GF]'].concat(Array.prototype.slice.call(arguments));
+      console.info.apply(console, args);
+    } catch (e) {}
+  }
+
+  /** Conta occorrenze del numero nel DOM visibile — usato per capire
+   *  se React/DreamCanvas ha gia stampato i link tel: prima di configurare
+   *  il phone_conversion. Il seed off-screen viene incluso qui perche il
+   *  DNI di Google lo trova comunque (offsetParent non-null). */
+  function countPhoneMatches() {
+    var c = cfg();
+    var digits = c.phoneNumberDigits || '3201147517';
+    var pretty = (c.phoneConversionNumber || '320 114 7517');
+    var telCount = 0;
+    try { telCount = document.querySelectorAll('a[href*="' + digits + '"]').length; } catch (e) {}
+    var text = '';
+    try { text = document.body ? (document.body.innerText || document.body.textContent || '') : ''; } catch (e) {}
+    var textCount = 0;
+    if (text) {
+      var idx = 0;
+      while ((idx = text.indexOf(pretty, idx)) !== -1) { textCount++; idx += pretty.length; }
+    }
+    return { tel: telCount, text: textCount };
+  }
+
+  /** Polling che risolve quando trova almeno UN link tel: matching (oltre al
+   *  seed) o dopo maxMs. Serve a garantire che Google DNI abbia qualcosa da
+   *  scambiare quando riceve il config, evitando la finestra vuota tra
+   *  removal x-dc e primo render React. */
+  function waitForPhoneInDom(maxMs, cb) {
+    var t0 = Date.now();
+    var interval = 200;
+    (function poll() {
+      var counts = countPhoneMatches();
+      var elapsed = Date.now() - t0;
+      // Ci basta anche solo il seed (tel >= 1). Se pero il body innerText ha
+      // gia il numero visibile (React montato), meglio: e' la situazione ideale.
+      if (counts.tel >= 1 || elapsed >= maxMs) {
+        logGf('waitForPhoneInDom done', {
+          telLinks: counts.tel,
+          textMatches: counts.text,
+          elapsedMs: elapsed
+        });
+        cb(counts);
+        return;
+      }
+      setTimeout(poll, interval);
+    })();
+  }
+
+  /** Re-applica lo snippet chiamate dopo il render DreamCanvas.
+   *  reason = 'init' | 'retry' | 'mutation' — solo per log. */
+  function applyPhoneConversionConfig(reason) {
     var c = cfg();
     if (!c.phoneConversionLabel) return;
-    if (getConsent() !== 'all') return;
+    if (getConsent() !== 'all') {
+      logGf('phone conversion skip (consent =', getConsent() + ')');
+      return;
+    }
     ensureGtagStub();
     var phoneShown = (c.phoneConversionNumber || '320 114 7517').trim();
+    var counts = countPhoneMatches();
+    logGf('applying phone conversion [' + (reason || 'init') + ']', {
+      label: c.phoneConversionLabel,
+      number: phoneShown,
+      telLinks: counts.tel,
+      textMatches: counts.text,
+      gtagLoaded: !!window.__gfGtagScriptLoaded,
+      debug: isPhoneDebug()
+    });
     var opts = {
       phone_conversion_number: phoneShown,
       phone_conversion_callback: function (replaced, formattedNumber, originalNumber) {
         try {
           window.__gfPhoneReplaced = !!replaced;
-          if (typeof console !== 'undefined' && console.info) {
-            console.info('[GF] phone replace:', replaced ? ('OK → ' + formattedNumber) : ('NO MATCH per "' + originalNumber + '"'));
-          }
+          logGf('phone_conversion_callback', {
+            replaced: !!replaced,
+            formatted: formattedNumber,
+            original: originalNumber
+          });
         } catch (e) {}
       }
     };
+    // Formato canonico Google: AW-<id>/<label>
     window.gtag('config', c.phoneConversionLabel, opts);
-    // Alcuni account Ads rispondono meglio se il config è anche sull'AW account + label separata
+    // Formato alternativo (documentato ma raro): config sull'AW puro + label
+    // come option. Alcuni account rispondono solo a questo secondo formato.
     if (c.adsIdConversion && c.phoneConversionLabel.indexOf('/') > -1) {
       var labelOnly = c.phoneConversionLabel.split('/').slice(1).join('/');
       if (labelOnly) {
@@ -163,9 +244,46 @@
         });
       }
     }
-    if (isPhoneDebug() && typeof console !== 'undefined' && console.info) {
-      console.info('[GF] debug chiamate attivo. Accetta cookie, attendi 5s. Numero cercato:', phoneShown);
-    }
+  }
+
+  /** Se Google non scambia entro 10s in modalita debug, esegue swap manuale.
+   *  NON e' una conversione reale: serve solo a PROVARE che il DOM e' trovabile
+   *  e che il problema sta lato Google Ads (label sbagliato, account non
+   *  attivo, dominio non whitelisted, adblock, etc). */
+  function scheduleDebugFallbackSwap() {
+    if (!isPhoneDebug()) return;
+    setTimeout(function () {
+      if (window.__gfPhoneReplaced) {
+        logGf('debug: Google DNI ha scambiato i numeri correttamente (OK).');
+        return;
+      }
+      var c = cfg();
+      var pretty = c.phoneConversionNumber || '320 114 7517';
+      var digits = c.phoneNumberDigits || '3201147517';
+      logGf('debug FALLBACK: dopo 10s Google NON ha scambiato. Eseguo swap manuale a 999-999-9999 per PROVARE che il DOM e trovabile. Se ora vedi 999-999-9999, il problema NON e' nel sito ma nel setup Google Ads (conversion non attiva, label errato, dominio non whitelisted, adblock, primi 24h di propagazione).');
+      var changed = 0;
+      try {
+        document.querySelectorAll('a[href*="' + digits + '"]').forEach(function (a) {
+          a.setAttribute('href', 'tel:+399999999999');
+          if (a.textContent && a.textContent.indexOf(pretty) > -1) {
+            a.textContent = a.textContent.replace(pretty, '999-999-9999');
+            changed++;
+          }
+        });
+        if (document.body && document.createTreeWalker) {
+          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+          var node;
+          while ((node = walker.nextNode())) {
+            var v = node.nodeValue;
+            if (v && v.indexOf(pretty) > -1) {
+              node.nodeValue = v.split(pretty).join('999-999-9999');
+              changed++;
+            }
+          }
+        }
+      } catch (e) {}
+      logGf('debug fallback swap: nodi modificati =', changed);
+    }, 10000);
   }
 
   function schedulePhoneConversionRefresh() {
@@ -173,10 +291,12 @@
     // Retry aggressivi: coprono (a) seed statico prima del boot React, (b)
     // primo render DreamCanvas (~800-2500ms), (c) eventuali re-render (setState).
     [200, 500, 900, 1500, 2500, 4000, 6000, 9000, 14000].forEach(function (ms) {
-      setTimeout(applyPhoneConversionConfig, ms);
+      setTimeout(function () { applyPhoneConversionConfig('retry@' + ms + 'ms'); }, ms);
     });
     // Osserva mutazioni DOM per rieseguire il config dopo ogni re-render
-    // significativo di DreamCanvas / React (setState).
+    // significativo di DreamCanvas / React (setState). Il DNI di Google ha
+    // gia' un suo MutationObserver interno ma re-inviare il config forza un
+    // re-scan completo, utile dopo che React ha rimontato il sottoalbero.
     try {
       if (window.__gfPhoneMo) return;
       var scheduled = null;
@@ -184,7 +304,7 @@
         if (scheduled) return;
         scheduled = setTimeout(function () {
           scheduled = null;
-          applyPhoneConversionConfig();
+          applyPhoneConversionConfig('mutation');
         }, 400);
       });
       window.__gfPhoneMo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
@@ -198,17 +318,27 @@
 
   function loadMarketing() {
     if (!hasTrackingIds()) return;
+    logGf('consent granted — bootstrap marketing tags start');
     updateConsentMode(true);
     loadGtagLibrary(function () {
-      if (window.__gfMarketingLoaded) {
-        applyPhoneConversionConfig();
-        schedulePhoneConversionRefresh();
-        flushQueue();
-        return;
+      logGf('gtag library ready', {
+        loaded: !!window.__gfGtagScriptLoaded,
+        primary: cfg().adsId,
+        conversionAccount: cfg().adsIdConversion,
+        conversionLabel: cfg().phoneConversionLabel
+      });
+      if (!window.__gfMarketingLoaded) {
+        window.__gfMarketingLoaded = true;
+        applyTagConfigs();
       }
-      window.__gfMarketingLoaded = true;
-      applyTagConfigs();
-      schedulePhoneConversionRefresh();
+      // Attende che almeno il seed (o meglio, i tel: di React) siano nel DOM
+      // prima del PRIMO config phone_conversion. Cosi il DNI trova subito da
+      // scambiare e attiva il modulo di rescan interno.
+      waitForPhoneInDom(8000, function () {
+        applyPhoneConversionConfig('init');
+        schedulePhoneConversionRefresh();
+        scheduleDebugFallbackSwap();
+      });
       flushQueue();
       setTimeout(flushQueue, 800);
     });
@@ -526,6 +656,15 @@
     if (hasTrackingIds()) loadGtagLibrary();
 
     var c = getConsent();
+    logGf('boot', {
+      consent: c || '(none)',
+      debug: isPhoneDebug(),
+      adsId: cfg().adsId,
+      conversionAccount: cfg().adsIdConversion,
+      conversionLabel: cfg().phoneConversionLabel,
+      phoneNumber: cfg().phoneConversionNumber,
+      href: location.href
+    });
     if (c === 'all') {
       updateConsentMode(true);
       loadMarketing();

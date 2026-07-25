@@ -48,9 +48,14 @@
 <script src="./consent-ads.js" defer></script>
 </head>
 <body>
-<!-- Seed statico numero per Google Ads DNI (fuori da DreamCanvas / React) -->
-<div id="gf-ads-phone-seed" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
-<a href="tel:+393201147517">320 114 7517</a>
+<!-- Seed statico numero per Google Ads DNI. Fuori da <x-dc> perche support.js
+     sostituisce l'intero elemento x-dc con <div id="dc-root"> al boot React
+     (dc.replaceWith), distruggendo qualsiasi seed interno prima che gtag
+     registri phone_conversion_number. NON usare clip:rect / width:1px:
+     lo scanner DNI di Google verifica offsetParent + dimensioni > 0 e
+     ignora i nodi visually clipped. Off-screen fisso ma renderizzato. -->
+<div id="gf-ads-phone-seed" style="position:fixed;left:-9999px;top:0;z-index:-1;width:280px;height:auto;padding:6px;background:#000;color:#fff;font:14px/1.4 sans-serif;pointer-events:none;">
+  Emergenza casa H24 &mdash; chiama <a href="tel:+393201147517" style="color:#fff;text-decoration:underline;">320 114 7517</a>
 </div>
 <x-dc>
 <helmet>
