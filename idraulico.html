@@ -3,6 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Google Consent Mode v2 — snippet inline PRIMA di qualsiasi altro script.
+   Garantisce l'ordine canonico: (1) stub gtag + dataLayer, (2) consent
+   default DENIED, (3) load gtag.js con AW-ID (per il modulo phone
+   conversion). Il consenso viene poi aggiornato a GRANTED da consent-ads.js
+   quando l'utente clicca "Accetta". Senza questo ordine il DNI di Google
+   Ads non fa lo swap del numero. */
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  if (!window.__gfConsentDefaultsSet) {
+    window.__gfConsentDefaultsSet = true;
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    window.gtag('set', 'ads_data_redaction', true);
+    window.gtag('set', 'url_passthrough', true);
+  }
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-299646523';
+  s.onload = function () {
+    window.__gfGtagScriptLoaded = true;
+    window.__gfGtagScriptLoading = false;
+    var cbs = window.__gfGtagLoadCbs || [];
+    window.__gfGtagLoadCbs = [];
+    for (var i = 0; i < cbs.length; i++) { try { cbs[i](); } catch (e) {} }
+  };
+  s.onerror = function () { window.__gfGtagScriptLoading = false; };
+  window.__gfGtagScriptLoading = true;
+  window.__gfGtagLoadCbs = window.__gfGtagLoadCbs || [];
+  (document.head || document.documentElement).appendChild(s);
+})();
+</script>
 <script src="./support.js"></script>
 <script src="./tracking-config.js"></script>
 <script src="./consent-ads.js" defer></script>

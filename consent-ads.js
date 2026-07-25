@@ -23,11 +23,13 @@
     }
   }
 
-  /** Consent Mode v2 — default DENIED prima di qualsiasi tag (UE). */
+  /** Consent Mode v2 — default DENIED prima di qualsiasi tag (UE).
+   *  Se lo snippet inline nell'HTML l'ha già fatto (__gfConsentDefaultsSet),
+   *  questa funzione è idempotente. */
   function initConsentDefaults() {
+    ensureGtagStub();
     if (window.__gfConsentDefaultsSet) return;
     window.__gfConsentDefaultsSet = true;
-    ensureGtagStub();
     window.gtag('consent', 'default', {
       ad_storage: 'denied',
       ad_user_data: 'denied',
@@ -58,13 +60,22 @@
     return !!(c.ga4Id || c.adsId);
   }
 
+  /** Carica gtag.js una sola volta. I callback vengono ACCODATI quando la
+   *  libreria è ancora in caricamento — così se l'utente clicca "Accetta"
+   *  DURANTE il fetch di gtag.js, il config non viene perso (bug storico). */
   function loadGtagLibrary(cb) {
-    if (window.__gfGtagScriptLoading || window.__gfGtagScriptLoaded) {
-      if (window.__gfGtagScriptLoaded && cb) cb();
+    window.__gfGtagLoadCbs = window.__gfGtagLoadCbs || [];
+    if (window.__gfGtagScriptLoaded) {
+      if (cb) { try { cb(); } catch (e) {} }
       return;
     }
+    if (cb) window.__gfGtagLoadCbs.push(cb);
+    if (window.__gfGtagScriptLoading) return;
     var c = cfg();
-    var primary = c.ga4Id || c.adsId;
+    // Prefer AW-ID come primary — è un account Google Ads con conversione
+    // chiamate: caricare gtag.js con id=AW-… garantisce che il modulo
+    // phone_conversion sia disponibile subito.
+    var primary = c.adsId || c.adsIdConversion || c.ga4Id;
     if (!primary) return;
     window.__gfGtagScriptLoading = true;
     ensureGtagStub();
@@ -74,9 +85,16 @@
     s.onload = function () {
       window.__gfGtagScriptLoaded = true;
       window.__gfGtagScriptLoading = false;
-      if (cb) cb();
+      var cbs = window.__gfGtagLoadCbs || [];
+      window.__gfGtagLoadCbs = [];
+      for (var i = 0; i < cbs.length; i++) {
+        try { cbs[i](); } catch (e) {}
+      }
     };
-    s.onerror = function () { window.__gfGtagScriptLoading = false; };
+    s.onerror = function () {
+      window.__gfGtagScriptLoading = false;
+      try { if (console && console.error) console.error('[GF] gtag.js failed to load:', s.src); } catch (e) {}
+    };
     document.head.appendChild(s);
   }
 
@@ -152,10 +170,13 @@
 
   function schedulePhoneConversionRefresh() {
     if (!cfg().phoneConversionLabel) return;
-    [800, 2000, 4000, 7000].forEach(function (ms) {
+    // Retry aggressivi: coprono (a) seed statico prima del boot React, (b)
+    // primo render DreamCanvas (~800-2500ms), (c) eventuali re-render (setState).
+    [200, 500, 900, 1500, 2500, 4000, 6000, 9000, 14000].forEach(function (ms) {
       setTimeout(applyPhoneConversionConfig, ms);
     });
-    // Dopo mutazioni DOM (DreamCanvas)
+    // Osserva mutazioni DOM per rieseguire il config dopo ogni re-render
+    // significativo di DreamCanvas / React (setState).
     try {
       if (window.__gfPhoneMo) return;
       var scheduled = null;
@@ -167,9 +188,11 @@
         }, 400);
       });
       window.__gfPhoneMo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+      // Estendiamo la finestra a 30s: alcune landing con font/CDN lenti
+      // completano il primo render solo dopo 5-10s.
       setTimeout(function () {
         try { window.__gfPhoneMo.disconnect(); } catch (e) {}
-      }, 12000);
+      }, 30000);
     } catch (e) {}
   }
 
