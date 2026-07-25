@@ -1,0 +1,395 @@
+﻿/**
+ * Consenso cookie + Google Consent Mode v2 + GA4 / Ads + coda conversioni.
+ *
+ * 1) Compila tracking-config.js (ID reali) — non inventarli.
+ * 2) Questo file gestisce: consent default denied → update → load tags.
+ */
+(function () {
+  var KEY = 'gf_cookie_consent';
+  var LEAD_KEY = 'gf_lead_ok';
+  window.GF_TRACKING = window.GF_TRACKING || {};
+  window.__gfEventQueue = window.__gfEventQueue || [];
+
+  function cfg() { return window.GF_TRACKING || {}; }
+
+  function getConsent() {
+    try { return localStorage.getItem(KEY); } catch (e) { return null; }
+  }
+
+  function ensureGtagStub() {
+    window.dataLayer = window.dataLayer || [];
+    if (!window.gtag) {
+      window.gtag = function () { window.dataLayer.push(arguments); };
+    }
+  }
+
+  /** Consent Mode v2 — default DENIED prima di qualsiasi tag (UE). */
+  function initConsentDefaults() {
+    if (window.__gfConsentDefaultsSet) return;
+    window.__gfConsentDefaultsSet = true;
+    ensureGtagStub();
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    // Regione UE: aiuta Ads / Privacy Sandbox
+    window.gtag('set', 'ads_data_redaction', true);
+    window.gtag('set', 'url_passthrough', true);
+  }
+
+  function updateConsentMode(granted) {
+    ensureGtagStub();
+    var state = granted ? 'granted' : 'denied';
+    window.gtag('consent', 'update', {
+      ad_storage: state,
+      ad_user_data: state,
+      ad_personalization: state,
+      analytics_storage: state
+    });
+  }
+
+  function hasTrackingIds() {
+    var c = cfg();
+    return !!(c.ga4Id || c.adsId);
+  }
+
+  function loadGtagLibrary(cb) {
+    if (window.__gfGtagScriptLoading || window.__gfGtagScriptLoaded) {
+      if (window.__gfGtagScriptLoaded && cb) cb();
+      return;
+    }
+    var c = cfg();
+    var primary = c.ga4Id || c.adsId;
+    if (!primary) return;
+    window.__gfGtagScriptLoading = true;
+    ensureGtagStub();
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(primary);
+    s.onload = function () {
+      window.__gfGtagScriptLoaded = true;
+      window.__gfGtagScriptLoading = false;
+      if (cb) cb();
+    };
+    s.onerror = function () { window.__gfGtagScriptLoading = false; };
+    document.head.appendChild(s);
+  }
+
+  function applyTagConfigs() {
+    var c = cfg();
+    var ga4Id = c.ga4Id || '';
+    var adsId = c.adsId || '';
+    var adsConv = c.adsIdConversion || '';
+    ensureGtagStub();
+    window.gtag('js', new Date());
+
+    if (ga4Id) {
+      window.gtag('config', ga4Id, {
+        anonymize_ip: true,
+        send_page_view: true,
+        allow_google_signals: getConsent() === 'all'
+      });
+    }
+    if (adsId) {
+      window.gtag('config', adsId, {
+        anonymize_ip: true,
+        allow_enhanced_conversions: !!c.enhancedConversions
+      });
+    }
+    // Secondo account Ads (es. MCC) se indicato da Google
+    if (adsConv && adsConv !== adsId) {
+      window.gtag('config', adsConv, { anonymize_ip: true });
+    }
+    // Snippet numero di inoltro — formato esatto richiesto da Google
+    if (c.phoneConversionLabel) {
+      var phoneShown = c.phoneConversionNumber || '320 114 7517';
+      window.gtag('config', c.phoneConversionLabel, {
+        phone_conversion_number: phoneShown
+      });
+    }
+    if (c.conversions) window.GADS_CONVERSIONS = c.conversions;
+  }
+
+  function loadMarketing() {
+    if (!hasTrackingIds()) return;
+    updateConsentMode(true);
+    loadGtagLibrary(function () {
+      if (window.__gfMarketingLoaded) {
+        flushQueue();
+        return;
+      }
+      window.__gfMarketingLoaded = true;
+      applyTagConfigs();
+      flushQueue();
+      setTimeout(flushQueue, 800);
+    });
+  }
+
+  function setConsent(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+    document.documentElement.setAttribute('data-gf-consent', value || '');
+    window.dispatchEvent(new CustomEvent('gf-consent', { detail: value }));
+    hideBanner();
+    if (value === 'all') {
+      loadMarketing();
+    } else {
+      updateConsentMode(false);
+      // Tag library può restare caricata in denied per modeling (se ID presenti)
+      if (hasTrackingIds()) loadGtagLibrary();
+    }
+  }
+
+  function conversionSendTo(name) {
+    var map = (cfg().conversions) || window.GADS_CONVERSIONS || {};
+    if (map[name]) return map[name];
+    if (/(phone_click|whatsapp_click|form_submit|lead_form)/.test(name) && map.default) return map.default;
+    return null;
+  }
+
+  function fireNow(name, extra) {
+    if (!window.gtag) return false;
+    var payload = Object.assign({ event_category: 'engagement', transport_type: 'beacon' }, extra || {});
+    window.gtag('event', name, payload);
+    var sendTo = conversionSendTo(name);
+    if (sendTo) {
+      window.gtag('event', 'conversion', {
+        send_to: sendTo,
+        transport_type: 'beacon',
+        event_timeout: 2000
+      });
+    }
+    return true;
+  }
+
+  function flushQueue() {
+    if (getConsent() !== 'all') return;
+    if (!window.__gfMarketingLoaded) return;
+    ensureGtagStub();
+    var q = window.__gfEventQueue.splice(0, window.__gfEventQueue.length);
+    for (var i = 0; i < q.length; i++) {
+      fireNow(q[i].name, q[i].extra);
+    }
+  }
+
+  window.gfTrack = function (name, extra) {
+    if (getConsent() !== 'all') return false;
+    ensureGtagStub();
+    if (window.__gfMarketingLoaded) {
+      fireNow(name, extra);
+      return true;
+    }
+    window.__gfEventQueue.push({ name: name, extra: extra || null });
+    if (hasTrackingIds()) loadMarketing();
+    return true;
+  };
+
+  /** Persiste gclid / gbraid per matching offline (WhatsApp). */
+  window.gfStoreAdsIds = function () {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_campaign', 'utm_medium'].forEach(function (k) {
+        var v = p.get(k);
+        if (v) sessionStorage.setItem('gf_' + k, v);
+      });
+    } catch (e) {}
+  };
+
+  window.gfGetAdsSuffix = function () {
+    try {
+      var parts = [];
+      var gclid = sessionStorage.getItem('gf_gclid') || new URLSearchParams(location.search).get('gclid');
+      if (gclid) parts.push('gclid:' + gclid);
+      var gbraid = sessionStorage.getItem('gf_gbraid');
+      if (gbraid) parts.push('gbraid:' + gbraid);
+      return parts.length ? (' [' + parts.join(' ') + ']') : '';
+    } catch (e) { return ''; }
+  };
+
+  /** Flag lead valido (form inviato) — evita conversioni false su /grazie. */
+  window.gfMarkLead = function () {
+    try {
+      sessionStorage.setItem(LEAD_KEY, String(Date.now()));
+    } catch (e) {}
+  };
+
+  window.gfConsumeLead = function () {
+    try {
+      var p = new URLSearchParams(location.search);
+      if (p.get('lead') !== '1') return false;
+      var ts = sessionStorage.getItem(LEAD_KEY);
+      if (!ts) return false;
+      sessionStorage.removeItem(LEAD_KEY);
+      var age = Date.now() - parseInt(ts, 10);
+      return age >= 0 && age < 15 * 60 * 1000;
+    } catch (e) { return false; }
+  };
+
+  window.gfSiteUrl = function () {
+    var base = (cfg().siteUrl || '').replace(/\/$/, '');
+    if (base) return base;
+    try { return location.origin; } catch (e) { return ''; }
+  };
+
+  window.gfAbsoluteUrl = function (path) {
+    var base = window.gfSiteUrl();
+    if (!path) return base || '';
+    if (/^https?:/i.test(path)) return path;
+    return base + (path.charAt(0) === '/' ? path : '/' + path);
+  };
+
+  /** Canonical + og:url + schema url/image da siteUrl (o origin). */
+  window.gfApplySeoAbsolute = function (pagePath) {
+    try {
+      var abs = window.gfAbsoluteUrl(pagePath || location.pathname.replace(/^\//, '') || '');
+      if (!abs && location.href) abs = location.href.split('?')[0].split('#')[0];
+      if (!abs) return;
+      var link = document.querySelector('link[rel="canonical"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'canonical';
+        document.head.appendChild(link);
+      }
+      link.href = abs;
+      var ogUrl = document.querySelector('meta[property="og:url"]');
+      if (!ogUrl) {
+        ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        document.head.appendChild(ogUrl);
+      }
+      ogUrl.setAttribute('content', abs);
+      var ogImg = document.querySelector('meta[property="og:image"]');
+      var imgAbs = window.gfAbsoluteUrl('assets/og-image.png');
+      if (!ogImg) {
+        ogImg = document.createElement('meta');
+        ogImg.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImg);
+      }
+      if (imgAbs) ogImg.setAttribute('content', imgAbs);
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(function (el) {
+        try {
+          var data = JSON.parse(el.textContent);
+          var list = Array.isArray(data) ? data : [data];
+          list.forEach(function (node) {
+            if (node && typeof node === 'object') {
+              if ('url' in node && (!node.url || node.url === '')) node.url = abs;
+              if (node.image && typeof node.image === 'string' && node.image.indexOf('http') !== 0) {
+                node.image = window.gfAbsoluteUrl(node.image);
+              }
+            }
+          });
+          el.textContent = JSON.stringify(Array.isArray(data) ? list : list[0]);
+        } catch (e) {}
+      });
+    } catch (e) {}
+  };
+
+  function hideBanner() {
+    var el = document.getElementById('gf-cookie-banner');
+    if (el) el.style.display = 'none';
+    document.documentElement.classList.remove('gf-cookie-open');
+  }
+
+  function showBanner() {
+    if (document.getElementById('gf-cookie-banner')) return;
+    document.documentElement.classList.add('gf-cookie-open');
+    var bar = document.createElement('div');
+    bar.id = 'gf-cookie-banner';
+    bar.setAttribute('role', 'dialog');
+    bar.setAttribute('aria-live', 'polite');
+    bar.setAttribute('aria-label', 'Consenso cookie');
+    bar.innerHTML =
+      '<div class="gf-cookie-inner">' +
+        '<p>Cookie tecnici sempre attivi. Statistica (GA4) e marketing (Google Ads) solo col tuo consenso — servono a misurare le <strong>chiamate</strong>. ' +
+        '<a href="cookie.html">Cookie</a> · <a href="privacy.html">Privacy</a></p>' +
+        '<div class="gf-cookie-actions">' +
+          '<button type="button" data-gf="reject" class="gf-cookie-btn gf-cookie-btn--ghost">Solo necessari</button>' +
+          '<button type="button" data-gf="accept" class="gf-cookie-btn gf-cookie-btn--ok">Accetta e misura</button>' +
+        '</div>' +
+      '</div>';
+    bar.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-gf]');
+      if (!t) return;
+      if (t.getAttribute('data-gf') === 'accept') setConsent('all');
+      else setConsent('necessary');
+    });
+    document.body.appendChild(bar);
+  }
+
+  function injectStyles() {
+    if (document.getElementById('gf-cookie-style')) return;
+    var css = document.createElement('style');
+    css.id = 'gf-cookie-style';
+    css.textContent =
+      '#gf-cookie-banner{position:fixed;left:0;right:0;bottom:0;z-index:600;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:rgba(5,12,24,0.97);border-top:1px solid rgba(255,255,255,0.12);color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;box-shadow:0 -8px 32px rgba(0,0,0,0.35);}' +
+      '#gf-cookie-banner .gf-cookie-inner{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px;}' +
+      '#gf-cookie-banner p{margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,0.78);flex:1 1 260px;}' +
+      '#gf-cookie-banner a{color:#4aaee8;text-decoration:underline;}' +
+      '#gf-cookie-banner .gf-cookie-actions{display:flex;flex-wrap:wrap;gap:8px;}' +
+      '#gf-cookie-banner .gf-cookie-btn{border:0;border-radius:3px;padding:12px 16px;min-height:44px;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;font-family:inherit;}' +
+      '#gf-cookie-banner .gf-cookie-btn--ok{background:#1259b0;color:#fff;}' +
+      '#gf-cookie-banner .gf-cookie-btn--ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.28);}' +
+      'html.gf-cookie-open .gf-sticky-call{visibility:hidden;pointer-events:none;}' +
+      '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
+      'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
+      'body.ads-traffic #top{min-height:auto!important;}' +
+      '.gf-sticky-call a{min-height:52px;}' +
+      '@media (max-width:600px){#gf-cookie-banner p{font-size:12px;}}';
+    document.head.appendChild(css);
+  }
+
+  window.gfApplyLandingContext = function () {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('gclid') || p.get('gbraid') || p.get('wbraid') || p.get('utm_source') || p.get('utm_medium')) {
+        document.body.classList.add('ads-traffic');
+      }
+      window.gfStoreAdsIds();
+      var city = (p.get('city') || '').trim();
+      var allowed = ['Udine', 'Pordenone', 'Gorizia', 'Trieste', 'Venezia', 'Treviso'];
+      var hit = allowed.find(function (c) { return c.toLowerCase() === city.toLowerCase(); });
+      if (hit) {
+        document.documentElement.setAttribute('data-gf-city', hit);
+        document.body.classList.add('city-' + hit.toLowerCase());
+      }
+      return hit || '';
+    } catch (e) {
+      return '';
+    }
+  };
+
+  window.gfGetConsent = getConsent;
+  window.gfSetConsent = setConsent;
+  window.gfHasMarketingConsent = function () { return getConsent() === 'all'; };
+  window.gfOpenCookieSettings = function () {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    showBanner();
+  };
+  window.gfFlushTracking = flushQueue;
+
+  function boot() {
+    initConsentDefaults();
+    injectStyles();
+    window.gfApplyLandingContext();
+
+    // Pre-carica gtag.js (consent ancora denied) se ID presenti — Consent Mode modeling
+    if (hasTrackingIds()) loadGtagLibrary();
+
+    var c = getConsent();
+    if (c === 'all') {
+      updateConsentMode(true);
+      loadMarketing();
+    } else if (c === 'necessary') {
+      updateConsentMode(false);
+    } else {
+      showBanner();
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();

@@ -1,0 +1,114 @@
+[build]
+  publish = "."
+  # Static site — no build command needed
+
+[[redirects]]
+  from = "http://{host}/*"
+  to = "https://{host}/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+    Content-Type = "image/x-icon"
+
+# Clean URLs (optional pretty paths)
+[[redirects]]
+  from = "/fabbro"
+  to = "/fabbro.html"
+  status = 200
+
+[[redirects]]
+  from = "/idraulico"
+  to = "/idraulico.html"
+  status = 200
+
+[[redirects]]
+  from = "/grazie"
+  to = "/grazie.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/cookie"
+  to = "/cookie.html"
+  status = 200
+
+# Legacy .dc.html / spaced filenames → clean URLs
+[[redirects]]
+  from = "/Pagina Idraulico e Fabbro.dc.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/Pagina%20Idraulico%20e%20Fabbro.dc.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/Pagina Fabbro.dc.html"
+  to = "/fabbro.html"
+  status = 301
+
+[[redirects]]
+  from = "/Pagina%20Fabbro.dc.html"
+  to = "/fabbro.html"
+  status = 301
+
+[[redirects]]
+  from = "/Pagina Idraulico.dc.html"
+  to = "/idraulico.html"
+  status = 301
+
+[[redirects]]
+  from = "/Pagina%20Idraulico.dc.html"
+  to = "/idraulico.html"
+  status = 301
+
+[[redirects]]
+  from = "/Grazie.dc.html"
+  to = "/grazie.html"
+  status = 301
+
+[[redirects]]
+  from = "/Privacy Policy.dc.html"
+  to = "/privacy.html"
+  status = 301
+
+[[redirects]]
+  from = "/Privacy%20Policy.dc.html"
+  to = "/privacy.html"
+  status = 301
+
+[[redirects]]
+  from = "/Cookie Policy.dc.html"
+  to = "/cookie.html"
+  status = 301
+
+[[redirects]]
+  from = "/Cookie%20Policy.dc.html"
+  to = "/cookie.html"
+  status = 301
