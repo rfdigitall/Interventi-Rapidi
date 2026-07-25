@@ -337,8 +337,10 @@
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
       'body.ads-traffic #top{min-height:auto!important;}' +
-      '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
-      '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:12px 16px;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;}' +
+      '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -6px 24px rgba(0,0,0,0.28);}' +
+      '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;padding:0 14px;margin:0;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;line-height:1;}' +
+      '.gf-sticky-call strong{font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:22px;letter-spacing:0.02em;line-height:1;white-space:nowrap;}' +
+      '.gf-sticky-call .gf-sticky-badge{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1;padding:5px 8px;border:1px solid rgba(255,255,255,0.4);border-radius:3px;white-space:nowrap;}' +
       '@media (max-width:600px){#gf-cookie-banner p{font-size:12px;}}';
     document.head.appendChild(css);
   }
@@ -375,13 +377,46 @@
   function initFaqAccordion() {
     if (window.__gfFaqAccordion) return;
     window.__gfFaqAccordion = true;
+
+    function closeOthers(opened) {
+      var root = document.getElementById('faq') || document;
+      root.querySelectorAll('details').forEach(function (other) {
+        if (other !== opened) other.open = false;
+      });
+    }
+
+    window.gfEnsureFaqNames = function () {
+      document.querySelectorAll('#faq details, details.gf-faq').forEach(function (d) {
+        d.setAttribute('name', 'gf-faq');
+        if (!d.classList.contains('gf-faq')) d.classList.add('gf-faq');
+      });
+    };
+
+    // Native exclusive accordion (name) + fallback click (DC may strip attrs)
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      var sum = t.closest('#faq details summary, details.gf-faq summary');
+      if (!sum) return;
+      var d = sum.parentElement;
+      if (!d || d.tagName !== 'DETAILS') return;
+      d.setAttribute('name', 'gf-faq');
+      setTimeout(function () {
+        if (d.open) closeOthers(d);
+      }, 0);
+    }, true);
+
     document.addEventListener('toggle', function (e) {
       var d = e.target;
-      if (!d || d.tagName !== 'DETAILS' || !d.classList || !d.classList.contains('gf-faq') || !d.open) return;
-      document.querySelectorAll('details.gf-faq').forEach(function (other) {
-        if (other !== d) other.open = false;
-      });
+      if (!d || d.tagName !== 'DETAILS' || !d.open) return;
+      if (!(d.classList && d.classList.contains('gf-faq')) && !(d.closest && d.closest('#faq'))) return;
+      d.setAttribute('name', 'gf-faq');
+      closeOthers(d);
     }, true);
+
+    window.gfEnsureFaqNames();
+    setTimeout(window.gfEnsureFaqNames, 400);
+    setTimeout(window.gfEnsureFaqNames, 1200);
   }
 
   function boot() {

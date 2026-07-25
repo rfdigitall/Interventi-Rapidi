@@ -242,34 +242,44 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   z-index: 400;
   background: #1259b0;
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.28);
 }
 .gf-sticky-call > a {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   width: 100%;
-  min-height: 56px;
-  padding: 12px 16px;
+  height: 52px;
+  padding: 0 14px;
+  margin: 0;
   box-sizing: border-box;
   color: #fff;
   background: #1259b0;
   border-radius: 0;
+  line-height: 1;
 }
 .gf-sticky-call > a:hover { background: #0d3f80; color: #fff; }
-.gf-sticky-inner {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+.gf-sticky-call svg { flex-shrink: 0; display: block; }
+.gf-sticky-call strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
 }
-.gf-sticky-inner svg { flex-shrink: 0; display: block; }
-.gf-sticky-txt {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  line-height: 1.15;
-  text-align: left;
+.gf-sticky-call .gf-sticky-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 5px 8px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  opacity: 0.95;
+  white-space: nowrap;
 }
 .idra-wa-btn {
   display: inline-flex;
@@ -305,7 +315,7 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (max-width:900px) {
   .gf-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; padding: 40px 20px 32px; }
-  .gf-footer-legal { padding-bottom: calc(18px + 70px + env(safe-area-inset-bottom)); }
+  .gf-footer-legal { padding-bottom: calc(18px + 56px + env(safe-area-inset-bottom)); }
 }
 @media (max-width:640px) {
   #top { padding: 40px 0 48px !important; }
@@ -419,8 +429,9 @@ img { max-width: 100%; height: auto; }
           </button>
         </sc-for>
       </div>
+      <div id="problema-cta" style="scroll-margin-top:88px; scroll-margin-bottom:72px;">
             <sc-if value="{{ hasPicked }}" hint-placeholder-val="{{ false }}">
-        <div id="problema-cta" style="margin-top:18px; background:var(--ink); border-radius:10px; padding:20px 22px; display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; scroll-margin-top:88px; scroll-margin-bottom:80px;">
+        <div style="margin-top:18px; background:var(--ink); border-radius:10px; padding:20px 22px; display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center;">
           <div>
             <div style="font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:3px;">Problema selezionato</div>
             <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:#fff; line-height:1.05;">{{ pickedLabel }}</div>
@@ -436,6 +447,7 @@ img { max-width: 100%; height: auto; }
           </div>
         </div>
       </sc-if>
+      </div>
     </div>
   </section>
 
@@ -535,12 +547,12 @@ img { max-width: 100%; height: auto; }
       <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--blue); margin-bottom:10px;"><span style="width:16px; height:2px; background:var(--blue); flex-shrink:0;"></span>Domande frequenti</div>
       <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 4px; color:var(--ink);">Le risposte,<br>prima di chiamare.</h2>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:22px;">
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Sono chiuso fuori, in quanto arrivate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il prima possibile, tempi indicativi in base a traffico e distanza. Quando possibile apriamo senza rovinare la porta.</div></details>
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Aprite anche porte blindate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei.</div></details>
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete anche di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, H24 tutti i giorni. Risponde una persona vera, non una segreteria.</div></details>
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Quanto costa l'intervento?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Ti comunichiamo il prezzo prima di iniziare. Di norma non chiediamo anticipo.</div></details>
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">In quali zone intervenite?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Veneto e Friuli: Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e i comuni limitrofi.</div></details>
-        <details class="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Cosa riparate oltre alle serrature?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Basculanti, tapparelle e cilindri: mettiamo in sicurezza porte, garage e ingressi.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Sono chiuso fuori, in quanto arrivate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il prima possibile, tempi indicativi in base a traffico e distanza. Quando possibile apriamo senza rovinare la porta.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Aprite anche porte blindate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete anche di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, H24 tutti i giorni. Risponde una persona vera, non una segreteria.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Quanto costa l'intervento?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Ti comunichiamo il prezzo prima di iniziare. Di norma non chiediamo anticipo.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">In quali zone intervenite?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Veneto e Friuli: Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e i comuni limitrofi.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Cosa riparate oltre alle serrature?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Basculanti, tapparelle e cilindri: mettiamo in sicurezza porte, garage e ingressi.</div></details>
       </div>
       <div style="margin-top:22px; text-align:center;">
         <a href="{{ telHref }}" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama {{ phoneDisplay }}</a>
@@ -645,13 +657,9 @@ img { max-width: 100%; height: auto; }
 
   <div class="gf-sticky-call">
     <a href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Chiama fabbro urgente 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
-      <span class="gf-sticky-inner">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        <span class="gf-sticky-txt">
-          <span style="font-size:11px; opacity:0.85;">Fabbro urgente · apertura porte · H24</span>
-          <span style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px;">{{ phoneDisplay }}</span>
-        </span>
-      </span>
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <strong>{{ phoneDisplay }}</strong>
+      <span class="gf-sticky-badge">Chiama ora</span>
     </a>
   </div>
 
@@ -667,6 +675,19 @@ class Component extends DCLogic {
   state = { name: '', phone: '', problem: '', picked: null, privacyOk: false };
 
   digits(str) { return (str || '').replace(/\D/g, ''); }
+
+  scrollToProblemaCta() {
+    var tries = 0;
+    var run = function () {
+      var el = document.getElementById('problema-cta');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (++tries < 30) setTimeout(run, 40);
+    };
+    setTimeout(run, 40);
+  }
 
   cityFromUrl() {
     if (window.gfApplyLandingContext) return window.gfApplyLandingContext() || '';
@@ -702,6 +723,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.syncSeo(this.cityFromUrl());
     if (window.gfApplySeoAbsolute) window.gfApplySeoAbsolute('fabbro.html');
+    if (window.gfEnsureFaqNames) window.gfEnsureFaqNames();
   }
 
   trackEvent(name) {
@@ -761,10 +783,7 @@ class Component extends DCLogic {
         pick: () => {
           this.setState({ picked: i });
           this.trackEvent('problem_select');
-          setTimeout(function () {
-            var el = document.getElementById('problema-cta');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 80);
+          this.scrollToProblemaCta();
         },
       })),
       hasPicked: picked != null,
