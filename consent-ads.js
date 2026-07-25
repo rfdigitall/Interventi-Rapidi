@@ -260,7 +260,7 @@
       var c = cfg();
       var pretty = c.phoneConversionNumber || '320 114 7517';
       var digits = c.phoneNumberDigits || '3201147517';
-      logGf('debug FALLBACK: dopo 10s Google NON ha scambiato. Eseguo swap manuale a 999-999-9999 per PROVARE che il DOM e trovabile. Se ora vedi 999-999-9999, il problema NON e' nel sito ma nel setup Google Ads (conversion non attiva, label errato, dominio non whitelisted, adblock, primi 24h di propagazione).');
+      logGf("debug FALLBACK: dopo 10s Google NON ha scambiato. Eseguo swap manuale a 999-999-9999 per PROVARE che il DOM e' trovabile. Se ora vedi 999-999-9999, il problema NON e' nel sito ma nel setup Google Ads (conversion non attiva, label errato, dominio non whitelisted, adblock, primi 24h di propagazione).");
       var changed = 0;
       try {
         document.querySelectorAll('a[href*="' + digits + '"]').forEach(function (a) {
@@ -549,6 +549,10 @@
     var css = document.createElement('style');
     css.id = 'gf-cookie-style';
     css.textContent =
+      // HARD LOCK del seed DNI: qualunque modifica futura (o override di un
+      // tema) non deve mai portare il seed davanti alla viewport (bug storico:
+      // background:#000 causo' black screen su mobile). Off-screen forzato.
+      '#gf-ads-phone-seed{position:fixed!important;left:-9999px!important;top:0!important;width:280px!important;max-width:280px!important;height:auto!important;background:transparent!important;color:#000!important;pointer-events:none!important;z-index:-1!important;}' +
       '#gf-cookie-banner{position:fixed;left:0;right:0;bottom:0;z-index:600;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:rgba(5,12,24,0.97);border-top:1px solid rgba(255,255,255,0.12);color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;box-shadow:0 -8px 32px rgba(0,0,0,0.35);}' +
       '#gf-cookie-banner .gf-cookie-inner{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px;}' +
       '#gf-cookie-banner p{margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,0.78);flex:1 1 260px;}' +
