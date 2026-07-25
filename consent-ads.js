@@ -336,7 +336,7 @@
       'html.gf-cookie-open .gf-sticky-call{visibility:hidden;pointer-events:none;}' +
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
-      'body.ads-traffic #top{min-height:auto!important;}' +
+      'body.ads-traffic #top.gf-page-hero{min-height:calc(100vh - 64px)!important;min-height:calc(100dvh - 64px)!important;}' +
       '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
       '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;padding:0 12px;margin:0;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;line-height:1;animation:gfStickyPulse 2.6s ease-in-out infinite;}' +
       '.gf-sticky-call strong{font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:20px;letter-spacing:0.03em;line-height:1;white-space:nowrap;text-align:center;}' +

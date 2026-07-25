@@ -302,8 +302,20 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   .gf-footer-legal { padding-bottom: calc(18px + 48px + env(safe-area-inset-bottom)); }
 }
 @media (max-width:640px) {
-  #top { padding: 40px 0 48px !important; }
+  #top.gf-page-hero {
+    min-height: calc(100vh - 64px) !important;
+    min-height: calc(100dvh - 64px) !important;
+    padding: 28px 0 56px !important;
+  }
+  #top.gf-page-hero .gf-page-hero__visual { width: min(88vw, 400px) !important; top: 48% !important; }
+  #top.gf-page-hero .gf-page-hero__copy { padding: 20px 18px 52px !important; }
   .gf-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (min-width:641px) {
+  #top.gf-page-hero {
+    min-height: calc(100vh - 64px) !important;
+    min-height: calc(100dvh - 64px) !important;
+  }
 }
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
@@ -324,10 +336,10 @@ img { max-width: 100%; height: auto; }
     </a>
   </nav>
 
-  <section id="top" style="position:relative; min-height:auto; display:flex; align-items:center; overflow:hidden; background:var(--deep); padding:48px 0 56px;">
-    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 68% 30%, rgba(26,114,212,0.24) 0%, transparent 68%); pointer-events:none;"></div>
-    <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:flex-start; justify-content:center; pointer-events:none;">
-      <svg width="440" height="440" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.72; max-width:82vw; margin-top:10px;">
+  <section id="top" class="gf-page-hero" style="position:relative; min-height:calc(100vh - 64px); min-height:calc(100dvh - 64px); display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--deep); padding:40px 0 56px; box-sizing:border-box;">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 50% 42%, rgba(26,114,212,0.22) 0%, transparent 68%); pointer-events:none;"></div>
+    <div class="gf-page-hero__visual" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:min(90vw,460px); opacity:0.48; z-index:0; pointer-events:none;">
+      <svg width="560" height="560" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:auto; display:block;">
         <defs>
           <radialGradient id="gfDrop" cx="34%" cy="26%" r="70%">
             <stop offset="0%" stop-color="#5cc2e6"></stop><stop offset="52%" stop-color="#1a72d4"></stop><stop offset="100%" stop-color="#0a1e40"></stop>
@@ -377,13 +389,13 @@ img { max-width: 100%; height: auto; }
         <line x1="186" y1="16" x2="186" y2="42" stroke="#1a4a8a" stroke-width="2"></line>
       </svg>
     </div>
-    <div style="position:absolute; bottom:0; left:0; right:0; height:62%; background:linear-gradient(to top, rgba(3,9,18,1) 0%, rgba(3,9,18,0.92) 42%, transparent 100%); pointer-events:none;"></div>
-    <div style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:52px 22px 36px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <div style="font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--blue-l); margin-bottom:16px; padding-bottom:7px; border-bottom:1px solid rgba(26,114,212,0.5);">Idraulico · Pronto intervento · H24</div>
-      <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; color:#fff; font-size:clamp(2.2rem,8vw,4.1rem); line-height:0.96; margin:0 0 14px; letter-spacing:0.005em; max-width:12ch;">
+    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(3,9,18,0.92) 0%, rgba(3,9,18,0.55) 38%, rgba(3,9,18,0.15) 62%, transparent 100%); pointer-events:none; z-index:1;"></div>
+    <div class="gf-page-hero__copy" style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:28px 22px 36px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+      <div style="font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--blue-l); margin-bottom:12px; padding-bottom:7px; border-bottom:1px solid rgba(26,114,212,0.5);">Idraulico · Pronto intervento · H24</div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; color:#fff; font-size:clamp(2.1rem,7.5vw,3.6rem); line-height:0.96; margin:0 0 10px; letter-spacing:0.005em; max-width:12ch;">
         {{ heroTitle }}
       </h1>
-      <p style="margin:0 0 28px; font-size:16px; line-height:1.5; color:rgba(255,255,255,0.75); max-width:360px;">Ti raggiungiamo subito.</p>
+      <p style="margin:0 0 20px; font-size:15px; line-height:1.45; color:rgba(255,255,255,0.75); max-width:360px;">Ti raggiungiamo subito.</p>
       <div class="idra-cta">
         <a class="idra-dial" href="{{ telHref }}" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
           <small>Tocca e chiama ora</small>
