@@ -246,10 +246,67 @@
     }
   }
 
+  /** Swap manuale idempotente. Sostituisce ovunque il pretty number con
+   *  999-999-9999 e gli href tel: con tel:+399999999999. NON tocca link
+   *  WhatsApp (wa.me / whatsapp:) — la richiesta e' solo tel display/href
+   *  per debug del DNI. Puo' essere richiamato ripetutamente: i nodi gia
+   *  scambiati non vengono ri-toccati. */
+  function performDebugFallbackSwap(reason) {
+    if (!isPhoneDebug()) return 0;
+    var c = cfg();
+    var pretty = (c.phoneConversionNumber || '320 114 7517');
+    var digits = (c.phoneNumberDigits || '3201147517');
+    var newPretty = '999-999-9999';
+    var newTel = 'tel:+399999999999';
+    var changed = 0;
+    try {
+      // 1) Ancore: swap href tel: e testo visibile. Salta WhatsApp.
+      var anchors = document.querySelectorAll('a[href]');
+      for (var i = 0; i < anchors.length; i++) {
+        var a = anchors[i];
+        var href = a.getAttribute('href') || '';
+        if (/^https?:\/\/(?:api\.)?wa\.me/i.test(href) || /^whatsapp:/i.test(href)) continue;
+        if (href.indexOf(digits) === -1 && (!a.textContent || a.textContent.indexOf(pretty) === -1)) continue;
+        // href tel: → tel:+399999999999 (idempotente)
+        if (/^tel:/i.test(href) && href !== newTel) {
+          a.setAttribute('href', newTel);
+          changed++;
+        }
+        // Testo visibile del link
+        if (a.textContent && a.textContent.indexOf(pretty) > -1) {
+          var nextTxt = a.textContent.split(pretty).join(newPretty);
+          if (nextTxt !== a.textContent) {
+            a.textContent = nextTxt;
+            changed++;
+          }
+        }
+      }
+      // 2) Text nodes con pretty number (copre hero, "Che problema hai?",
+      //    sticky bar, footer, e ogni CTA dinamica montata da React).
+      if (document.body && document.createTreeWalker) {
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+        var node;
+        while ((node = walker.nextNode())) {
+          var v = node.nodeValue;
+          if (v && v.indexOf(pretty) > -1) {
+            node.nodeValue = v.split(pretty).join(newPretty);
+            changed++;
+          }
+        }
+      }
+    } catch (e) {}
+    if (reason === 'dynamic' && changed > 0) {
+      logGf('debug fallback: swapped ' + changed + ' new nodes (dynamic section)');
+    }
+    return changed;
+  }
+
   /** Se Google non scambia entro 10s in modalita debug, esegue swap manuale.
    *  NON e' una conversione reale: serve solo a PROVARE che il DOM e' trovabile
    *  e che il problema sta lato Google Ads (label sbagliato, account non
-   *  attivo, dominio non whitelisted, adblock, etc). */
+   *  attivo, dominio non whitelisted, adblock, etc). Dopo il primo scatto,
+   *  __gfDebugFallbackActive=true fa scattare il re-swap anche su nodi
+   *  aggiunti dinamicamente (es. CTA di "Che problema hai?"). */
   function scheduleDebugFallbackSwap() {
     if (!isPhoneDebug()) return;
     setTimeout(function () {
@@ -257,31 +314,9 @@
         logGf('debug: Google DNI ha scambiato i numeri correttamente (OK).');
         return;
       }
-      var c = cfg();
-      var pretty = c.phoneConversionNumber || '320 114 7517';
-      var digits = c.phoneNumberDigits || '3201147517';
       logGf("debug FALLBACK: dopo 10s Google NON ha scambiato. Eseguo swap manuale a 999-999-9999 per PROVARE che il DOM e' trovabile. Se ora vedi 999-999-9999, il problema NON e' nel sito ma nel setup Google Ads (conversion non attiva, label errato, dominio non whitelisted, adblock, primi 24h di propagazione).");
-      var changed = 0;
-      try {
-        document.querySelectorAll('a[href*="' + digits + '"]').forEach(function (a) {
-          a.setAttribute('href', 'tel:+399999999999');
-          if (a.textContent && a.textContent.indexOf(pretty) > -1) {
-            a.textContent = a.textContent.replace(pretty, '999-999-9999');
-            changed++;
-          }
-        });
-        if (document.body && document.createTreeWalker) {
-          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
-          var node;
-          while ((node = walker.nextNode())) {
-            var v = node.nodeValue;
-            if (v && v.indexOf(pretty) > -1) {
-              node.nodeValue = v.split(pretty).join('999-999-9999');
-              changed++;
-            }
-          }
-        }
-      } catch (e) {}
+      window.__gfDebugFallbackActive = true;
+      var changed = performDebugFallbackSwap('initial');
       logGf('debug fallback swap: nodi modificati =', changed);
     }, 10000);
   }
@@ -300,7 +335,18 @@
     try {
       if (window.__gfPhoneMo) return;
       var scheduled = null;
+      var swapScheduled = null;
       window.__gfPhoneMo = new MutationObserver(function () {
+        // Debug fallback: se abbiamo gia' swappato manualmente, re-swappa
+        // i nodi appena inseriti (React setState dopo click su "Che problema
+        // hai?", CTA dinamiche, tooltip, modali, ecc.). Debounce breve per
+        // reagire quasi in tempo reale.
+        if (window.__gfDebugFallbackActive && !swapScheduled) {
+          swapScheduled = setTimeout(function () {
+            swapScheduled = null;
+            performDebugFallbackSwap('dynamic');
+          }, 150);
+        }
         if (scheduled) return;
         scheduled = setTimeout(function () {
           scheduled = null;
@@ -308,9 +354,12 @@
         }, 400);
       });
       window.__gfPhoneMo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
-      // Estendiamo la finestra a 30s: alcune landing con font/CDN lenti
-      // completano il primo render solo dopo 5-10s.
+      // In produzione disconnettiamo dopo 30s (finestra sufficiente per
+      // primo render React anche con font/CDN lenti). In debug lasciamo
+      // l'observer attivo: l'utente puo' interagire con "Che problema hai?"
+      // dopo 30+ secondi e le nuove CTA devono comunque essere swappate.
       setTimeout(function () {
+        if (isPhoneDebug()) return;
         try { window.__gfPhoneMo.disconnect(); } catch (e) {}
       }, 30000);
     } catch (e) {}
