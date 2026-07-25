@@ -337,7 +337,8 @@
       '@media (min-width:901px){.gf-sticky-call{display:none!important;}}' +
       'body.ads-traffic *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition:none!important;}' +
       'body.ads-traffic #top{min-height:auto!important;}' +
-      '.gf-sticky-call a{min-height:52px;}' +
+      '.gf-sticky-call{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1259b0;padding-bottom:env(safe-area-inset-bottom,0px);}' +
+      '.gf-sticky-call>a{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:12px 16px;box-sizing:border-box;color:#fff;background:#1259b0;border-radius:0;}' +
       '@media (max-width:600px){#gf-cookie-banner p{font-size:12px;}}';
     document.head.appendChild(css);
   }
@@ -371,10 +372,23 @@
   };
   window.gfFlushTracking = flushQueue;
 
+  function initFaqAccordion() {
+    if (window.__gfFaqAccordion) return;
+    window.__gfFaqAccordion = true;
+    document.addEventListener('toggle', function (e) {
+      var d = e.target;
+      if (!d || d.tagName !== 'DETAILS' || !d.classList || !d.classList.contains('gf-faq') || !d.open) return;
+      document.querySelectorAll('details.gf-faq').forEach(function (other) {
+        if (other !== d) other.open = false;
+      });
+    }, true);
+  }
+
   function boot() {
     initConsentDefaults();
     injectStyles();
     window.gfApplyLandingContext();
+    initFaqAccordion();
 
     // Pre-carica gtag.js (consent ancora denied) se ID presenti — Consent Mode modeling
     if (hasTrackingIds()) loadGtagLibrary();
