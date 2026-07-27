@@ -1,0 +1,9 @@
+# Redirect URL majuscule / mixte (Ads, bookmark, test Lighthouse)
+/IDRAULICO.HTML    /idraulico.html    301
+/idraulico.HTML    /idraulico.html    301
+/Idraulico.html    /idraulico.html    301
+/FABBRO.HTML       /fabbro.html       301
+/fabbro.HTML       /fabbro.html       301
+/Fabbro.html       /fabbro.html       301
+/INDEX.HTML        /                  301
+/index.HTML        /                  301

@@ -9,6 +9,11 @@
   force = true
 
 [[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
@@ -56,6 +61,47 @@
   from = "/cookie"
   to = "/cookie.html"
   status = 200
+
+# URL majuscule / mixte (evită 404 în Ads / Lighthouse)
+[[redirects]]
+  from = "/IDRAULICO.HTML"
+  to = "/idraulico.html"
+  status = 301
+
+[[redirects]]
+  from = "/idraulico.HTML"
+  to = "/idraulico.html"
+  status = 301
+
+[[redirects]]
+  from = "/FABBRO.HTML"
+  to = "/fabbro.html"
+  status = 301
+
+[[redirects]]
+  from = "/fabbro.HTML"
+  to = "/fabbro.html"
+  status = 301
+
+[[redirects]]
+  from = "/INDEX.HTML"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/index.HTML"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/Fabbro.html"
+  to = "/fabbro.html"
+  status = 301
+
+[[redirects]]
+  from = "/Idraulico.html"
+  to = "/idraulico.html"
+  status = 301
 
 # Legacy .dc.html / spaced filenames → clean URLs
 [[redirects]]
