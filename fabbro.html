@@ -29,26 +29,30 @@
     window.gtag('set', 'ads_data_redaction', true);
     window.gtag('set', 'url_passthrough', true);
   }
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-299646523';
-  s.onload = function () {
-    window.__gfGtagScriptLoaded = true;
-    window.__gfGtagScriptLoading = false;
-    var cbs = window.__gfGtagLoadCbs || [];
-    window.__gfGtagLoadCbs = [];
-    for (var i = 0; i < cbs.length; i++) { try { cbs[i](); } catch (e) {} }
-  };
-  s.onerror = function () { window.__gfGtagScriptLoading = false; };
-  window.__gfGtagScriptLoading = true;
-  window.__gfGtagLoadCbs = window.__gfGtagLoadCbs || [];
-  (document.head || document.documentElement).appendChild(s);
+  /* gtag.js caricato da consent-ads.js dopo window.load — non blocca LCP */
 })();
 </script>
+<style>
+#gf-static-shell{background:#030912;color:#fff;min-height:100svh}
+#gf-static-shell .gf-ss-nav{position:fixed;top:0;left:0;right:0;z-index:501;height:64px;display:flex;align-items:center;gap:12px;padding:0 18px;background:rgba(5,12,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08)}
+#gf-static-shell .gf-ss-hero{min-height:calc(100svh - 64px);display:flex;align-items:center;justify-content:center;text-align:center;padding:88px 22px 40px;box-sizing:border-box}
+#gf-static-shell .gf-ss-eyebrow{font-size:13px;font-weight:600;color:#6BB5FF;margin:0 0 12px;padding-bottom:7px;border-bottom:1px solid rgba(26,114,212,0.5);display:inline-block}
+#gf-static-shell .gf-ss-h1{font-size:clamp(2.2rem,8vw,4.8rem);font-weight:800;line-height:0.96;margin:0 0 10px;max-width:12ch;color:#fff;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+#gf-static-shell .gf-ss-sub{margin:0 0 22px;font-size:16px;line-height:1.5;color:rgba(255,255,255,0.75);max-width:360px}
+#gf-static-shell .gf-ss-dial{display:inline-flex;flex-direction:column;align-items:center;background:#1259b0;color:#fff;text-decoration:none;padding:1.2rem 2rem 1.35rem;border-radius:3px;min-width:260px}
+#gf-static-shell .gf-ss-dial small{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;opacity:0.9;margin-bottom:0.2rem}
+#gf-static-shell .gf-ss-dial strong{font-size:clamp(1.8rem,6vw,2.6rem);font-weight:800;line-height:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+#gf-static-shell .gf-ss-call{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:#1259b0;color:#fff;padding:11px 16px;min-height:44px;border-radius:3px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+</style>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="dns-prefetch" href="https://unpkg.com">
+<link rel="preload" href="./support.js" as="script">
+<link rel="preload" href="assets/logo-white-160.png" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=optional" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=optional"></noscript>
+<script src="./gf-perf.js" defer></script>
 <script src="./support.js" defer></script>
 <script src="./tracking-config.js" defer></script>
 <script src="./consent-ads.js" defer></script>
@@ -65,6 +69,20 @@
      salta i commenti HTML e matcherebbe qui, corrompendo l'intero render. -->
 <div id="gf-ads-phone-seed" style="position:fixed;left:-9999px;top:0;z-index:-1;width:280px;height:auto;padding:6px;font:14px/1.4 sans-serif;pointer-events:none;">
   Emergenza casa H24 &mdash; chiama <a href="tel:+393201147517" style="text-decoration:underline;">320 114 7517</a>
+</div>
+<div id="gf-static-shell" aria-hidden="false">
+  <header class="gf-ss-nav">
+    <img src="assets/logo-white-160.png" alt="Gianfranco Tuttofare — Fabbro" width="160" height="135" decoding="async" fetchpriority="high" style="height:44px;width:auto">
+    <a class="gf-ss-call" href="tel:+393201147517">320 114 7517</a>
+  </header>
+  <section class="gf-ss-hero">
+    <div>
+      <p class="gf-ss-eyebrow">Fabbro · Pronto intervento · H24</p>
+      <h1 class="gf-ss-h1">Emergenza Fabbro?</h1>
+      <p class="gf-ss-sub">Ti raggiungiamo subito.</p>
+      <a class="gf-ss-dial" href="tel:+393201147517"><small>Tocca e chiama ora</small><strong>320 114 7517</strong></a>
+    </div>
+  </section>
 </div>
 <x-dc>
 <helmet>
