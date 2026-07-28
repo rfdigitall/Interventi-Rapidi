@@ -2,10 +2,7 @@ User-agent: *
 Allow: /
 
 Disallow: /grazie.html
-Disallow: /grazie
 Disallow: /privacy.html
-Disallow: /privacy
 Disallow: /cookie.html
-Disallow: /cookie
 
 Sitemap: https://interventi-rapidi.it/sitemap.xml
