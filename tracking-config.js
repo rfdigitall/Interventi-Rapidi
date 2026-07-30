@@ -22,7 +22,11 @@ window.GF_TRACKING = {
   enhancedConversions: false,
 
   conversions: {
-    default: '',
+    /**
+     * Conversione "Click tel" (Ads) — AW-16810122289/-QLpCPvPidkcELG42M8-
+     * Inviata su phone_click_* anche senza cookie marketing (Consent Mode cookieless).
+     */
+    default: 'AW-16810122289/-QLpCPvPidkcELG42M8-',
     form_submit_whatsapp: '',
     lead_form_completed: ''
   }
