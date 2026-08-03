@@ -21,6 +21,13 @@ window.GF_TRACKING = {
   sedeLegale: '',
   enhancedConversions: false,
 
+  /**
+   * TEMP (audit chiamate): fino a questa data il sito tratta il consenso
+   * marketing come ACCETTATO → GA4 + Ads + DNI sempre attivi, senza banner.
+   * Dopo il 11/08/2026 torna automatico il banner cookie. Rimuovere il campo.
+   */
+  forceMarketingConsentUntil: '2026-08-11T23:59:59+02:00',
+
   conversions: {
     /**
      * Conversione "Click tel" (Ads) — AW-16810122289/-QLpCPvPidkcELG42M8-
