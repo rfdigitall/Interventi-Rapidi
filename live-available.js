@@ -1,6 +1,7 @@
 /**
  * Live availability chip under the nav (left half) — tap-to-call.
- * Europe/Rome clock. Visible until 23:00 Rome (hide from 23:00 inclusive).
+ * Europe/Rome clock. Visible START_HOUR inclusive → END_HOUR exclusive
+ * (06:00–22:59 Rome). Hidden from 23:00 through night until morning.
  * Half-width left pill so it never crowds the header tel CTA.
  * Hides when #top hero scrolls out of view (mobile + desktop).
  */
@@ -8,7 +9,8 @@
   if (window.__gfLiveAvail) return;
   window.__gfLiveAvail = true;
 
-  var END_HOUR = 23; /* hide at 23:00 Rome — no separate start hour in config */
+  var START_HOUR = 6; /* show from 06:00 Rome (inclusive) */
+  var END_HOUR = 23; /* hide from 23:00 Rome (inclusive) — window is hour < 23 */
   var PHONE_TEL = 'tel:+393201147517';
   var PHONE_LABEL = '320 114 7517';
   var heroVisible = true;
@@ -80,7 +82,7 @@
       month: 'short',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false,
+      hourCycle: 'h23',
     });
     var parts = {};
     fmt.formatToParts(d).forEach(function (p) {
@@ -89,16 +91,33 @@
     return parts;
   }
 
+  /** Rome wall-clock hour 0–23. Normalizes Chrome "24" midnight quirk. */
   function romeHour(d) {
     var p = romeParts(d);
     var hour = parseInt(p.hour, 10);
-    if (isNaN(hour)) hour = d.getHours();
+    if (isNaN(hour)) {
+      /* Fallback still in Europe/Rome — never use local browser TZ */
+      try {
+        hour = parseInt(
+          new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/Rome',
+            hour: 'numeric',
+            hourCycle: 'h23',
+          }).format(d),
+          10
+        );
+      } catch (e) {
+        hour = 0;
+      }
+    }
+    if (hour === 24) hour = 0;
     return hour;
   }
 
-  /** Banner window: before END_HOUR (23:00) Rome. No start-hour config → only end. */
+  /** Banner window: START_HOUR <= hour < END_HOUR (Rome). Overnight stays hidden. */
   function isBannerWindow(d) {
-    return romeHour(d) < END_HOUR;
+    var h = romeHour(d);
+    return h >= START_HOUR && h < END_HOUR;
   }
 
   function buildLabel(d) {
