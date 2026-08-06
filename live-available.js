@@ -32,7 +32,7 @@
     'animation:gfLivePulse 2s ease-out infinite;',
     '}',
     '.gf-live-avail__txt{',
-    'font-size:11px;font-weight:650;letter-spacing:0.01em;line-height:1.2;',
+    'font-size:11.5px;font-weight:650;letter-spacing:0.01em;line-height:1.25;',
     'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;',
     '}',
     '.gf-live-avail__txt b{font-weight:800;}',
@@ -86,14 +86,6 @@
     return romeHour(d) < END_HOUR;
   }
 
-  function nightHint(hour) {
-    // H24 reassurance when people hesitate at night
-    if (hour >= 22 || hour < 6) return 'Anche di notte — ';
-    if (hour >= 6 && hour < 8) return 'Anche al mattino — ';
-    if (hour >= 12 && hour < 14) return 'Anche a pranzo — ';
-    return '';
-  }
-
   function buildLabel(d) {
     var p = romeParts(d);
     var weekday = (p.weekday || '').replace(/\.$/, '');
@@ -101,10 +93,10 @@
     var month = (p.month || '').replace(/\.$/, '');
     var hour = romeHour(d);
     var time = pad(hour) + ':' + pad(parseInt(p.minute, 10) || 0);
-    var hint = nightHint(hour);
+    var when = weekday + ' ' + day + ' ' + month + ' · ' + time;
     return {
-      html: 'Oggi <b>' + weekday + ' ' + day + ' ' + month + '</b> · <b>' + time + '</b> — ' + hint + 'siamo disponibili',
-      plain: 'Oggi ' + weekday + ' ' + day + ' ' + month + ' · ' + time + ' — ' + hint + 'siamo disponibili. Chiama ' + PHONE_LABEL,
+      html: 'Siamo disponibili anche oggi · <b>' + weekday + ' ' + day + ' ' + month + '</b> · <b>' + time + '</b>',
+      plain: 'Siamo disponibili anche oggi · ' + when + '. Chiama ' + PHONE_LABEL,
     };
   }
 
