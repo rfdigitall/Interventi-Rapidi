@@ -64,7 +64,7 @@
 <script src="./support.js" defer></script>
 <script src="./tracking-config.js" defer></script>
 <script src="./consent-ads.js" defer></script>
-<!-- gf-pages-bust 2026-08-06T18:21:11+02:00 -->
+<!-- gf-bust-20260806182726 -->
 </head>
 <body>
 <!-- Seed statico numero per Google Ads DNI. Fuori dal template DreamCanvas
@@ -191,7 +191,7 @@
       "name": "Aprite anche porte blindate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "SÃƒÂ¬, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei."
+        "text": "Sì, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei."
       }
     },
     {
@@ -199,7 +199,7 @@
       "name": "Rispondete anche di notte?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "SÃƒÂ¬, H24 tutti i giorni. Risponde una persona vera, non una segreteria."
+        "text": "Sì, H24 tutti i giorni. Risponde una persona vera, non una segreteria."
       }
     },
     {
@@ -232,12 +232,12 @@
 <style>
 .gf-hero-copy,
 .gf-page-hero__copy {
-  min-height: 0;
+  min-height: 300px;
   justify-content: center;
 }
 .gf-hero-copy h1,
 .gf-page-hero__copy h1 {
-  min-height: 0;
+  min-height: 2.35em;
 }
 html, body {
   background: #030912;
@@ -477,64 +477,6 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   }
 }
 /* /gf-desktop-hero */
-
-/* Mobile first-screen fit: hero + Chiama + numero fully visible (above sticky) */
-@media (max-width: 900px) {
-  .gf-page-hero__copy { min-height: 0 !important; }
-  .gf-page-hero__copy h1 { min-height: 0 !important; }
-  #top.gf-page-hero {
-    min-height: calc(100svh - 64px - 48px - env(safe-area-inset-bottom, 0px)) !important;
-    height: calc(100svh - 64px - 48px - env(safe-area-inset-bottom, 0px)) !important;
-    padding: 8px 0 12px !important;
-    box-sizing: border-box !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-  }
-  #top.gf-page-hero .gf-page-hero__visual {
-    width: min(62vw, 260px) !important;
-    top: 46% !important;
-    opacity: 0.26 !important;
-  }
-  #top.gf-page-hero .gf-page-hero__copy {
-    padding: 8px 16px 4px !important;
-    justify-content: center !important;
-  }
-  #top.gf-page-hero .gf-page-hero__copy > div:first-child {
-    font-size: 12px !important;
-    margin-bottom: 6px !important;
-    padding-bottom: 4px !important;
-  }
-  #top.gf-page-hero h1 {
-    font-size: clamp(1.4rem, 6vw, 2rem) !important;
-    line-height: 1.05 !important;
-    margin: 0 0 6px !important;
-    max-width: 18ch !important;
-  }
-  #top.gf-page-hero .gf-page-hero__copy > p {
-    font-size: 14px !important;
-    line-height: 1.35 !important;
-    margin: 0 0 12px !important;
-    max-width: 34ch !important;
-  }
-  #top.gf-page-hero .idra-cta {
-    margin-top: 0 !important;
-    width: 100% !important;
-    max-width: 320px !important;
-  }
-  #top.gf-page-hero .idra-dial {
-    width: 100% !important;
-    min-width: 0 !important;
-    padding: 0.8rem 1.2rem 0.9rem !important;
-    min-height: 52px !important;
-  }
-  #top.gf-page-hero .idra-dial small { font-size: 0.62rem !important; }
-  #top.gf-page-hero .idra-dial strong { font-size: clamp(1.4rem, 5.2vw, 1.9rem) !important; }
-  #gf-static-shell .gf-ss-hero {
-    min-height: calc(100svh - 64px) !important;
-    padding: 72px 16px 24px !important;
-  }
-}
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
 a, button, input, select, textarea, .idra-dial, .idra-wa-btn { touch-action: manipulation; }
@@ -677,7 +619,7 @@ img { max-width: 100%; height: auto; }
         <a href="tel:+393201147517" onClick="{{ trackPerdite }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:#1259b0; line-height:1; margin-bottom:6px;">02</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Cambio e Riparazione Serrature</h3>
-          <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Serratura rotta o dopo un tentativo di scasso? Sostituiamo con serrature nuove e piÃƒÂ¹ sicure, spesso in giornata.</p>
+          <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Serratura rotta o dopo un tentativo di scasso? Sostituiamo con serrature nuove e più sicure, spesso in giornata.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama per la serratura &rarr;</span>
         </a>
         <a href="tel:+393201147517" onClick="{{ trackScarichi }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
@@ -724,11 +666,11 @@ img { max-width: 100%; height: auto; }
   <section id="chi-siamo" style="background:var(--ink2);">
     <div style="max-width:1120px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
       <div style="padding:52px 24px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>PerchÃƒÂ© chiamare noi</div>
+        <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>Perché chiamare noi</div>
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 14px; color:#fff;">Una voce vera.<br>Un intervento vero.</h2>
-        <p style="font-size:15px; line-height:1.7; color:rgba(255,255,255,0.78); margin:0 0 20px;">Chiami, rispondiamo subito. Nessun centralino: in pochi minuti il tecnico ÃƒÂ¨ in arrivo.</p>
+        <p style="font-size:15px; line-height:1.7; color:rgba(255,255,255,0.78); margin:0 0 20px;">Chiami, rispondiamo subito. Nessun centralino: in pochi minuti il tecnico è in arrivo.</p>
         <div style="display:flex; flex-direction:column; gap:11px;">
-          <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>DisponibilitÃƒÂ  reale H24, festivi compresi</div>
+          <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Disponibilità reale H24, festivi compresi</div>
           <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Costo comunicato prima di iniziare il lavoro</div>
           <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Persona vera al telefono: niente call center</div>
         </div>
@@ -736,7 +678,7 @@ img { max-width: 100%; height: auto; }
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:rgba(255,255,255,0.08);">
         <div style="background:var(--blue); padding:30px 16px; text-align:center; display:flex; flex-direction:column; justify-content:center; gap:5px;">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:34px; font-weight:900; color:#fff; line-height:1;">H24</div>
-          <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.8);">ReperibilitÃƒÂ  reale</div>
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.8);">Reperibilità reale</div>
         </div>
         <div style="background:var(--ink2); padding:30px 16px; text-align:center; border:1px solid rgba(255,255,255,0.06); display:flex; flex-direction:column; justify-content:center; gap:5px;">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:34px; font-weight:900; color:#fff; line-height:1;">Rapido</div>
@@ -760,8 +702,8 @@ img { max-width: 100%; height: auto; }
       <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 4px; color:var(--ink);">Le risposte,<br>prima di chiamare.</h2>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:22px;">
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Sono chiuso fuori, in quanto arrivate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il prima possibile, tempi indicativi in base a traffico e distanza. Quando possibile apriamo senza rovinare la porta.</div></details>
-        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Aprite anche porte blindate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">SÃƒÂ¬, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei.</div></details>
-        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete anche di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">SÃƒÂ¬, H24 tutti i giorni. Risponde una persona vera, non una segreteria.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Aprite anche porte blindate?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, blindate e normali. Sostituiamo e ripariamo cilindri a doppia mappa ed europei.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete anche di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì, H24 tutti i giorni. Risponde una persona vera, non una segreteria.</div></details>
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Quanto costa l'intervento?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Ti comunichiamo il prezzo prima di iniziare. Di norma non chiediamo anticipo.</div></details>
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">In quali zone intervenite?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Veneto e Friuli-Venezia Giulia e comuni limitrofi. Al telefono ti confermiamo se possiamo raggiungere subito la tua zona.</div></details>
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Cosa fate oltre all'apertura porte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Cambio e riparazione serrature, cilindri (doppia mappa ed europei) e messa in sicurezza dopo scasso. Non interveniamo su cancelli, grate, inferriate, basculanti o tapparelle.</div></details>
@@ -777,7 +719,7 @@ img { max-width: 100%; height: auto; }
       <div style="padding:52px 24px;">
         <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>Contatti</div>
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 12px; color:#fff;">Chiamaci <span style="color:var(--blue-l);">ora</span>.</h2>
-        <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono ÃƒÂ¨ sempre la via piÃƒÂ¹ rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
+        <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono è sempre la via più rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:4px;">Telefono</div>
           <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">320 114 7517</a>
@@ -805,7 +747,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div style="background:var(--ink2); padding:52px 24px;">
         <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:800; text-transform:uppercase; color:#fff; margin-bottom:4px;">Scrivici il problema</div>
-        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo ÃƒÂ¨ per richieste non urgenti.</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo è per richieste non urgenti.</div>
         <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:14px;">
           <div style="display:flex; flex-direction:column; gap:5px;">
             <label for="gf-contact-name" style="font-size:11px; font-weight:600; color:rgba(255,255,255,0.7);">Nome</label>
@@ -970,7 +912,7 @@ class Component extends DCLogic {
     const { name, phone, problem } = this.state;
     const waDigits = this.digits(this.props.whatsappNumber ?? '320 114 7517');
     const suffix = (window.gfGetAdsSuffix && window.gfGetAdsSuffix()) || '';
-    const text = `Ciao, sono ${name || '...'}. Il mio numero ÃƒÂ¨ ${phone || '...'}. Problema: ${problem || '...'}` + suffix;
+    const text = `Ciao, sono ${name || '...'}. Il mio numero è ${phone || '...'}. Problema: ${problem || '...'}` + suffix;
     this.trackEvent('form_submit_whatsapp');
     if (window.gfMarkLead) window.gfMarkLead();
     window.open(`https://wa.me/39${waDigits}?text=${encodeURIComponent(text)}`, '_blank');
