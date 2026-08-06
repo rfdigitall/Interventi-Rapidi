@@ -6,3 +6,4 @@ Disallow: /privacy.html
 Disallow: /cookie.html
 
 Sitemap: https://interventi-rapidi.it/sitemap.xml
+# encoding-deploy
