@@ -380,9 +380,8 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (max-width:640px) {
   #top.gf-page-hero {
-    min-height: calc(100vh - 64px) !important;
-    min-height: calc(100svh - 64px) !important;
-    padding: 28px 0 56px !important;
+    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 6px 0 10px !important;
   }
   .gf-footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .gf-nav-links { gap: 10px; margin-right: 10px; }
@@ -435,6 +434,99 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   0%, 100% { box-shadow: inset 0 0 0 0 rgba(74,174,232,0); }
   50% { box-shadow: inset 0 0 28px 0 rgba(74,174,232,0.28); }
 }
+
+/* Sticky + body pad (match live-available sticky offset 56px) */
+body { padding-bottom: 58px; }
+@media (min-width: 901px) { body { padding-bottom: 0; } }
+.gf-sticky-call { z-index: 520; }
+.gf-sticky-call > a { height: 56px; gap: 10px; }
+
+/* Mobile first-screen fit — home: slightly larger type, compact services */
+@media (max-width: 900px) {
+  .gf-hero-copy,
+  .gf-page-hero__copy { min-height: 0 !important; }
+  .gf-hero-copy h1,
+  .gf-page-hero__copy h1 { min-height: 0 !important; }
+  #top.gf-page-hero {
+    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 6px 0 10px !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  #top.gf-page-hero .gf-hero-copy {
+    padding: 6px 16px 4px !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+  #top.gf-page-hero .gf-hero-copy > div:first-child {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+    padding-bottom: 5px !important;
+  }
+  #top.gf-page-hero h1 {
+    font-size: clamp(1.75rem, 7.2vw, 2.35rem) !important;
+    line-height: 1.02 !important;
+    margin: 0 0 6px !important;
+    max-width: 14ch !important;
+  }
+  #top.gf-page-hero .gf-hero-copy > p {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    margin: 0 0 10px !important;
+    max-width: 32ch !important;
+  }
+  #top.gf-page-hero .gf-hero-services {
+    gap: 4px 10px !important;
+    margin: 0 auto 10px !important;
+    max-width: 340px !important;
+  }
+  #top.gf-page-hero .gf-hero-svc {
+    gap: 2px !important;
+    padding: 2px 4px !important;
+  }
+  #top.gf-page-hero .gf-hero-svc svg {
+    width: min(72px, 22vw) !important;
+  }
+  #top.gf-page-hero .gf-hero-svc span {
+    font-size: clamp(15px, 3.8vw, 18px) !important;
+  }
+  #top.gf-page-hero .gf-hero-svc small {
+    font-size: 10px !important;
+  }
+  #top.gf-page-hero .idra-cta {
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 340px !important;
+  }
+  #top.gf-page-hero .idra-dial {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.85rem 1.25rem 0.95rem !important;
+    min-height: 54px !important;
+  }
+  #top.gf-page-hero .idra-dial small {
+    font-size: 0.68rem !important;
+  }
+  #top.gf-page-hero .idra-dial strong {
+    font-size: clamp(1.55rem, 5.8vw, 2.1rem) !important;
+  }
+  #top.gf-page-hero .idra-wa-btn {
+    min-width: 56px !important;
+    padding: 0 0.7rem !important;
+  }
+  #top.gf-page-hero .idra-wa-btn img {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  #gf-static-shell .gf-ss-hero {
+    min-height: calc(100svh - 64px) !important;
+    padding: 72px 16px 24px !important;
+  }
+}
+
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
 a, button, input, select, textarea, .idra-dial, .idra-wa-btn { touch-action: manipulation; }

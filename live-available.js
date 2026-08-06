@@ -1,14 +1,17 @@
 /**
  * Thin live availability banner under the nav.
  * Real Europe/Rome clock + tap-to-call for max conversion on H24 landings.
+ * Visible until 23:00 Rome time (hide from 23:00 inclusive).
  */
 (function () {
   if (window.__gfLiveAvail) return;
   window.__gfLiveAvail = true;
 
   var BANNER_H = 34;
+  var END_HOUR = 23; /* hide at 23:00 Rome — no separate start hour in config */
   var PHONE_TEL = 'tel:+393201147517';
   var PHONE_LABEL = '320 114 7517';
+  var PAD_BASE = 64;
 
   var css = [
     '.gf-live-avail{',
@@ -75,6 +78,18 @@
     return parts;
   }
 
+  function romeHour(d) {
+    var p = romeParts(d);
+    var hour = parseInt(p.hour, 10);
+    if (isNaN(hour)) hour = d.getHours();
+    return hour;
+  }
+
+  /** Banner window: before END_HOUR (23:00) Rome. No start-hour config → only end. */
+  function isBannerWindow(d) {
+    return romeHour(d) < END_HOUR;
+  }
+
   function nightHint(hour) {
     // H24 reassurance when people hesitate at night
     if (hour >= 22 || hour < 6) return 'Anche di notte — ';
@@ -88,8 +103,7 @@
     var weekday = (p.weekday || '').replace(/\.$/, '');
     var day = p.day || '';
     var month = (p.month || '').replace(/\.$/, '');
-    var hour = parseInt(p.hour, 10);
-    if (isNaN(hour)) hour = d.getHours();
+    var hour = romeHour(d);
     var time = pad(hour) + ':' + pad(parseInt(p.minute, 10) || 0);
     var hint = nightHint(hour);
     return {
@@ -98,13 +112,27 @@
     };
   }
 
-  function mount() {
-    if (document.getElementById('gf-live-avail')) return;
+  function findPadWrap() {
+    return document.querySelector('[style*="padding-top:64px"], [style*="padding-top: ' + PAD_BASE + 'px"]');
+  }
 
+  function setPad(on) {
+    var wrap = findPadWrap();
+    if (!wrap) return;
+    wrap.style.paddingTop = (on ? PAD_BASE + BANNER_H : PAD_BASE) + 'px';
+  }
+
+  function ensureStyle() {
+    if (document.querySelector('style[data-gf-live-avail]')) return;
     var style = document.createElement('style');
     style.setAttribute('data-gf-live-avail', '1');
     style.textContent = css;
     document.head.appendChild(style);
+  }
+
+  function showBanner() {
+    if (document.getElementById('gf-live-avail')) return;
+    ensureStyle();
 
     var a = document.createElement('a');
     a.id = 'gf-live-avail';
@@ -118,25 +146,44 @@
 
     document.body.appendChild(a);
     document.body.classList.add('gf-has-live-avail');
+    setPad(true);
+    refreshLabel();
+  }
 
-    var wrap = document.querySelector('[style*="padding-top:64px"]');
-    if (wrap) {
-      wrap.style.paddingTop = (64 + BANNER_H) + 'px';
-    }
+  function hideBanner() {
+    var a = document.getElementById('gf-live-avail');
+    if (a && a.parentNode) a.parentNode.removeChild(a);
+    document.body.classList.remove('gf-has-live-avail');
+    setPad(false);
+  }
 
+  function refreshLabel() {
+    var a = document.getElementById('gf-live-avail');
+    if (!a) return;
     var txt = a.querySelector('.gf-live-avail__txt');
-    function tick() {
-      var label = buildLabel(new Date());
-      txt.innerHTML = label.html;
-      a.setAttribute('aria-label', label.plain);
+    if (!txt) return;
+    var label = buildLabel(new Date());
+    txt.innerHTML = label.html;
+    a.setAttribute('aria-label', label.plain);
+  }
+
+  function tick() {
+    if (isBannerWindow(new Date())) {
+      showBanner();
+      refreshLabel();
+    } else {
+      hideBanner();
     }
+  }
+
+  function start() {
     tick();
     setInterval(tick, 30000);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    mount();
+    start();
   }
 })();

@@ -407,9 +407,8 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (max-width:640px) {
   #top.gf-page-hero {
-    min-height: calc(100vh - 64px) !important;
-    min-height: calc(100svh - 64px) !important;
-    padding: 28px 0 56px !important;
+    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 8px 0 12px !important;
   }
   #top.gf-page-hero .gf-page-hero__visual { width: min(88vw, 400px) !important; top: 48% !important; }
   #top.gf-page-hero .gf-page-hero__copy { padding: 20px 18px 52px !important; }
@@ -478,6 +477,88 @@ details.gf-faq[open] summary::after { content:'\2212'; }
   }
 }
 /* /gf-desktop-hero */
+
+/* Sticky bar taller for Ads CTA + safe body pad */
+body { padding-bottom: 58px; }
+@media (min-width: 901px) { body { padding-bottom: 0; } }
+.gf-sticky-call { z-index: 520; }
+.gf-sticky-call > a { height: 56px; gap: 10px; }
+
+/* Mobile first-screen fit: hero + Chiama + numero fully visible (above sticky) */
+@media (max-width: 900px) {
+  .gf-page-hero__copy { min-height: 0 !important; }
+  .gf-page-hero__copy h1 { min-height: 0 !important; }
+  #top.gf-page-hero {
+    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 8px 0 12px !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  #top.gf-page-hero .gf-page-hero__visual {
+    width: min(62vw, 260px) !important;
+    top: 46% !important;
+    opacity: 0.26 !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy {
+    padding: 8px 16px 4px !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy > div:first-child {
+    font-size: 12px !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 4px !important;
+  }
+  #top.gf-page-hero h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    line-height: 1.05 !important;
+    margin: 0 0 6px !important;
+    max-width: 18ch !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy > p {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    margin: 0 0 12px !important;
+    max-width: 34ch !important;
+  }
+  #top.gf-page-hero .idra-cta {
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 320px !important;
+  }
+  #top.gf-page-hero .idra-dial {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.8rem 1.2rem 0.9rem !important;
+    min-height: 52px !important;
+  }
+  #top.gf-page-hero .idra-dial small {
+    font-size: 0.62rem !important;
+  }
+  #top.gf-page-hero .idra-dial strong {
+    font-size: clamp(1.4rem, 5.2vw, 1.9rem) !important;
+  }
+  #top.gf-page-hero .idra-wa-btn {
+    min-width: 56px !important;
+    padding: 0 0.7rem !important;
+  }
+  #top.gf-page-hero .idra-wa-btn img {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  #gf-static-shell .gf-ss-hero {
+    min-height: calc(100svh - 64px) !important;
+    padding: 72px 16px 24px !important;
+  }
+  #gf-static-shell .gf-ss-h1 {
+    font-size: clamp(1.45rem, 6.5vw, 2.1rem) !important;
+    max-width: 16ch !important;
+  }
+}
+
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
 a, button, input, select, textarea, .idra-dial, .idra-wa-btn { touch-action: manipulation; }
