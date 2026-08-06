@@ -363,8 +363,9 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (max-width:640px) {
   #top.gf-page-hero {
-    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
-    padding: 8px 0 12px !important;
+    min-height: calc(100svh - 64px) !important;
+    height: auto !important;
+    padding: 10px 0 calc(56px + env(safe-area-inset-bottom, 0px) + 8px) !important;
   }
   #top.gf-page-hero .gf-page-hero__visual { width: min(62vw, 260px) !important; top: 46% !important; }
   #top.gf-page-hero .gf-page-hero__copy { padding: 8px 16px 4px !important; }
@@ -372,7 +373,7 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (min-width:641px) and (max-width:900px) {
   #top.gf-page-hero {
-    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
+    min-height: calc(100svh - 64px) !important;
   }
 }
 @media (min-width:901px) {
@@ -478,13 +479,17 @@ body.ads-traffic #top .idra-dial { width: 100%; }
   .gf-page-hero__copy { min-height: 0 !important; }
   .gf-page-hero__copy h1 { min-height: 0 !important; }
   #top.gf-page-hero {
-    min-height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
-    height: calc(100svh - 64px - 56px - env(safe-area-inset-bottom, 0px)) !important;
-    padding: 8px 0 12px !important;
+    /* Dark continuous to sticky: sticky overlays bottom pad — no paper white gap */
+    min-height: calc(100svh - 64px) !important;
+    height: auto !important;
+    padding: 10px 0 calc(56px + env(safe-area-inset-bottom, 0px) + 8px) !important;
     box-sizing: border-box !important;
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
+  }
+  body.gf-has-live-avail #top.gf-page-hero {
+    padding-top: 36px !important;
   }
   #top.gf-page-hero .gf-page-hero__visual {
     width: min(62vw, 260px) !important;
