@@ -190,7 +190,7 @@
       "name": "Rispondete davvero di notte?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sì. Risponde una persona vera, non una segreteria, tutti i giorni dell'anno."
+        "text": "SÃ¬. Risponde una persona vera, non una segreteria, tutti i giorni dell'anno."
       }
     },
     {
@@ -211,7 +211,7 @@
     },
     {
       "@type": "Question",
-      "name": "Qual è il modo più rapido per avere aiuto?",
+      "name": "Qual Ã¨ il modo piÃ¹ rapido per avere aiuto?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Il telefono. Idraulico e fabbro nello stesso numero: rispondiamo subito, o scrivici su WhatsApp."
@@ -223,12 +223,12 @@
 <style>
 .gf-hero-copy,
 .gf-page-hero__copy {
-  min-height: 300px;
+  min-height: 0;
   justify-content: center;
 }
 .gf-hero-copy h1,
 .gf-page-hero__copy h1 {
-  min-height: 2.35em;
+  min-height: 0;
 }
 html, body {
   background: #030912;
@@ -433,6 +433,64 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 @keyframes gfStickyPulse {
   0%, 100% { box-shadow: inset 0 0 0 0 rgba(74,174,232,0); }
   50% { box-shadow: inset 0 0 28px 0 rgba(74,174,232,0.28); }
+}
+
+/* Mobile first-screen fit: hero + Chiama + numero fully visible (above sticky) */
+@media (max-width: 900px) {
+  .gf-page-hero__copy { min-height: 0 !important; }
+  .gf-page-hero__copy h1 { min-height: 0 !important; }
+  #top.gf-page-hero {
+    min-height: calc(100svh - 64px - 48px - env(safe-area-inset-bottom, 0px)) !important;
+    height: calc(100svh - 64px - 48px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 8px 0 12px !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  #top.gf-page-hero .gf-page-hero__visual {
+    width: min(62vw, 260px) !important;
+    top: 46% !important;
+    opacity: 0.26 !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy {
+    padding: 8px 16px 4px !important;
+    justify-content: center !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy > div:first-child {
+    font-size: 12px !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 4px !important;
+  }
+  #top.gf-page-hero h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    line-height: 1.05 !important;
+    margin: 0 0 6px !important;
+    max-width: 18ch !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy > p {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    margin: 0 0 12px !important;
+    max-width: 34ch !important;
+  }
+  #top.gf-page-hero .idra-cta {
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 320px !important;
+  }
+  #top.gf-page-hero .idra-dial {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.8rem 1.2rem 0.9rem !important;
+    min-height: 52px !important;
+  }
+  #top.gf-page-hero .idra-dial small { font-size: 0.62rem !important; }
+  #top.gf-page-hero .idra-dial strong { font-size: clamp(1.4rem, 5.2vw, 1.9rem) !important; }
+  #gf-static-shell .gf-ss-hero {
+    min-height: calc(100svh - 64px) !important;
+    padding: 72px 16px 24px !important;
+  }
 }
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
@@ -672,11 +730,11 @@ img { max-width: 100%; height: auto; }
   <section id="chi-siamo" style="background:var(--ink2);">
     <div style="max-width:1120px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
       <div style="padding:52px 24px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>Perché chiamare noi</div>
+        <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>PerchÃ© chiamare noi</div>
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 14px; color:#fff;">Una voce vera.<br>Un intervento vero.</h2>
-        <p style="font-size:15px; line-height:1.7; color:rgba(255,255,255,0.78); margin:0 0 20px;">Chiami, rispondiamo subito. Nessun centralino: in pochi minuti il tecnico è in arrivo.</p>
+        <p style="font-size:15px; line-height:1.7; color:rgba(255,255,255,0.78); margin:0 0 20px;">Chiami, rispondiamo subito. Nessun centralino: in pochi minuti il tecnico Ã¨ in arrivo.</p>
         <div style="display:flex; flex-direction:column; gap:11px;">
-          <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Disponibilità reale H24, festivi compresi</div>
+          <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>DisponibilitÃ  reale H24, festivi compresi</div>
           <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Costo comunicato prima di iniziare il lavoro</div>
           <div style="display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,0.72);"><span style="flex-shrink:0; width:17px; height:17px; background:var(--blue); border-radius:50%; margin-top:2px; display:flex; align-items:center; justify-content:center;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Persona vera al telefono: niente call center</div>
         </div>
@@ -684,7 +742,7 @@ img { max-width: 100%; height: auto; }
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:rgba(255,255,255,0.08);">
         <div style="background:var(--blue); padding:30px 16px; text-align:center; display:flex; flex-direction:column; justify-content:center; gap:5px;">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:34px; font-weight:900; color:#fff; line-height:1;">H24</div>
-          <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.8);">Reperibilità reale</div>
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.8);">ReperibilitÃ  reale</div>
         </div>
         <div style="background:var(--ink2); padding:30px 16px; text-align:center; border:1px solid rgba(255,255,255,0.06); display:flex; flex-direction:column; justify-content:center; gap:5px;">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:34px; font-weight:900; color:#fff; line-height:1;">Rapido</div>
@@ -711,11 +769,11 @@ img { max-width: 100%; height: auto; }
       <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 4px; color:var(--ink);">Le risposte,<br>prima di chiamare.</h2>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:22px;">
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Quanto tempo impiegate ad arrivare?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il prima possibile, tempi indicativi in base a traffico e distanza. Siamo attivi H24, anche di notte e nei giorni festivi.</div></details>
-        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Fate sia idraulico che fabbro?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì. Un solo numero per perdite, scarichi, apertura porte e serrature.</div></details>
-        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete davvero di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Sì. Risponde una persona vera, non una segreteria, tutti i giorni dell'anno.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Fate sia idraulico che fabbro?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">SÃ¬. Un solo numero per perdite, scarichi, apertura porte e serrature.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Rispondete davvero di notte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">SÃ¬. Risponde una persona vera, non una segreteria, tutti i giorni dell'anno.</div></details>
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Quanto costa l'intervento?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Ti comunichiamo il prezzo prima di iniziare. Di norma non chiediamo anticipo.</div></details>
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">In quali zone intervenite?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Veneto e Friuli: Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e i paesi vicini.</div></details>
-        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Qual è il modo più rapido per avere aiuto?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il telefono. Se preferisci scrivere, siamo anche su WhatsApp e ti rispondiamo subito.</div></details>
+        <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Qual Ã¨ il modo piÃ¹ rapido per avere aiuto?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Il telefono. Se preferisci scrivere, siamo anche su WhatsApp e ti rispondiamo subito.</div></details>
       </div>
       <div style="margin-top:22px; text-align:center;">
         <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama 320 114 7517</a>
@@ -728,7 +786,7 @@ img { max-width: 100%; height: auto; }
       <div style="padding:52px 24px;">
         <div style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:10px;"><span style="width:16px; height:2px; background:rgba(255,255,255,0.35); flex-shrink:0;"></span>Contatti</div>
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 12px; color:#fff;">Chiamaci <span style="color:var(--blue-l);">ora</span>.</h2>
-        <p style="font-size:13px; color:rgba(255,255,255,0.72); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono è sempre la via più rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
+        <p style="font-size:13px; color:rgba(255,255,255,0.72); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono Ã¨ sempre la via piÃ¹ rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:4px;">Telefono</div>
           <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">320 114 7517</a>
@@ -756,7 +814,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div style="background:var(--ink2); padding:52px 24px;">
         <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:800; text-transform:uppercase; color:#fff; margin-bottom:4px;">Scrivici il problema</div>
-        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo è per richieste non urgenti.</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo Ã¨ per richieste non urgenti.</div>
         <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:14px;">
           <div style="display:flex; flex-direction:column; gap:5px;">
             <label for="gf-contact-name" style="font-size:11px; font-weight:600; color:rgba(255,255,255,0.7);">Nome</label>
@@ -920,7 +978,7 @@ class Component extends DCLogic {
     const { name, phone, problem } = this.state;
     const waDigits = this.digits(this.props.whatsappNumber ?? '320 114 7517');
     const suffix = (window.gfGetAdsSuffix && window.gfGetAdsSuffix()) || '';
-    const text = `Ciao, sono ${name || '...'}. Il mio numero è ${phone || '...'}. Problema: ${problem || '...'}` + suffix;
+    const text = `Ciao, sono ${name || '...'}. Il mio numero Ã¨ ${phone || '...'}. Problema: ${problem || '...'}` + suffix;
     this.trackEvent('form_submit_whatsapp');
     if (window.gfMarkLead) window.gfMarkLead();
     window.open(`https://wa.me/39${waDigits}?text=${encodeURIComponent(text)}`, '_blank');
