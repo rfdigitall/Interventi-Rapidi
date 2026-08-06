@@ -377,60 +377,68 @@ details.gf-faq[open] summary::after { content:'\2212'; }
     min-height: calc(100svh - 64px) !important;
   }
 }
-/* gf-desktop-hero */
+/* gf-desktop-hero — pack higher so dial+WA fully above fold */
 @media (min-width:768px) {
   #top.gf-page-hero {
-    min-height: calc(100vh - 64px) !important;
     min-height: calc(100svh - 64px) !important;
-    padding: 72px 0 88px !important;
+    height: calc(100svh - 64px) !important;
+    max-height: calc(100svh - 64px) !important;
+    padding: 28px 0 24px !important;
+    box-sizing: border-box !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    overflow: hidden !important;
   }
   #top.gf-page-hero .gf-page-hero__visual {
-    width: min(56vw, 640px) !important;
-    opacity: 0.5 !important;
+    width: min(48vw, 520px) !important;
+    top: 46% !important;
+    opacity: 0.46 !important;
   }
   #top.gf-page-hero .gf-page-hero__copy {
     max-width: 920px !important;
-    padding: 48px 40px 56px !important;
+    padding: 28px 40px 12px !important;
+    justify-content: flex-start !important;
   }
   #top.gf-page-hero .gf-page-hero__copy > div:first-child {
-    font-size: 16px !important;
-    margin-bottom: 20px !important;
-    padding-bottom: 8px !important;
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 6px !important;
   }
   #top.gf-page-hero h1 {
-    font-size: clamp(3.6rem, 5.5vw, 5.2rem) !important;
-    line-height: 0.94 !important;
-    margin: 0 0 18px !important;
-    max-width: 14ch !important;
+    font-size: clamp(2.7rem, 4.2vw, 4rem) !important;
+    line-height: 0.96 !important;
+    margin: 0 0 10px !important;
+    max-width: 16ch !important;
   }
   #top.gf-page-hero .gf-page-hero__copy > p {
-    font-size: 19px !important;
-    line-height: 1.5 !important;
-    margin: 0 0 32px !important;
-    max-width: 440px !important;
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+    margin: 0 0 18px !important;
+    max-width: 420px !important;
   }
   #top.gf-page-hero .idra-cta {
-    gap: 1rem !important;
+    gap: 0.85rem !important;
     width: auto !important;
+    margin-top: 0 !important;
   }
   #top.gf-page-hero .idra-dial {
-    padding: 1.45rem 2.6rem 1.6rem !important;
-    min-width: 320px !important;
+    padding: 1.15rem 2.2rem 1.25rem !important;
+    min-width: 300px !important;
   }
   #top.gf-page-hero .idra-dial small {
-    font-size: 0.78rem !important;
-    letter-spacing: 0.16em !important;
+    font-size: 0.74rem !important;
+    letter-spacing: 0.14em !important;
   }
   #top.gf-page-hero .idra-dial strong {
-    font-size: clamp(2.4rem, 3vw, 3.2rem) !important;
+    font-size: clamp(2.1rem, 2.8vw, 2.8rem) !important;
   }
   #top.gf-page-hero .idra-wa-btn {
-    min-width: 100px !important;
-    padding: 0 1.55rem !important;
+    min-width: 92px !important;
+    padding: 0 1.35rem !important;
   }
   #top.gf-page-hero .idra-wa-btn img {
-    width: 40px !important;
-    height: 40px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 }
 /* /gf-desktop-hero */
@@ -451,12 +459,12 @@ body { padding-bottom: 58px; }
     height: auto !important;
     padding: 10px 0 calc(56px + env(safe-area-inset-bottom, 0px) + 8px) !important;
     box-sizing: border-box !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: center !important;
     overflow: hidden !important;
   }
   body.gf-has-live-avail #top.gf-page-hero {
-    padding-top: 36px !important;
+    padding-top: 28px !important;
   }
   #top.gf-page-hero .gf-page-hero__visual {
     width: min(62vw, 260px) !important;
@@ -464,8 +472,8 @@ body { padding-bottom: 58px; }
     opacity: 0.26 !important;
   }
   #top.gf-page-hero .gf-page-hero__copy {
-    padding: 6px 14px 2px !important;
-    justify-content: center !important;
+    padding: 4px 14px 2px !important;
+    justify-content: flex-start !important;
     gap: 0 !important;
   }
   #top.gf-page-hero .gf-page-hero__copy > div:first-child {
@@ -549,7 +557,7 @@ img { max-width: 100%; height: auto; }
   </nav>
 
   <main id="main-content">
-  <section id="top" class="gf-page-hero" style="position:relative; min-height:calc(100vh - 64px); min-height:calc(100svh - 64px); display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--deep); padding:40px 0 56px; box-sizing:border-box;">
+  <section id="top" class="gf-page-hero" style="position:relative; min-height:calc(100vh - 64px); min-height:calc(100svh - 64px); display:flex; align-items:flex-start; justify-content:center; overflow:hidden; background:var(--deep); padding:28px 0 24px; box-sizing:border-box;">
     <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 50% 42%, rgba(26,114,212,0.22) 0%, transparent 68%); pointer-events:none;"></div>
     <div class="gf-page-hero__visual" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:min(92vw,560px); opacity:0.48; z-index:0; pointer-events:none;">
       <svg width="560" height="560" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:auto; display:block;">

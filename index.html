@@ -391,9 +391,67 @@ details.gf-faq[open] summary::after { content:'\2212'; }
 }
 @media (min-width:641px) {
   #top.gf-page-hero {
-    min-height: calc(100vh - 64px) !important;
     min-height: calc(100svh - 64px) !important;
+    height: calc(100svh - 64px) !important;
+    max-height: calc(100svh - 64px) !important;
+    padding: 28px 0 24px !important;
+    box-sizing: border-box !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    overflow: hidden !important;
   }
+  #top.gf-page-hero .gf-page-hero__visual {
+    display: block !important;
+    width: min(48vw, 520px) !important;
+    top: 46% !important;
+    opacity: 0.42 !important;
+  }
+  #top.gf-page-hero .gf-hero-copy {
+    padding: 28px 40px 12px !important;
+    max-width: 920px !important;
+    justify-content: flex-start !important;
+  }
+  #top.gf-page-hero .gf-hero-copy > div:first-child {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 6px !important;
+  }
+  #top.gf-page-hero h1 {
+    font-size: clamp(2.8rem, 4.5vw, 4.2rem) !important;
+    line-height: 0.96 !important;
+    margin: 0 0 10px !important;
+    max-width: 14ch !important;
+  }
+  #top.gf-page-hero .gf-hero-copy > p {
+    font-size: 17px !important;
+    margin: 0 0 14px !important;
+  }
+  #top.gf-page-hero .gf-hero-services {
+    margin: 0 auto 16px !important;
+  }
+  #top.gf-page-hero .idra-cta {
+    gap: 0.85rem !important;
+    width: auto !important;
+  }
+  #top.gf-page-hero .idra-dial {
+    padding: 1.15rem 2.2rem 1.25rem !important;
+    min-width: 300px !important;
+  }
+  #top.gf-page-hero .idra-dial strong {
+    font-size: clamp(2.1rem, 2.8vw, 2.8rem) !important;
+  }
+  #top.gf-page-hero .idra-wa-btn {
+    min-width: 92px !important;
+    padding: 0 1.35rem !important;
+  }
+  #top.gf-page-hero .idra-wa-btn img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+/* hide big bg SVG on small phones where service icons already show */
+@media (max-width:767px) {
+  #top.gf-page-hero .gf-page-hero__visual { display: none !important; }
 }
 .gf-sticky-call {
   position: fixed;
@@ -454,12 +512,12 @@ body { padding-bottom: 58px; }
     height: auto !important;
     padding: 8px 0 calc(56px + env(safe-area-inset-bottom, 0px) + 8px) !important;
     box-sizing: border-box !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: center !important;
     overflow: hidden !important;
   }
   body.gf-has-live-avail #top.gf-page-hero {
-    padding-top: 36px !important;
+    padding-top: 28px !important;
   }
   #top.gf-page-hero .gf-hero-copy {
     padding: 2px 12px 0 !important;
@@ -564,10 +622,57 @@ img { max-width: 100%; height: auto; }
   </nav>
 
   <main id="main-content">
-  <section id="top" class="gf-page-hero" style="position:relative; min-height:calc(100vh - 64px); min-height:calc(100svh - 64px); display:flex; align-items:center; overflow:hidden; background:var(--deep); padding:40px 0 56px; box-sizing:border-box;">
-    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 50% 20%, rgba(26,114,212,0.22) 0%, transparent 68%); pointer-events:none;"></div>
-    <div style="position:absolute; bottom:0; left:0; right:0; height:55%; background:linear-gradient(to top, rgba(3,9,18,1) 0%, rgba(3,9,18,0.9) 45%, transparent 100%); pointer-events:none;"></div>
-    <div class="gf-hero-copy" style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:28px 22px 36px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+  <section id="top" class="gf-page-hero" style="position:relative; min-height:calc(100vh - 64px); min-height:calc(100svh - 64px); display:flex; align-items:flex-start; justify-content:center; overflow:hidden; background:var(--deep); padding:28px 0 24px; box-sizing:border-box;">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 50% 42%, rgba(26,114,212,0.22) 0%, transparent 68%); pointer-events:none;"></div>
+    <div class="gf-page-hero__visual" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:min(92vw,560px); opacity:0.42; z-index:0; pointer-events:none;">
+      <svg width="560" height="560" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%; height:auto; display:block;">
+        <defs>
+          <linearGradient id="homeHeroLock" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2f8fe0"></stop><stop offset="55%" stop-color="#1259b0"></stop><stop offset="100%" stop-color="#0a1e40"></stop>
+          </linearGradient>
+          <radialGradient id="homeHeroShine" cx="32%" cy="22%" r="60%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.4"></stop><stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
+          </radialGradient>
+          <radialGradient id="homeHeroPool" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a72d4" stop-opacity="0"></stop><stop offset="60%" stop-color="#1a72d4" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1a72d4" stop-opacity="0"></stop>
+          </radialGradient>
+          <filter id="homeHeroGlow"><feGaussianBlur stdDeviation="9" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+          <filter id="homeHeroSoft"><feGaussianBlur stdDeviation="2.5" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+        </defs>
+        <g transform="translate(0,-14)">
+          <ellipse cx="280" cy="470" rx="150" ry="26" fill="url(#homeHeroPool)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.15;0.4" dur="4.5s" repeatCount="indefinite"></animate>
+          </ellipse>
+          <g filter="url(#homeHeroGlow)">
+            <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,-22;0,-22;0,0" keyTimes="0;0.4;0.55;0.9;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+            <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#2f6fb0" stroke-width="26" stroke-linecap="round"></path>
+            <path d="M212 258 L212 196 A68 68 0 0 1 348 196 L348 258" fill="none" stroke="#6fb2e6" stroke-width="7" stroke-linecap="round" opacity="0.5"></path>
+          </g>
+          <g filter="url(#homeHeroGlow)">
+            <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#homeHeroLock)"></rect>
+            <rect x="168" y="250" width="224" height="200" rx="30" fill="url(#homeHeroShine)"></rect>
+            <circle cx="280" cy="322" r="26" fill="#071733"></circle>
+            <path d="M266 336 L294 336 L302 396 L258 396 Z" fill="#071733"></path>
+          </g>
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.18;0.85;0.93;1" dur="4.5s" repeatCount="indefinite"></animate>
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0,150;0,0;0,0;0,150" keyTimes="0;0.3;0.85;1" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.3 1;0 0 1 1;0.6 0 0.4 1"></animateTransform>
+              <g filter="url(#homeHeroSoft)">
+                <animateTransform attributeName="transform" type="rotate" values="0 280 322;0 280 322;28 280 322;28 280 322;0 280 322" keyTimes="0;0.4;0.55;0.85;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+                <rect x="273" y="300" width="14" height="150" rx="6" fill="#5cc2e6"></rect>
+                <rect x="287" y="404" width="16" height="10" rx="2" fill="#5cc2e6"></rect>
+                <rect x="287" y="424" width="24" height="10" rx="2" fill="#5cc2e6"></rect>
+                <circle cx="280" cy="474" r="30" fill="none" stroke="#5cc2e6" stroke-width="12"></circle>
+                <circle cx="280" cy="300" r="7" fill="#8fd6e5"></circle>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(3,9,18,0.92) 0%, rgba(3,9,18,0.55) 38%, rgba(3,9,18,0.15) 62%, transparent 100%); pointer-events:none; z-index:1;"></div>
+    <div class="gf-hero-copy" style="position:relative; z-index:2; width:100%; max-width:720px; margin:0 auto; padding:28px 22px 16px; display:flex; flex-direction:column; align-items:center; text-align:center;">
       <div style="font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--blue-l); margin-bottom:16px; padding-bottom:7px; border-bottom:1px solid rgba(26,114,212,0.5);">Idraulico &middot; Fabbro &middot; H24</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; color:#fff; font-size:clamp(2.2rem,8vw,4.1rem); line-height:0.96; margin:0 0 10px; letter-spacing:0.005em; max-width:12ch;">
         {{ heroTitle }}
