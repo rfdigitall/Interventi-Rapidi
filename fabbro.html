@@ -579,6 +579,33 @@ body { padding-bottom: 58px; }
   }
 }
 
+/* Mobile fold pack: H1+CTA solid block ending ~16px above sticky — phones only */
+@media (max-width: 640px) {
+  #top.gf-page-hero {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    min-height: calc(100svh - 64px) !important;
+    height: auto !important;
+    padding: 12px 0 calc(56px + env(safe-area-inset-bottom, 0px) + 16px) !important;
+    box-sizing: border-box !important;
+  }
+  body.gf-has-live-avail #top.gf-page-hero {
+    padding-top: 36px !important;
+  }
+  #top.gf-page-hero .gf-page-hero__copy {
+    width: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 4px 14px 0 !important;
+    justify-content: flex-end !important;
+  }
+  #top.gf-page-hero .gf-page-hero__visual {
+    top: 40% !important;
+  }
+}
+
 @media (min-width:901px) { .gf-sticky-call { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .gf-sticky-call > a { animation: none !important; } }
 a, button, input, select, textarea, .idra-dial, .idra-wa-btn { touch-action: manipulation; }
