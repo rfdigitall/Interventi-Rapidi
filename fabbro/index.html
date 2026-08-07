@@ -77,19 +77,19 @@
      in questo commento perche parseDcText in support.js usa una regex che non
      salta i commenti HTML e matcherebbe qui, corrompendo l'intero render. -->
 <div id="gf-ads-phone-seed" style="position:fixed;left:-9999px;top:0;z-index:-1;width:280px;height:auto;padding:6px;font:14px/1.4 sans-serif;pointer-events:none;">
-  Emergenza casa H24 &mdash; chiama <a href="tel:+393201147517" style="text-decoration:underline;">320 114 7517</a>
+  Emergenza casa H24 &mdash; chiama <a data-gf-phone-track="phone_click_contatto" href="tel:+393201147517" style="text-decoration:underline;">320 114 7517</a>
 </div>
 <div id="gf-static-shell" aria-hidden="false">
   <header class="gf-ss-nav">
     <img src="assets/logo-white-160.png" alt="Gianfranco Tuttofare &mdash; Fabbro" width="160" height="135" decoding="async" fetchpriority="high" style="height:44px;width:auto">
-    <a class="gf-ss-call" href="tel:+393201147517">320 114 7517</a>
+    <a data-gf-phone-track="phone_click_hero" class="gf-ss-call" href="tel:+393201147517">320 114 7517</a>
   </header>
   <section class="gf-ss-hero">
     <div>
       <p class="gf-ss-eyebrow">Fabbro &middot; Pronto intervento &middot; H24</p>
       <h1 class="gf-ss-h1">Fabbro Pronto Intervento H24</h1>
       <p class="gf-ss-sub">Chiuso fuori casa? Apriamo subito.</p>
-      <a class="gf-ss-dial" href="tel:+393201147517"><small>Tocca e chiama ora</small><strong>320 114 7517</strong></a>
+      <a data-gf-phone-track="phone_click_hero" class="gf-ss-dial" href="tel:+393201147517"><small>Tocca e chiama ora</small><strong>320 114 7517</strong></a>
     </div>
   </section>
 </div>
@@ -493,7 +493,7 @@ img { max-width: 100%; height: auto; }
       <a href="fabbro.html" style="font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#fff;">Fabbro</a>
       <a href="idraulico.html" style="font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(255,255,255,0.65);" style-hover="color:#fff;">Idraulico</a>
     </div>
-    <a href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama subito 320 114 7517" style="display:inline-flex; align-items:center; gap:7px; background:var(--blue); color:#fff; padding:11px 16px; min-height:44px; border-radius:3px; font-size:13px; font-weight:700; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0;" style-hover="background:var(--blue-d); color:#fff;">
+    <a data-gf-phone-track="phone_click_hero" href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama subito 320 114 7517" style="display:inline-flex; align-items:center; gap:7px; background:var(--blue); color:#fff; padding:11px 16px; min-height:44px; border-radius:3px; font-size:13px; font-weight:700; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0;" style-hover="background:var(--blue-d); color:#fff;">
       <span style="width:7px; height:7px; border-radius:50%; background:var(--aqua); flex-shrink:0;"></span>320 114 7517
     </a>
   </nav>
@@ -556,7 +556,7 @@ img { max-width: 100%; height: auto; }
       </h1>
       <p style="margin:0 0 22px; font-size:16px; line-height:1.5; color:rgba(255,255,255,0.75); max-width:400px;">Chiuso fuori casa? Apriamo subito.</p>
       <div class="idra-cta">
-        <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
+        <a data-gf-phone-track="phone_click_hero" class="idra-dial" href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Tocca e chiama 320 114 7517">
           <small>Tocca e chiama ora</small>
           <strong>320 114 7517</strong>
         </a>
@@ -590,7 +590,7 @@ img { max-width: 100%; height: auto; }
             <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:#fff; line-height:1.05;">{{ pickedLabel }}</div>
           </div>
           <div class="idra-cta">
-            <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517">
+            <a data-gf-phone-track="phone_click_contatto" class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517">
               <small>Tocca e chiama ora</small>
               <strong>320 114 7517</strong>
             </a>
@@ -610,25 +610,25 @@ img { max-width: 100%; height: auto; }
       <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5.4vw,40px); line-height:0.94; margin:0 0 12px; color:var(--ink);">Fabbro urgente H24.<br>Un solo numero.</h2>
       <p style="color:var(--muted); font-size:15px; line-height:1.75; max-width:640px; margin:0;">Apertura porte, cambio serrature, blindate e messa in sicurezza. Pronto intervento, quando serve.</p>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:var(--line); margin-top:26px; border:1px solid var(--line);">
-        <a href="tel:+393201147517" onClick="{{ trackUrgente }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a data-gf-phone-track="phone_click_urgenza" href="tel:+393201147517" onClick="{{ trackUrgente }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:#1259b0; line-height:1; margin-bottom:6px;">01</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Apertura Porte H24</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Porta sbattuta, chiave rotta nella toppa, serratura che gira a vuoto: apriamo senza rovinare la porta, a qualsiasi ora.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama per un'urgenza &rarr;</span>
         </a>
-        <a href="tel:+393201147517" onClick="{{ trackPerdite }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a data-gf-phone-track="phone_click_perdite" href="tel:+393201147517" onClick="{{ trackPerdite }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:#1259b0; line-height:1; margin-bottom:6px;">02</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Cambio e Riparazione Serrature</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Serratura rotta o dopo un tentativo di scasso? Sostituiamo con serrature nuove e più sicure, spesso in giornata.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiama per la serratura &rarr;</span>
         </a>
-        <a href="tel:+393201147517" onClick="{{ trackScarichi }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a data-gf-phone-track="phone_click_scarichi" href="tel:+393201147517" onClick="{{ trackScarichi }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:#1259b0; line-height:1; margin-bottom:6px;">03</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Serrature di Sicurezza e Blindate</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Vuoi dormire tranquillo? Installiamo serrature di sicurezza, cilindri europei e difese anti-effrazione su porte blindate.</p>
           <span style="font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;">Chiedi un consiglio &rarr;</span>
         </a>
-        <a href="tel:+393201147517" onClick="{{ trackGenerico }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
+        <a data-gf-phone-track="phone_click_generico" href="tel:+393201147517" onClick="{{ trackGenerico }}" style="display:block; background:#fff; padding:26px 24px;" style-hover="background:var(--ice); color:var(--text);">
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:#1259b0; line-height:1; margin-bottom:6px;">04</div>
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); margin:0 0 7px;">Messa in Sicurezza</h3>
           <p style="font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 14px;">Dopo un furto o un tentativo di scasso: chiudiamo e mettiamo in sicurezza la porta, con serrature e cilindri nuovi.</p>
@@ -709,7 +709,7 @@ img { max-width: 100%; height: auto; }
         <details class="gf-faq" name="gf-faq" style="background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;"><summary style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--ink); list-style:none;">Cosa fate oltre all'apertura porte?</summary><div style="padding:0 18px 16px; color:var(--muted); font-size:14px; line-height:1.7;">Cambio e riparazione serrature, cilindri (doppia mappa ed europei) e messa in sicurezza dopo scasso. Non interveniamo su cancelli, grate, inferriate, basculanti o tapparelle.</div></details>
       </div>
       <div style="margin-top:22px; text-align:center;">
-        <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama 320 114 7517</a>
+        <a data-gf-phone-track="phone_click_contatto" href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:inline-flex; align-items:center; gap:9px; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; padding:15px 28px; border-radius:3px;" style-hover="background:var(--blue-d); color:#fff;">Un'altra domanda? Chiama 320 114 7517</a>
       </div>
     </div>
   </section>
@@ -722,7 +722,7 @@ img { max-width: 100%; height: auto; }
         <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.8; margin:0 0 22px;">Per urgenze il telefono è sempre la via più rapida. Per richieste non urgenti usa il modulo qui a fianco: ti rispondiamo su WhatsApp.</p>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:4px;">Telefono</div>
-          <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">320 114 7517</a>
+          <a data-gf-phone-track="phone_click_contatto" href="tel:+393201147517" onClick="{{ trackContatto }}" style="font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--blue-l); letter-spacing:0.01em;" style-hover="color:var(--blue-l);">320 114 7517</a>
         </div>
         <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
           <div style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:4px;">Zona di intervento</div>
@@ -736,7 +736,7 @@ img { max-width: 100%; height: auto; }
           </sc-if>
         </div>
         <div class="idra-cta" style="justify-content:flex-start; margin-top:18px;">
-          <a class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517" style="box-shadow:none;">
+          <a data-gf-phone-track="phone_click_contatto" class="idra-dial" href="tel:+393201147517" onClick="{{ trackContatto }}" aria-label="Tocca e chiama 320 114 7517" style="box-shadow:none;">
             <small>Tocca e chiama ora</small>
             <strong>320 114 7517</strong>
           </a>
@@ -747,7 +747,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div style="background:var(--ink2); padding:52px 24px;">
         <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:800; text-transform:uppercase; color:#fff; margin-bottom:4px;">Scrivici il problema</div>
-        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo è per richieste non urgenti.</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.72); margin-bottom:20px;">Per urgenze chiama subito <a data-gf-phone-track="phone_click_contatto" href="tel:+393201147517" onClick="{{ trackContatto }}" style="color:#6BB5FF; font-weight:700; text-decoration:underline;">320 114 7517</a>. Il modulo è per richieste non urgenti.</div>
         <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:14px;">
           <div style="display:flex; flex-direction:column; gap:5px;">
             <label for="gf-contact-name" style="font-size:11px; font-weight:600; color:rgba(255,255,255,0.7);">Nome</label>
@@ -797,7 +797,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#fff; margin-bottom:16px;">Contatti</div>
-        <a href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--blue-l); padding:5px 0;" style-hover="color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>320 114 7517</a>
+        <a data-gf-phone-track="phone_click_contatto" href="tel:+393201147517" onClick="{{ trackContatto }}" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--blue-l); padding:5px 0;" style-hover="color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>320 114 7517</a>
         <a href="{{ waHref }}" target="_blank" rel="noopener" onClick="{{ trackWa }}" aria-label="Scrivici su WhatsApp" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; color:var(--wa); padding:5px 0;" style-hover="opacity:0.85;"><img src="assets/whatsapp.svg" width="16" height="16" alt="" decoding="async" role="presentation">WhatsApp</a>
         <div style="display:flex; align-items:center; gap:10px; font-size:13.5px; color:rgba(255,255,255,0.65); padding:5px 0;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Veneto e Friuli &mdash; intervento in zona</div>
         <div style="display:flex; align-items:center; gap:10px; font-size:13.5px; color:rgba(255,255,255,0.65); padding:5px 0;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Aperto 24/7 &mdash; 365 giorni</div>
@@ -825,7 +825,7 @@ img { max-width: 100%; height: auto; }
   </footer>
 
   <div class="gf-sticky-call">
-    <a href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama fabbro urgente 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
+    <a data-gf-phone-track="phone_click_hero" href="tel:+393201147517" onClick="{{ trackHero }}" aria-label="Chiama fabbro urgente 320 114 7517" style-hover="background:var(--blue-d); color:#fff;">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
       <strong>320 114 7517</strong>
     </a>
