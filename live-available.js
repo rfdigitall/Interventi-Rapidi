@@ -19,9 +19,10 @@
 
   var css = [
     '.gf-live-avail{',
-    'position:fixed;top:calc(64px + 8px);left:10px;right:auto;z-index:490;',
-    'display:inline-flex;align-items:center;justify-content:flex-start;gap:7px;',
-    /* Below 64px nav — leave side gutters only; never underlap header tel */
+    'position:fixed;top:calc(64px + 8px);left:0;right:0;z-index:490;',
+    'display:inline-flex;align-items:center;justify-content:center;gap:7px;',
+    /* Centered chip under nav — gutters only; never underlap header tel */
+    'margin-left:auto;margin-right:auto;',
     'max-width:calc(100% - 20px);width:max-content;',
     'height:auto;min-height:28px;padding:6px 12px 6px 10px;box-sizing:border-box;',
     'border-radius:12px;',
@@ -46,7 +47,7 @@
     '}',
     '.gf-live-avail__txt{',
     'font-size:11.5px;font-weight:650;letter-spacing:0.01em;line-height:1.35;',
-    'min-width:0;flex:1 1 auto;',
+    'min-width:0;flex:1 1 auto;text-align:center;',
     'white-space:normal;overflow:visible;max-width:100%;',
     '}',
     '.gf-live-avail__txt b{font-weight:800;}',
@@ -56,7 +57,7 @@
     'padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.14);',
     '}',
     '@media (min-width:640px){',
-    '.gf-live-avail{top:calc(64px + 10px);left:16px;max-width:min(560px,calc(100% - 32px));padding:7px 14px 7px 11px;}',
+    '.gf-live-avail{top:calc(64px + 10px);max-width:min(560px,calc(100% - 32px));padding:7px 14px 7px 11px;}',
     '.gf-live-avail__txt{font-size:12.5px;}',
     '.gf-live-avail__cta{display:inline-flex;}',
     '}',
