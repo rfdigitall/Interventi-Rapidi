@@ -1,8 +1,8 @@
 /**
- * Live availability chip under the nav (left half) — tap-to-call.
+ * Live availability chip under the nav — tap-to-call.
  * Europe/Rome clock. Visible START_HOUR inclusive → END_HOUR exclusive
  * (06:00–22:59 Rome). Hidden from 23:00 through night until morning.
- * Half-width left pill so it never crowds the header tel CTA.
+ * Full-width-safe under header (below nav tel); wraps up to 2 lines — no ellipsis.
  * Hides when #top hero scrolls out of view (mobile + desktop).
  */
 (function () {
@@ -21,9 +21,10 @@
     '.gf-live-avail{',
     'position:fixed;top:calc(64px + 8px);left:10px;right:auto;z-index:490;',
     'display:inline-flex;align-items:center;justify-content:flex-start;gap:7px;',
-    'max-width:calc(50% - 14px);width:max-content;',
-    'height:auto;min-height:28px;padding:5px 11px 5px 9px;box-sizing:border-box;',
-    'border-radius:999px;',
+    /* Below 64px nav — leave side gutters only; never underlap header tel */
+    'max-width:calc(100% - 20px);width:max-content;',
+    'height:auto;min-height:28px;padding:6px 12px 6px 10px;box-sizing:border-box;',
+    'border-radius:12px;',
     'background:linear-gradient(90deg,#073d1c 0%,#0b6b2f 100%);',
     'color:#fff;text-decoration:none;',
     'border:1px solid rgba(255,255,255,0.14);',
@@ -39,13 +40,14 @@
     '.gf-live-avail:hover,.gf-live-avail:focus{color:#fff;opacity:0.97;}',
     '.gf-live-avail.gf-live-avail--away:hover,.gf-live-avail.gf-live-avail--away:focus{opacity:0;}',
     '.gf-live-avail__dot{',
-    'width:7px;height:7px;border-radius:50%;flex-shrink:0;',
+    'width:7px;height:7px;border-radius:50%;flex-shrink:0;align-self:flex-start;margin-top:5px;',
     'background:#7dffa6;box-shadow:0 0 0 0 rgba(125,255,166,0.7);',
     'animation:gfLivePulse 2s ease-out infinite;',
     '}',
     '.gf-live-avail__txt{',
-    'font-size:11.5px;font-weight:650;letter-spacing:0.01em;line-height:1.25;',
-    'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;',
+    'font-size:11.5px;font-weight:650;letter-spacing:0.01em;line-height:1.35;',
+    'min-width:0;flex:1 1 auto;',
+    'white-space:normal;overflow:visible;max-width:100%;',
     '}',
     '.gf-live-avail__txt b{font-weight:800;}',
     '.gf-live-avail__cta{',
@@ -54,12 +56,12 @@
     'padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.14);',
     '}',
     '@media (min-width:640px){',
-    '.gf-live-avail{top:calc(64px + 10px);left:16px;max-width:min(42%,420px);padding:6px 12px 6px 10px;}',
+    '.gf-live-avail{top:calc(64px + 10px);left:16px;max-width:min(560px,calc(100% - 32px));padding:7px 14px 7px 11px;}',
     '.gf-live-avail__txt{font-size:12.5px;}',
     '.gf-live-avail__cta{display:inline-flex;}',
     '}',
     '@media (min-width:901px){',
-    '.gf-live-avail{max-width:min(38%,380px);}',
+    '.gf-live-avail{max-width:min(580px,calc(100% - 40px));}',
     '}',
     '@keyframes gfLivePulse{',
     '0%{box-shadow:0 0 0 0 rgba(125,255,166,0.55);}',
