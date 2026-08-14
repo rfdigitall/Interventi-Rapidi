@@ -22,11 +22,12 @@ window.GF_TRACKING = {
   enhancedConversions: false,
 
   /**
-   * TEMP (audit chiamate): fino a questa data il sito tratta il consenso
-   * marketing come ACCETTATO → GA4 + Ads + DNI sempre attivi, senza banner.
-   * Dopo il 11/08/2026 torna automatico il banner cookie. Rimuovere il campo.
+   * Câmpul temporar "forceMarketingConsentUntil" a fost eliminat pe
+   * 14/08/2026 (RF Digital) - perioada de test/audit se încheiase deja
+   * pe 11/08/2026. Site-ul folosește acum bannerul normal de consimțământ
+   * GDPR pentru toți vizitatorii, conform comentariului original ("Rimuovere
+   * il campo" dupa expirare).
    */
-  forceMarketingConsentUntil: '2026-08-11T23:59:59+02:00',
 
   conversions: {
     /**
