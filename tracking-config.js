@@ -22,12 +22,11 @@ window.GF_TRACKING = {
   enhancedConversions: false,
 
   /**
-   * Câmpul temporar "forceMarketingConsentUntil" a fost eliminat pe
-   * 14/08/2026 (RF Digital) - perioada de test/audit se încheiase deja
-   * pe 11/08/2026. Site-ul folosește acum bannerul normal de consimțământ
-   * GDPR pentru toți vizitatorii, conform comentariului original ("Rimuovere
-   * il campo" dupa expirare).
+   * TEMP (17/08/2026): banner Accept/Rifiuta nascosto, tracking marketing ON
+   * (GA4 + Ads + click tel) senza scelta cookie. Ripristinare quando il
+   * cliente lo chiede: forceMarketingConsent = false e rimettere il banner.
    */
+  forceMarketingConsent: true,
 
   conversions: {
     /**
