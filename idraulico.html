@@ -26,15 +26,15 @@
   if (!window.__gfConsentDefaultsSet) {
     window.__gfConsentDefaultsSet = true;
     window.gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
       functionality_storage: 'granted',
       security_storage: 'granted',
       wait_for_update: 500
     });
-    window.gtag('set', 'ads_data_redaction', true);
+    window.gtag('set', 'ads_data_redaction', false);
     window.gtag('set', 'url_passthrough', true);
   }
   /* gtag.js caricato da consent-ads.js dopo window.load &mdash; non blocca LCP */
@@ -971,8 +971,7 @@ img { max-width: 100%; height: auto; }
       </div>
       <div class="gf-footer-legal">
         <span style="font-size:12px; color:rgba(255,255,255,0.72);">&copy; 2026 Gianfranco Tuttofare. Interventi su richiesta. &mdash; P.IVA 05128870267</span>
-        <span style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:12px;"><a href="privacy.html" style="color:rgba(255,255,255,0.78);" style-hover="color:#fff;">Privacy Policy</a><span style="color:rgba(255,255,255,0.3);">&middot;</span><a href="cookie.html" style="color:rgba(255,255,255,0.78);" style-hover="color:#fff;">Cookies</a><span style="color:rgba(255,255,255,0.3);">&middot;</span><a href="#" onClick="{{ openCookies }}" style="color:rgba(255,255,255,0.78);" style-hover="color:#fff;">Gestisci cookie</a><span style="color:rgba(255,255,255,0.25);">&middot;</span>
-<a href="https://maps.app.goo.gl/xGcGdqTjPwDyDv7BA" target="_blank" rel="noopener noreferrer" style="font-size:11px; color:rgba(255,255,255,0.5); text-decoration:none;" style-hover="color:rgba(255,255,255,0.85);">Google Maps</a></span>
+        <span style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:12px;"><a href="https://maps.app.goo.gl/xGcGdqTjPwDyDv7BA" target="_blank" rel="noopener noreferrer" style="font-size:11px; color:rgba(255,255,255,0.5); text-decoration:none;" style-hover="color:rgba(255,255,255,0.85);">Google Maps</a></span>
       </div>
     </div>
   </footer>

@@ -22,11 +22,11 @@ window.GF_TRACKING = {
   enhancedConversions: false,
 
   /**
-   * TEMP (audit chiamate): fino a questa data il sito tratta il consenso
-   * marketing come ACCETTATO → GA4 + Ads + DNI sempre attivi, senza banner.
-   * Dopo il 11/08/2026 torna automatico il banner cookie. Rimuovere il campo.
+   * TEMP (17/08/2026): banner Accept/Rifiuta nascosto, tracking marketing ON
+   * (GA4 + Ads + click tel) senza scelta cookie. Ripristinare quando il
+   * cliente lo chiede: forceMarketingConsent = false e rimettere il banner.
    */
-  forceMarketingConsentUntil: '2026-08-11T23:59:59+02:00',
+  forceMarketingConsent: true,
 
   conversions: {
     /**
