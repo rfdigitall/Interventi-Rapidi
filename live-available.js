@@ -173,6 +173,7 @@
     refreshLabel();
     syncVisibility();
     bindScrollWatch();
+    if (window.gfApplyDniSwap) window.gfApplyDniSwap('live-avail');
   }
 
   function hideBanner() {
@@ -189,6 +190,11 @@
     var label = buildLabel(new Date());
     txt.innerHTML = label.html;
     a.setAttribute('aria-label', label.plain);
+    if (window.__gfDniMobile) {
+      var tel = String(window.__gfDniMobile);
+      a.href = 0 === tel.indexOf('tel:') ? tel : 'tel:' + tel;
+    }
+    if (window.gfApplyDniSwap) window.gfApplyDniSwap('live-avail-label');
   }
 
   function heroStillInView() {

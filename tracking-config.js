@@ -16,6 +16,7 @@ window.GF_TRACKING = {
   phoneConversionLabel: 'AW-16810122289/fxTKCL_wwtYcELG42M8-',
   /** Deve coincidere ESATTAMENTE con il testo visibile sul sito */
   phoneConversionNumber: '320 114 7517',
+  phoneConversionCountryCode: 'IT',
   phoneNumberDigits: '3201147517',
   siteUrl: 'https://interventi-rapidi.it',
   sedeLegale: '',
