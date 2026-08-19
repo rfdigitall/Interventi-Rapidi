@@ -182,6 +182,24 @@
     document.body.classList.remove('gf-has-live-avail');
   }
 
+  function dniTelHref() {
+    var mobile = window.__gfDniMobile;
+    var formatted = window.__gfDniFormatted;
+    if (!mobile && !formatted) return PHONE_TEL;
+    var tel = String(mobile || '').trim();
+    if (tel.indexOf('tel:') === 0) return tel;
+    if (tel.charAt(0) === '+') return 'tel:' + tel;
+    if (tel) {
+      var digits = tel.replace(/[^\d]/g, '');
+      if (digits) return 'tel:+' + digits;
+    }
+    if (formatted) {
+      var fd = String(formatted).replace(/[^\d]/g, '');
+      if (fd) return 'tel:+' + fd;
+    }
+    return PHONE_TEL;
+  }
+
   function refreshLabel() {
     var a = document.getElementById('gf-live-avail');
     if (!a) return;
@@ -190,10 +208,7 @@
     var label = buildLabel(new Date());
     txt.innerHTML = label.html;
     a.setAttribute('aria-label', label.plain);
-    if (window.__gfDniMobile) {
-      var tel = String(window.__gfDniMobile);
-      a.href = 0 === tel.indexOf('tel:') ? tel : 'tel:' + tel;
-    }
+    a.href = dniTelHref();
     if (window.gfApplyDniSwap) window.gfApplyDniSwap('live-avail-label');
   }
 
