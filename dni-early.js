@@ -1,7 +1,10 @@
 /**
- * DNI early boot — must load AFTER tracking-config.js, BEFORE consent-ads.js.
- * Starts Google phone-conversion (number swap) immediately so Ads visitors
- * see the forwarding number in ~1–3s, not 20s+ (too late for emergency taps).
+ * DNI early boot + anti-flicker
+ * Load AFTER tracking-config.js, BEFORE consent-ads.js.
+ *
+ * Ads traffic: hide visible phone digits until Google forwarding number
+ * arrives (or timeout) so the user never sees 320 → other number.
+ * Seed #gf-ads-phone-seed stays readable for Google's scanner.
  */
 (function () {
   var t = window.GF_TRACKING || {};
@@ -34,6 +37,7 @@
   var number = (t.phoneConversionNumber || "320 114 7517").trim();
   var country = (t.phoneConversionCountryCode || "IT").trim();
   var digits = t.phoneNumberDigits || "3201147517";
+  var FALLBACK_MS = 4500;
 
   function log() {
     try {
@@ -42,6 +46,81 @@
     } catch (e) {}
   }
 
+  function isAdsTraffic() {
+    try {
+      var p = new URLSearchParams(location.search);
+      if (p.get("google_phone_conversion_debug") === "true") return true;
+      if (p.get("gclid") || p.get("gbraid") || p.get("wbraid")) return true;
+      var med = (p.get("utm_medium") || "").toLowerCase();
+      if (med === "cpc" || med === "ppc" || med === "paid") return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function injectAntiFlickerCss() {
+    if (document.getElementById("gf-dni-af-style")) return;
+    var css =
+      "html.gf-dni-await:not(.gf-dni-ready) a[href^=\"tel:\"]:not(#gf-ads-phone-seed a) strong{" +
+      "color:transparent!important;position:relative;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a[href^=\"tel:\"]:not(#gf-ads-phone-seed a) strong::after{" +
+      "content:\"Chiama ora\";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);" +
+      "white-space:nowrap;color:#fff;font-size:clamp(1.05rem,4.2vw,1.55rem);font-weight:800;" +
+      "letter-spacing:0.02em;line-height:1;font-family:Barlow Condensed,system-ui,sans-serif;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a.gf-ss-call{" +
+      "color:transparent!important;position:relative;min-width:7.5rem;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a.gf-ss-call::after{" +
+      "content:\"Chiama ora\";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);" +
+      "white-space:nowrap;color:#fff;font-size:13px;font-weight:700;letter-spacing:0.04em;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) .gf-ss-dial small{opacity:0;height:0;overflow:hidden;margin:0;display:block;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a[href^=\"tel:\"]:not(#gf-ads-phone-seed a):not(.gf-ss-call):not(:has(strong)){" +
+      "font-size:0!important;letter-spacing:0!important;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a[href^=\"tel:\"]:not(#gf-ads-phone-seed a):not(.gf-ss-call):not(:has(strong))::after{" +
+      "content:\"Chiama ora\";font-size:15px;font-weight:700;letter-spacing:0.02em;" +
+      "color:#6BB5FF;font-family:Barlow Condensed,system-ui,sans-serif;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) .gf-sticky-call a strong::after{color:#fff;}" +
+      "html.gf-dni-await:not(.gf-dni-ready) a.idra-dial strong::after," +
+      "html.gf-dni-await:not(.gf-dni-ready) .gf-ss-dial strong::after{color:#fff;}";
+    var el = document.createElement("style");
+    el.id = "gf-dni-af-style";
+    el.textContent = css;
+    document.head.appendChild(el);
+  }
+
+  /** Show digits (Google number or real 320). Safe to call multiple times. */
+  window.gfDniReveal = function (reason) {
+    if (window.__gfDniRevealed) return;
+    window.__gfDniRevealed = true;
+    try {
+      document.documentElement.classList.remove("gf-dni-await");
+      document.documentElement.classList.add("gf-dni-ready");
+    } catch (e) {}
+    log("reveal", reason || "", {
+      replaced: !!window.__gfPhoneReplaced,
+      formatted: window.__gfDniFormatted || null,
+    });
+  };
+
+  function armAntiFlicker() {
+    if (!isAdsTraffic()) {
+      log("anti-flicker OFF (not ads traffic)");
+      return;
+    }
+    injectAntiFlickerCss();
+    document.documentElement.classList.add("gf-dni-await");
+    log("anti-flicker ON — digits hidden until DNI or timeout");
+    setTimeout(function () {
+      if (!window.__gfDniRevealed) {
+        log("anti-flicker timeout — show number (DNI or real 320)");
+        window.gfDniReveal("timeout-" + FALLBACK_MS + "ms");
+      }
+    }, FALLBACK_MS);
+  }
+
+  // Before body paints (script in head)
+  armAntiFlicker();
+
   function swapNow(formatted, mobile) {
     if (!formatted) return;
     window.__gfPhoneReplaced = true;
@@ -49,54 +128,59 @@
     window.__gfDniMobile = mobile || formatted;
     if (typeof window.gfApplyDniSwap === "function") {
       window.gfApplyDniSwap("early-callback");
-      return;
-    }
-    var tel = String(mobile || "").trim();
-    if (tel && tel.indexOf("tel:") !== 0) {
-      tel = tel.charAt(0) === "+" ? "tel:" + tel : "tel:+" + tel.replace(/[^\d]/g, "");
-    }
-    if (!tel) tel = "tel:+399999999999";
-    var n = 0;
-    try {
-      var links = document.querySelectorAll("a[href]");
-      for (var i = 0; i < links.length; i++) {
-        var el = links[i];
-        var href = el.getAttribute("href") || "";
-        if (/^https?:\/\/(?:api\.)?wa\.me/i.test(href) || /^whatsapp:/i.test(href)) continue;
-        if (
-          href.indexOf(digits) === -1 &&
-          href.indexOf("3201147517") === -1 &&
-          !(el.textContent && el.textContent.indexOf(number) > -1)
-        )
-          continue;
-        if (/^tel:/i.test(href) && href !== tel) {
-          el.setAttribute("href", tel);
-          n++;
-        }
-        if (el.textContent && el.textContent.indexOf(number) > -1) {
-          var next = el.textContent.split(number).join(formatted);
-          if (next !== el.textContent) {
-            el.textContent = next;
+    } else {
+      var tel = String(mobile || "").trim();
+      if (tel && tel.indexOf("tel:") !== 0) {
+        tel = tel.charAt(0) === "+" ? "tel:" + tel : "tel:+" + tel.replace(/[^\d]/g, "");
+      }
+      if (!tel) tel = "tel:+399999999999";
+      var n = 0;
+      try {
+        var links = document.querySelectorAll("a[href]");
+        for (var i = 0; i < links.length; i++) {
+          var el = links[i];
+          var href = el.getAttribute("href") || "";
+          if (/^https?:\/\/(?:api\.)?wa\.me/i.test(href) || /^whatsapp:/i.test(href)) continue;
+          if (
+            href.indexOf(digits) === -1 &&
+            href.indexOf("3201147517") === -1 &&
+            !(el.textContent && el.textContent.indexOf(number) > -1)
+          )
+            continue;
+          if (/^tel:/i.test(href) && href !== tel) {
+            el.setAttribute("href", tel);
             n++;
           }
-        }
-      }
-      if (document.body && document.createTreeWalker) {
-        var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
-        var node;
-        while ((node = tw.nextNode())) {
-          if (node.nodeValue && node.nodeValue.indexOf(number) > -1) {
-            node.nodeValue = node.nodeValue.split(number).join(formatted);
-            n++;
+          if (el.textContent && el.textContent.indexOf(number) > -1) {
+            var next = el.textContent.split(number).join(formatted);
+            if (next !== el.textContent) {
+              el.textContent = next;
+              n++;
+            }
           }
         }
-      }
-    } catch (e) {}
-    log("swap nodes=", n, { formatted: formatted, tel: tel });
+        if (document.body && document.createTreeWalker) {
+          var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+          var node;
+          while ((node = tw.nextNode())) {
+            if (node.nodeValue && node.nodeValue.indexOf(number) > -1) {
+              // Keep seed text for scanner until reveal; seed can show Google # too
+              node.nodeValue = node.nodeValue.split(number).join(formatted);
+              n++;
+            }
+          }
+        }
+      } catch (e) {}
+      log("swap nodes=", n, { formatted: formatted, tel: tel });
+    }
+    window.gfDniReveal("dni-callback");
   }
 
   function applyPhoneConfig(reason) {
-    if (window.__gfEarlyDniConfigured && !/(?:\?|&)google_phone_conversion_debug=true(?:&|$)/.test(location.search))
+    if (
+      window.__gfEarlyDniConfigured &&
+      !/(?:\?|&)google_phone_conversion_debug=true(?:&|$)/.test(location.search)
+    )
       return;
     window.__gfEarlyDniConfigured = true;
     log("config", reason, label, number);
@@ -167,9 +251,7 @@
   var existing = document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
   if (existing) {
     if (window.__gfGtagScriptLoaded) onGtagReady();
-    else
-      existing.addEventListener("load", onGtagReady, { once: true });
-    // Still queue config if script already loading via consent-ads
+    else existing.addEventListener("load", onGtagReady, { once: true });
     window.__gfGtagLoadCbs = window.__gfGtagLoadCbs || [];
     window.__gfGtagLoadCbs.push(onGtagReady);
     return;
@@ -193,6 +275,7 @@
   s.onerror = function () {
     window.__gfGtagScriptLoading = false;
     log("gtag.js failed", s.src);
+    window.gfDniReveal("gtag-error");
   };
   document.head.appendChild(s);
   log("loading gtag", awId);
