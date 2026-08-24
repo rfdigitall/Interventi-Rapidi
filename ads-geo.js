@@ -1,0 +1,152 @@
+/**
+ * Ads geo line — EmergenzeCasa-style.
+ * Reads city= / area= from Google Ads ValueTrack (loc_physical_ms / loc_interest_ms)
+ * or a city name (?city=Treviso). Does not use GPS.
+ */
+(function () {
+  var MAP = window.GF_GEO_NE || {};
+  var REGIONS = { Veneto: 1, "Friuli-Venezia Giulia": 1 };
+
+  try {
+    var css = document.createElement("style");
+    css.textContent =
+      ".gf-geo-avail{display:block;margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6BB5FF}.gf-geo-avail[hidden]{display:none!important}";
+    (document.head || document.documentElement).appendChild(css);
+  } catch (e) {}
+
+  function params() {
+    try {
+      return new URLSearchParams(window.location.search);
+    } catch (e) {
+      return new URLSearchParams();
+    }
+  }
+
+  function decodeVal(v) {
+    if (!v) return "";
+    try {
+      return decodeURIComponent(String(v).replace(/\+/g, " ")).trim();
+    } catch (e) {
+      return String(v).trim();
+    }
+  }
+
+  function titleCity(s) {
+    return s.replace(/\b\w/g, function (c) {
+      return c.toUpperCase();
+    });
+  }
+
+  function fromIdOrName(raw) {
+    var v = decodeVal(raw);
+    if (!v) return "";
+    if (/^\d+$/.test(v)) return MAP[v] || "";
+    var named = titleCity(v);
+    var values = Object.keys(MAP).map(function (k) {
+      return MAP[k];
+    });
+    var hit = values.find(function (n) {
+      return n.toLowerCase() === named.toLowerCase();
+    });
+    return hit || "";
+  }
+
+  function fromKeyword(raw) {
+    var kw = decodeVal(raw).toLowerCase();
+    if (!kw || kw.length < 4) return "";
+    var names = [];
+    var seen = {};
+    Object.keys(MAP).forEach(function (id) {
+      var n = MAP[id];
+      if (!n || REGIONS[n] || seen[n]) return;
+      seen[n] = 1;
+      names.push(n);
+    });
+    names.sort(function (a, b) {
+      return b.length - a.length;
+    });
+    for (var i = 0; i < names.length; i++) {
+      var n = names[i];
+      var re = new RegExp("(?:^|\\s)" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?:\\s|$)", "i");
+      if (re.test(kw)) return n;
+    }
+    return "";
+  }
+
+  function pickCity(p) {
+    var interest = fromIdOrName(p.get("area"));
+    var physical = fromIdOrName(p.get("city") || p.get("citta"));
+    var kw = fromKeyword(p.get("utm_keyword") || p.get("utm_term") || p.get("kw"));
+    function ok(n) {
+      return n && !REGIONS[n];
+    }
+    if (ok(interest)) return interest;
+    if (ok(physical)) return physical;
+    if (ok(kw)) return kw;
+    if (interest) return interest;
+    if (physical) return physical;
+    return "";
+  }
+
+  function lineText(city) {
+    if (!city) return "";
+    if (REGIONS[city]) return "Siamo disponibili in " + city + " ora";
+    return "Siamo disponibili a " + city + " ora";
+  }
+
+  function paint(city) {
+    var text = lineText(city);
+    var nodes = document.querySelectorAll("[data-gf-geo-avail]");
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (!text) {
+        el.hidden = true;
+        el.textContent = "";
+      } else {
+        el.hidden = false;
+        el.textContent = text;
+      }
+    }
+  }
+
+  var p = params();
+  if (p.get("gclid") || p.get("gbraid") || p.get("wbraid") || p.get("utm_source")) {
+    try {
+      document.documentElement.classList.add("ads-traffic");
+      if (document.body) document.body.classList.add("ads-traffic");
+    } catch (e) {}
+  }
+
+  var city = pickCity(p);
+  window.__gfGeoCity = city;
+
+  window.gfApplyLandingContext = function () {
+    if (p.get("gclid") || p.get("gbraid") || p.get("wbraid") || p.get("utm_source")) {
+      try {
+        if (document.body) document.body.classList.add("ads-traffic");
+      } catch (e) {}
+    }
+    return window.__gfGeoCity || "";
+  };
+
+  var t = 0;
+  function run() {
+    paint(window.__gfGeoCity);
+  }
+  function schedule() {
+    if (t) clearTimeout(t);
+    t = setTimeout(run, 40);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+  var mo = new MutationObserver(schedule);
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+  setTimeout(function () {
+    mo.disconnect();
+    run();
+  }, 8000);
+})();
