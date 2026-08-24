@@ -6,6 +6,14 @@
 (function () {
   var MAP = window.GF_GEO_NE || {};
   var REGIONS = { Veneto: 1, "Friuli-Venezia Giulia": 1 };
+  var ALIAS = {
+    "Metropolitan City of Venice": "Venezia",
+    "Padua City Centre": "Padova",
+    "Venezia Mestre": "Mestre",
+    "Municipalita di Mestre-Carpenedo": "Mestre",
+    "San Dona di Piave": "San Donà di Piave",
+    "Scorze": "Scorzè",
+  };
 
   try {
     var css = document.createElement("style");
@@ -37,18 +45,24 @@
     });
   }
 
+  function aliasName(n) {
+    if (!n) return "";
+    return ALIAS[n] || n;
+  }
+
   function fromIdOrName(raw) {
     var v = decodeVal(raw);
     if (!v) return "";
-    if (/^\d+$/.test(v)) return MAP[v] || "";
+    if (/^\d+$/.test(v)) return aliasName(MAP[v] || "");
     var named = titleCity(v);
+    if (ALIAS[named]) return ALIAS[named];
     var values = Object.keys(MAP).map(function (k) {
       return MAP[k];
     });
     var hit = values.find(function (n) {
       return n.toLowerCase() === named.toLowerCase();
     });
-    return hit || "";
+    return aliasName(hit || "");
   }
 
   function fromKeyword(raw) {

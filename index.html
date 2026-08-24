@@ -64,7 +64,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=optional"></noscript>
 <script src="/gf-perf.js?v=20260819b" defer></script>
 <script src="/geo-ne.js?v=20260824c"></script>
-<script src="/ads-geo.js?v=20260824c"></script>
+<script src="/ads-geo.js?v=20260824d"></script>
 <script src="/support.js?v=20260817e" defer></script>
 <script src="/tracking-config.js?v=20260820b"></script>
 <script src="/dni-early.js?v=20260820b"></script>
@@ -1266,4 +1266,11 @@ class Component extends DCLogic {
       trackScarichi: () => this.trackEvent('phone_click_scarichi'),
       trackGenerico: () => this.trackEvent('phone_click_generico'),
       trackContatto: () => this.trackEvent('phone_click_contatto'),
-      trackWa: () => this.trackEvent('whatsapp
+      trackWa: () => this.trackEvent('whatsapp_click'),
+    };
+  }
+}
+</script>
+
+</body>
+</html>
