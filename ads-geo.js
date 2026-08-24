@@ -129,6 +129,14 @@
     return window.__gfGeoCity || "";
   };
 
+  // Re-assert after other deferred scripts (e.g. support.js) may overwrite.
+  function assertHook() {
+    window.gfApplyLandingContext = function () {
+      return window.__gfGeoCity || "";
+    };
+    paint(window.__gfGeoCity);
+  }
+
   var t = 0;
   function run() {
     paint(window.__gfGeoCity);
@@ -139,14 +147,19 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", run);
+    document.addEventListener("DOMContentLoaded", function () {
+      assertHook();
+      run();
+    });
   } else {
+    assertHook();
     run();
   }
   var mo = new MutationObserver(schedule);
   mo.observe(document.documentElement, { childList: true, subtree: true });
   setTimeout(function () {
     mo.disconnect();
+    assertHook();
     run();
   }, 8000);
 })();
