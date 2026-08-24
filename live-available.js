@@ -131,6 +131,13 @@
     var hour = romeHour(d);
     var time = pad(hour) + ':' + pad(parseInt(p.minute, 10) || 0);
     var when = weekday + ' ' + day + ' ' + month + ' · ' + time;
+    var city = (window.__gfGeoCity || '').trim();
+    if (city) {
+      return {
+        html: 'Disponibili a <b>' + city + '</b> &middot; <b>' + weekday + ' ' + day + ' ' + month + '</b> &middot; <b>' + time + '</b>',
+        plain: 'Disponibili a ' + city + ' · ' + when + '. Chiama ' + PHONE_LABEL,
+      };
+    }
     return {
       html: 'Siamo disponibili anche oggi &middot; <b>' + weekday + ' ' + day + ' ' + month + '</b> &middot; <b>' + time + '</b>',
       plain: 'Siamo disponibili anche oggi · ' + when + '. Chiama ' + PHONE_LABEL,

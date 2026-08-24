@@ -18,7 +18,9 @@
   try {
     var css = document.createElement("style");
     css.textContent =
-      ".gf-geo-avail{display:block;margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6BB5FF}.gf-geo-avail[hidden]{display:none!important}";
+      ".gf-geo-avail{display:block;margin:2px 0 14px;font-size:14px;font-weight:500;letter-spacing:0.01em;line-height:1.4;color:rgba(255,255,255,0.78);max-width:26rem}.gf-geo-avail[hidden]{display:none!important}" +
+      /* When green live chip carries the city, hide duplicate geo line */
+      "body.gf-has-live-avail .gf-geo-avail{display:none!important}";
     (document.head || document.documentElement).appendChild(css);
   } catch (e) {}
 
@@ -104,8 +106,9 @@
 
   function lineText(city) {
     if (!city) return "";
-    if (REGIONS[city]) return "Siamo disponibili in " + city + " ora";
-    return "Siamo disponibili a " + city + " ora";
+    /* Calm trust line — H1 already has the city; night fallback when live chip is hidden */
+    if (REGIONS[city]) return "Rispondiamo noi in " + city + " — senza call center.";
+    return "Rispondiamo noi a " + city + " — senza call center.";
   }
 
   function paint(city) {
