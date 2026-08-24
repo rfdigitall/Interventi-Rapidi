@@ -63,9 +63,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=optional" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=optional"></noscript>
 <script src="/gf-perf.js?v=20260819b" defer></script>
+<script src="/geo-ne.js?v=20260824c"></script>
+<script src="/ads-geo.js?v=20260824c"></script>
 <script src="/support.js?v=20260817e" defer></script>
-<script src="/geo-ne.js?v=20260824b"></script>
-<script src="/ads-geo.js?v=20260824b" defer></script>
 <script src="/tracking-config.js?v=20260820b"></script>
 <script src="/dni-early.js?v=20260820b"></script>
 <script src="/consent-ads.js?v=20260820b" defer></script>
@@ -1144,6 +1144,7 @@ class Component extends DCLogic {
 
   cityFromUrl() {
     try {
+      if (window.__gfGeoCity) return window.__gfGeoCity;
       if (window.gfApplyLandingContext) {
         var ctx = window.gfApplyLandingContext();
         if (ctx) return ctx;
@@ -1265,11 +1266,4 @@ class Component extends DCLogic {
       trackScarichi: () => this.trackEvent('phone_click_scarichi'),
       trackGenerico: () => this.trackEvent('phone_click_generico'),
       trackContatto: () => this.trackEvent('phone_click_contatto'),
-      trackWa: () => this.trackEvent('whatsapp_click'),
-    };
-  }
-}
-</script>
-
-</body>
-</html>
+      trackWa: () => this.trackEvent('whatsapp
