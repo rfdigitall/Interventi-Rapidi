@@ -3,17 +3,19 @@
  * TRACKING CONFIG — GA4 + Google Ads (da istruzioni Google)
  * ============================================================
  * Tag account: AW-299646523
- * Conversione chiamate sito (inoltro Google):
- *   AW-16810122289/fxTKCL_wwtYcELG42M8-
- * Numero esatto da sostituire sul sito: "320 114 7517"
+ * 26/08/2026: DNI / inoltro Google DISATTIVATO.
+ * Motivo: call_view = MISSED (annuncio + landing) mentre il 320
+ * non squillava. Ora tel: va DIRETTO a 320 114 7517.
+ * Click tel (WEBPAGE) resta attivo via conversions.default.
+ * Per riattivare DNI: rimetti phoneConversionLabel sotto.
  */
 window.GF_TRACKING = {
   ga4Id: 'G-JVSFEE2E7J',
   adsId: 'AW-299646523',
   /** ID account conversione (MCC / altro account Ads, se diverso da adsId) */
   adsIdConversion: 'AW-16810122289',
-  /** Snippet Google: gtag('config', 'AW-…/label', { phone_conversion_number }) */
-  phoneConversionLabel: 'AW-16810122289/fxTKCL_wwtYcELG42M8-',
+  /** VUOTO = niente sostituzione numero Google (chiamata diretta) */
+  phoneConversionLabel: '',
   /** Deve coincidere ESATTAMENTE con il testo visibile sul sito */
   phoneConversionNumber: '320 114 7517',
   phoneConversionCountryCode: 'IT',
