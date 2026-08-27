@@ -2,7 +2,7 @@
  * Live availability chip under the nav — tap-to-call.
  * Europe/Rome clock. Visible START_HOUR inclusive → END_HOUR exclusive
  * (06:00–22:59 Rome). Hidden from 23:00 through night until morning.
- * Full-width-safe under header (below nav tel); wraps up to 2 lines — no ellipsis.
+ * Centered under header; wraps up to 2 lines — no ellipsis.
  * Hides when #top hero scrolls out of view (mobile + desktop).
  */
 (function () {
@@ -16,37 +16,55 @@
   var heroVisible = true;
   var inHours = false;
   var scrollBound = false;
+  var STYLE_VER = '20260827g';
 
   var css = [
     '.gf-live-avail{',
-    'position:fixed;top:calc(64px + 8px);left:0;right:0;z-index:490;',
-    'display:inline-flex;align-items:center;justify-content:center;gap:7px;',
-    /* Centered chip under nav — gutters only; never underlap header tel */
-    'margin-left:auto;margin-right:auto;',
-    'max-width:calc(100% - 20px);width:max-content;',
-    'height:auto;min-height:28px;padding:6px 11px;box-sizing:border-box;',
-    'border-radius:12px;',
+    'position:fixed!important;',
+    'top:calc(64px + 10px)!important;',
+    'left:50%!important;',
+    'right:auto!important;',
+    'z-index:510!important;',
+    'display:inline-flex!important;',
+    'align-items:center;',
+    'justify-content:center;',
+    'gap:8px;',
+    'transform:translateX(-50%)!important;',
+    'margin:0!important;',
+    'max-width:calc(100% - 24px);',
+    'width:max-content;',
+    'height:auto;',
+    'min-height:30px;',
+    'padding:7px 14px;',
+    'box-sizing:border-box;',
+    'border-radius:999px;',
     'background:linear-gradient(90deg,#073d1c 0%,#0b6b2f 100%);',
-    'color:#fff;text-decoration:none;',
-    'border:1px solid rgba(255,255,255,0.14);',
-    'box-shadow:0 4px 16px rgba(0,0,0,0.32);',
+    'color:#fff!important;',
+    'text-decoration:none!important;',
+    'border:1px solid rgba(255,255,255,0.18);',
+    'box-shadow:0 6px 20px rgba(0,0,0,0.35);',
     'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;',
-    '-webkit-tap-highlight-color:transparent;touch-action:manipulation;',
-    'opacity:1;transform:translate(-8px,0);pointer-events:auto;',
-    'transition:opacity .2s ease,transform .2s ease,visibility .2s;',
+    '-webkit-tap-highlight-color:transparent;',
+    'touch-action:manipulation;',
+    'opacity:1!important;',
+    'visibility:visible!important;',
+    'pointer-events:auto!important;',
+    'transition:opacity .2s ease,visibility .2s;',
     '}',
     '.gf-live-avail.gf-live-avail--away{',
-    'opacity:0;visibility:hidden;pointer-events:none;transform:translate(-8px,-6px);',
+    'opacity:0!important;',
+    'visibility:hidden!important;',
+    'pointer-events:none!important;',
     '}',
-    '.gf-live-avail:hover,.gf-live-avail:focus{color:#fff;opacity:0.97;}',
-    '.gf-live-avail.gf-live-avail--away:hover,.gf-live-avail.gf-live-avail--away:focus{opacity:0;}',
+    '.gf-live-avail:hover,.gf-live-avail:focus{color:#fff!important;opacity:0.96!important;}',
+    '.gf-live-avail.gf-live-avail--away:hover,.gf-live-avail.gf-live-avail--away:focus{opacity:0!important;}',
     '.gf-live-avail__dot{',
-    'width:7px;height:7px;border-radius:50%;flex-shrink:0;align-self:flex-start;margin-top:5px;',
+    'width:8px;height:8px;border-radius:50%;flex-shrink:0;',
     'background:#7dffa6;box-shadow:0 0 0 0 rgba(125,255,166,0.7);',
     'animation:gfLivePulse 2s ease-out infinite;',
     '}',
     '.gf-live-avail__txt{',
-    'font-size:11.5px;font-weight:650;letter-spacing:0.01em;line-height:1.35;',
+    'font-size:12px;font-weight:650;letter-spacing:0.01em;line-height:1.35;',
     'min-width:0;flex:1 1 auto;text-align:center;',
     'white-space:normal;overflow:visible;max-width:100%;',
     '}',
@@ -54,15 +72,15 @@
     '.gf-live-avail__cta{',
     'display:none;flex-shrink:0;align-items:center;gap:6px;',
     'font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;',
-    'padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.14);',
+    'padding:4px 9px;border-radius:999px;background:rgba(255,255,255,0.16);',
     '}',
     '@media (min-width:640px){',
-    '.gf-live-avail{top:calc(64px + 10px);max-width:min(560px,calc(100% - 32px));padding:7px 12px;}',
-    '.gf-live-avail__txt{font-size:12.5px;}',
+    '.gf-live-avail{top:calc(64px + 12px)!important;max-width:min(560px,calc(100% - 40px));padding:8px 16px;}',
+    '.gf-live-avail__txt{font-size:13px;}',
     '.gf-live-avail__cta{display:inline-flex;}',
     '}',
     '@media (min-width:901px){',
-    '.gf-live-avail{max-width:min(580px,calc(100% - 40px));}',
+    '.gf-live-avail{max-width:min(580px,calc(100% - 48px));}',
     '}',
     '@keyframes gfLivePulse{',
     '0%{box-shadow:0 0 0 0 rgba(125,255,166,0.55);}',
@@ -99,7 +117,6 @@
     var p = romeParts(d);
     var hour = parseInt(p.hour, 10);
     if (isNaN(hour)) {
-      /* Fallback still in Europe/Rome — never use local browser TZ */
       try {
         hour = parseInt(
           new Intl.DateTimeFormat('en-GB', {
@@ -117,7 +134,6 @@
     return hour;
   }
 
-  /** Banner window: START_HOUR <= hour < END_HOUR (Rome). Overnight stays hidden. */
   function isBannerWindow(d) {
     var h = romeHour(d);
     return h >= START_HOUR && h < END_HOUR;
@@ -145,9 +161,14 @@
   }
 
   function ensureStyle() {
-    if (document.querySelector('style[data-gf-live-avail]')) return;
+    var existing = document.querySelector('style[data-gf-live-avail]');
+    if (existing) {
+      if (existing.getAttribute('data-gf-live-ver') === STYLE_VER) return;
+      existing.parentNode.removeChild(existing);
+    }
     var style = document.createElement('style');
     style.setAttribute('data-gf-live-avail', '1');
+    style.setAttribute('data-gf-live-ver', STYLE_VER);
     style.textContent = css;
     document.head.appendChild(style);
   }
@@ -223,8 +244,8 @@
     var hero = document.getElementById('top');
     if (!hero) return true;
     var rect = hero.getBoundingClientRect();
-    /* Hide once hero top has scrolled above header (~64px) */
-    return rect.bottom > 80 && rect.top < window.innerHeight;
+    /* Keep visible while any meaningful part of hero remains under the nav */
+    return rect.bottom > 96;
   }
 
   function onScrollOrResize() {
@@ -241,14 +262,18 @@
       var io = new IntersectionObserver(
         function (entries) {
           var e = entries[0];
-          heroVisible = !!(e && e.isIntersecting);
+          /* Prefer geometry: IO alone can flicker on full-bleed heroes */
+          if (e && e.isIntersecting) {
+            heroVisible = true;
+          } else {
+            heroVisible = heroStillInView();
+          }
           syncVisibility();
         },
         {
-          /* leave a bit of room under fixed header */
           root: null,
-          rootMargin: '-64px 0px 0px 0px',
-          threshold: 0,
+          rootMargin: '0px',
+          threshold: [0, 0.01, 0.1],
         }
       );
       io.observe(hero);
