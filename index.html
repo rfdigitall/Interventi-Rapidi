@@ -926,23 +926,6 @@ img { max-width: 100%; height: auto; }
             Altro problema (acqua o serratura)
           </a>
       </div>
-      <div id="problema-cta" style="scroll-margin-top:88px; scroll-margin-bottom:72px;">
-        <div id="problema-picked" style="margin-top:18px; background:var(--ink); border-radius:10px; padding:20px 22px; display:none; flex-direction:column; align-items:center; gap:16px; text-align:center;">
-          <div>
-            <div style="font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.62); margin-bottom:3px;">Problema selezionato</div>
-            <div id="problema-picked-label" style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:#fff; line-height:1.05;"></div>
-          </div>
-          <div class="idra-cta">
-            <a data-gf-phone-track="phone_click_contatto" class="idra-dial" href="tel:+393201147517" aria-label="Tocca e chiama 320 114 7517">
-              <small>Tocca e chiama ora</small>
-              <strong>320 114 7517</strong>
-            </a>
-            <a id="problema-picked-wa" class="idra-wa-btn" href="https://wa.me/393201147517?text=Ciao%2C%20ho%20bisogno%20di%20un%20intervento%20urgente." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-              <img src="assets/whatsapp.svg" width="30" height="30" alt="" decoding="async">
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1336,20 +1319,6 @@ class Component extends DCLogic {
   function waUrl(msg) {
     return 'https://wa.me/393201147517?text=' + encodeURIComponent(msg + adsSuffix());
   }
-  document.addEventListener('click', function (e) {
-    var btn = e.target && e.target.closest ? e.target.closest('[data-gf-pick]') : null;
-    if (!btn) return;
-    var label = btn.getAttribute('data-gf-pick') || '';
-    var box = document.getElementById('problema-picked');
-    var lab = document.getElementById('problema-picked-label');
-    var wa = document.getElementById('problema-picked-wa');
-    if (lab) lab.textContent = label;
-    if (wa) wa.href = waUrl('Ciao, ho questo problema: ' + label + '. Potete aiutarmi?');
-    if (box) {
-      box.style.display = 'flex';
-      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  });
   var form = document.getElementById('gf-contact-form');
   if (form) {
     form.addEventListener('submit', function (e) {
