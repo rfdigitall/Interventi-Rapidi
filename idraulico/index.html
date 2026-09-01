@@ -54,7 +54,6 @@
 <script src="/gf-perf.js?v=20260827c" defer></script>
 <script src="/geo-ne.js?v=20260824c"></script>
 <script src="/ads-geo.js?v=20260824e"></script>
-<script src="/ads-qs-match.js?v=20260901b"></script>
 <script src="/support.js?v=20260817e" defer></script>
 <script src="/tracking-config.js?v=20260826a"></script>
 <script src="/dni-early.js?v=20260820b"></script>
@@ -941,15 +940,38 @@ class Component extends DCLogic {
     return 'https://wa.me/393201147517?text=' + encodeURIComponent(msg + adsSuffix());
   }
   function paintHero() {
-    if (window.gfApplyAdsQsHero) {
-      window.gfApplyAdsQsHero();
-      return;
-    }
-    var el = document.getElementById('gf-hero-title');
-    if (!el) return;
+    var titleEl = document.getElementById('gf-hero-title');
+    if (!titleEl) return;
     var city = '';
     try { city = window.__gfGeoCity || (window.gfApplyLandingContext && window.gfApplyLandingContext()) || ''; } catch (e) {}
-    el.textContent = city ? ('Idraulico Pronto Intervento H24 a ' + city) : 'Idraulico Pronto Intervento H24';
+    var kw = '';
+    try {
+      var p = new URLSearchParams(window.location.search);
+      kw = decodeURIComponent((p.get('utm_keyword') || p.get('utm_term') || p.get('kw') || '').replace(/\+/g, ' ')).toLowerCase();
+    } catch (e2) {}
+    var title = 'Idraulico Pronto Intervento H24';
+    var subEl = document.getElementById('gf-hero-sub');
+    var browEl = document.getElementById('gf-hero-eyebrow');
+    if (/wc intas|water ottur|water non scarica/.test(kw)) {
+      title = city ? ('WC Intasato a ' + city + ' — Spurgo H24') : 'WC Intasato? Pronto Intervento H24';
+      if (subEl) subEl.textContent = 'Water otturato o WC che non scarica? Rispondiamo subito — spurgo professionale in zona.';
+      if (browEl) browEl.textContent = 'WC intasato · Spurgo urgente · H24';
+    } else if (/scarico ottur|lavandino ottur|spurgo scarich/.test(kw)) {
+      title = city ? ('Scarico Otturato a ' + city + ' — H24') : 'Scarico Otturato? Sturiamo Subito';
+      if (subEl) subEl.textContent = 'Scarico bloccato o lavandino intasato? Arriviamo con attrezzatura da spurgo — chiama ora.';
+      if (browEl) browEl.textContent = 'Scarico otturato · Spurgo H24';
+    } else if (/perdita acqua|allagamento|tubo rotto/.test(kw)) {
+      title = city ? ('Perdita d\'acqua urgente a ' + city) : 'Perdita d\'acqua? Blocchiamo Subito';
+      if (subEl) subEl.textContent = 'Allagamento o tubo rotto? Rispondiamo in pochi secondi — blocchiamo il danno e ripariamo.';
+      if (browEl) browEl.textContent = 'Perdita acqua · Tubo rotto · H24';
+    } else if (/intervento idraulico|pronto intervento idraulico/.test(kw)) {
+      title = city ? ('Intervento Idraulico H24 a ' + city) : 'Intervento Idraulico Urgente H24';
+      if (subEl) subEl.textContent = 'Emergenza idraulica? Persona reale al telefono — niente attese, prezzo chiaro subito.';
+      if (browEl) browEl.textContent = 'Pronto intervento idraulico · H24';
+    } else if (city) {
+      title = 'Idraulico Pronto Intervento H24 a ' + city;
+    }
+    titleEl.textContent = title;
   }
   paintHero();
   setTimeout(paintHero, 50);

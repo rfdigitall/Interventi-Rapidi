@@ -54,7 +54,6 @@
 <script src="/gf-perf.js?v=20260827c" defer></script>
 <script src="/geo-ne.js?v=20260824c"></script>
 <script src="/ads-geo.js?v=20260824e"></script>
-<script src="/ads-qs-match.js?v=20260901b"></script>
 <script src="/support.js?v=20260817e" defer></script>
 <script src="/tracking-config.js?v=20260826a"></script>
 <script src="/dni-early.js?v=20260820b"></script>
@@ -1063,7 +1062,11 @@ class Component extends DCLogic {
     return 'https://wa.me/393201147517?text=' + encodeURIComponent(msg + adsSuffix());
   }
   function paintHero() {
-    if (window.gfApplyAdsQsHero) window.gfApplyAdsQsHero();
+    var el = document.getElementById('gf-hero-title');
+    if (!el) return;
+    var city = '';
+    try { city = window.__gfGeoCity || (window.gfApplyLandingContext && window.gfApplyLandingContext()) || ''; } catch (e) {}
+    el.textContent = city ? ('Perdita d\'acqua urgente a ' + city) : 'Perdita d\'acqua? Intervento urgente';
   }
   paintHero();
   var form = document.getElementById('gf-contact-form');
