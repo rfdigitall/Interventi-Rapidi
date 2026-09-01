@@ -956,18 +956,30 @@ class Component extends DCLogic {
       title = city ? ('WC Intasato a ' + city + ' — Spurgo H24') : 'WC Intasato? Pronto Intervento H24';
       if (subEl) subEl.textContent = 'Water otturato o WC che non scarica? Rispondiamo subito — spurgo professionale in zona.';
       if (browEl) browEl.textContent = 'WC intasato · Spurgo urgente · H24';
-    } else if (/scarico ottur|lavandino ottur|spurgo scarich/.test(kw)) {
+    } else if (/scarico ottur|lavandino ottur|spurgo scarich|stasatura|disottur|stappare lavandino|fogna ottur/.test(kw)) {
       title = city ? ('Scarico Otturato a ' + city + ' — H24') : 'Scarico Otturato? Sturiamo Subito';
       if (subEl) subEl.textContent = 'Scarico bloccato o lavandino intasato? Arriviamo con attrezzatura da spurgo — chiama ora.';
       if (browEl) browEl.textContent = 'Scarico otturato · Spurgo H24';
-    } else if (/perdita acqua|allagamento|tubo rotto/.test(kw)) {
+    } else if (/perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|acqua che esce|acqua che perde/.test(kw)) {
       title = city ? ('Perdita d\'acqua urgente a ' + city) : 'Perdita d\'acqua? Blocchiamo Subito';
       if (subEl) subEl.textContent = 'Allagamento o tubo rotto? Rispondiamo in pochi secondi — blocchiamo il danno e ripariamo.';
       if (browEl) browEl.textContent = 'Perdita acqua · Tubo rotto · H24';
-    } else if (/intervento idraulico|pronto intervento idraulico/.test(kw)) {
+    } else if (/intervento idraulico|pronto intervento idraulico|idraulico pronto intervento/.test(kw)) {
       title = city ? ('Intervento Idraulico H24 a ' + city) : 'Intervento Idraulico Urgente H24';
       if (subEl) subEl.textContent = 'Emergenza idraulica? Persona reale al telefono — niente attese, prezzo chiaro subito.';
       if (browEl) browEl.textContent = 'Pronto intervento idraulico · H24';
+    } else if (/idraulico urgente|idraulico h24|idraulico emergenza|emergenza idraulico|idraulico reperibile|idraulico subito/.test(kw)) {
+      title = city ? ('Idraulico Urgente H24 a ' + city) : 'Idraulico Urgente H24';
+      if (subEl) subEl.textContent = 'Idraulico urgente disponibile ora — rispondiamo noi, senza call center. Chiama il 320.';
+      if (browEl) browEl.textContent = 'Idraulico urgente · H24';
+    } else if (/riparazioni idrauliche|riparazione idraulica/.test(kw)) {
+      title = city ? ('Riparazione Idraulica a ' + city) : 'Riparazione Idraulica Urgente H24';
+      if (subEl) subEl.textContent = 'Guasto idraulico da risolvere subito? Ti diciamo il costo al telefono — poi partiamo.';
+      if (browEl) browEl.textContent = 'Riparazione idraulica · Urgente';
+    } else if (/spurgo lavandino|stappare lavandino|disintasare/.test(kw)) {
+      title = city ? ('Spurgo Lavandino a ' + city + ' — H24') : 'Spurgo Lavandino Urgente H24';
+      if (subEl) subEl.textContent = 'Lavandino intasato? Spurgo professionale in zona — rispondiamo subito al telefono.';
+      if (browEl) browEl.textContent = 'Spurgo lavandino · Urgente · H24';
     } else if (city) {
       title = 'Idraulico Pronto Intervento H24 a ' + city;
     }
