@@ -6,7 +6,8 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260901a";
+  var VER = "20260901b";
+  var lastApplied = "";
 
   function params() {
     try {
@@ -185,7 +186,8 @@
 
   function setText(id, text) {
     var el = document.getElementById(id);
-    if (el && text) el.textContent = text;
+    if (!el || !text) return;
+    if (el.textContent !== text) el.textContent = text;
   }
 
   function apply() {
@@ -197,13 +199,19 @@
     var copy = pickCopy(kind, kw, ads);
 
     var title = city && copy.titleCity ? copy.titleCity(city) : copy.title;
+    var sig = [title, copy.sub, copy.eyebrow, ads && kw ? "1" : "0"].join("\u0001");
+    if (sig === lastApplied) return;
+    lastApplied = sig;
+
     setText("gf-hero-title", title);
     setText("gf-hero-sub", copy.sub);
     setText("gf-hero-eyebrow", copy.eyebrow);
 
     if (ads && kw) {
       try {
-        document.documentElement.setAttribute("data-gf-kw-match", "1");
+        if (document.documentElement.getAttribute("data-gf-kw-match") !== "1") {
+          document.documentElement.setAttribute("data-gf-kw-match", "1");
+        }
       } catch (e) {}
     }
   }
@@ -225,13 +233,18 @@
     setTimeout(apply, delays[d]);
   }
 
+  var moTimer = 0;
+  function scheduleApply() {
+    if (moTimer) clearTimeout(moTimer);
+    moTimer = setTimeout(apply, 60);
+  }
+
   try {
-    var mo = new MutationObserver(function () {
-      apply();
-    });
+    var mo = new MutationObserver(scheduleApply);
     mo.observe(document.documentElement, { childList: true, subtree: true });
     setTimeout(function () {
       mo.disconnect();
+      if (moTimer) clearTimeout(moTimer);
     }, 10000);
   } catch (e) {}
 })();
