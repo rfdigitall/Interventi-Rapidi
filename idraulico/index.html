@@ -54,6 +54,7 @@
 <script src="/gf-perf.js?v=20260827c" defer></script>
 <script src="/geo-ne.js?v=20260824c"></script>
 <script src="/ads-geo.js?v=20260824e"></script>
+<script src="/ads-qs-match.js?v=20260901a"></script>
 <script src="/support.js?v=20260817e" defer></script>
 <script src="/tracking-config.js?v=20260826a"></script>
 <script src="/dni-early.js?v=20260820b"></script>
@@ -481,11 +482,11 @@ img { max-width: 100%; height: auto; }
   <section id="top" class="gf-page-hero gf-page-hero--photo" style="position:relative; min-height:100vh; min-height:100svh; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; background:#0b1a2e url(/assets/idraulico-hero-bg.jpg?v=20260829a) center 40%/cover no-repeat; padding:20px 0 24px; box-sizing:border-box;">
     <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,20,40,0.2) 0%, rgba(8,20,40,0.35) 42%, rgba(8,20,40,0.88) 100%); pointer-events:none; z-index:1;"></div>
     <div class="gf-page-hero__copy" style="position:relative; z-index:2; box-sizing:border-box; width:100%; max-width:640px; margin:0 auto; padding:20px 18px 12px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <div style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#8ec5ff; margin-bottom:10px;">Idraulico urgente · Intervento idraulico · H24</div>
+      <div id="gf-hero-eyebrow" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#8ec5ff; margin-bottom:10px;">Idraulico urgente · Intervento idraulico · H24</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; color:#fff; font-size:clamp(2rem,7.5vw,3.4rem); line-height:0.96; margin:0 0 10px; letter-spacing:0.01em; max-width:16ch; text-shadow:0 2px 18px rgba(0,0,0,0.35);">
         <span id="gf-hero-title">Idraulico Pronto Intervento H24</span>
       </h1>
-      <p style="margin:0 0 14px; font-size:15px; line-height:1.4; color:rgba(255,255,255,0.92); max-width:36ch;">Intervento idraulico urgente H24: perdite, scarichi e tubo rotto. Costo chiaro al telefono.</p>
+      <p id="gf-hero-sub" style="margin:0 0 14px; font-size:15px; line-height:1.4; color:rgba(255,255,255,0.92); max-width:38ch;">Rispondiamo subito — persona reale al telefono, niente call center. Prezzo chiaro prima di iniziare.</p>
       <p class="gf-geo-avail" data-gf-geo-avail hidden></p>
       <div class="idra-cta" style="margin-top:2px; width:100%; max-width:340px;">
         <a data-gf-phone-track="phone_click_hero" class="idra-dial" href="tel:+393201147517" aria-label="Tocca e chiama 320 114 7517" style="width:100%; border-radius:10px; background:#1a7aef; box-shadow:0 14px 32px rgba(0,0,0,0.28);">
@@ -940,16 +941,9 @@ class Component extends DCLogic {
     return 'https://wa.me/393201147517?text=' + encodeURIComponent(msg + adsSuffix());
   }
   function paintHero() {
-    var el = document.getElementById('gf-hero-title');
-    if (!el) return;
-    var city = '';
-    try { city = window.__gfGeoCity || (window.gfApplyLandingContext && window.gfApplyLandingContext()) || ''; } catch (e) {}
-    el.textContent = city ? ('Idraulico Pronto Intervento H24 a ' + city) : 'Idraulico Pronto Intervento H24';
+    if (window.gfApplyAdsQsHero) window.gfApplyAdsQsHero();
   }
   paintHero();
-  setTimeout(paintHero, 50);
-  setTimeout(paintHero, 400);
-  setTimeout(paintHero, 1200);
   var form = document.getElementById('gf-contact-form');
   if (form) {
     form.addEventListener('submit', function (e) {
