@@ -1,14 +1,14 @@
 /**
- * Ads QS + call max — hero eyebrow / H1 / subtitle from utm_keyword + page + city.
- * Load after ads-geo.js. Strong call CTA in every subtitle (320).
+ * Ads QS message-match — hero eyebrow / H1 / subtitle from utm_keyword + city.
+ * Load after ads-geo.js.
+ * Sub = ONLY keywords (no phone, no zone list — dial is on the CTA button).
  */
 (function () {
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260910qs";
+  var VER = "20260910qs2";
   var lastApplied = "";
-  var TEL = "320 114 7517";
 
   function params() {
     try {
@@ -25,10 +25,6 @@
     } catch (e) {
       return String(v).trim();
     }
-  }
-
-  function isAdsTraffic(p) {
-    return !!(p.get("gclid") || p.get("gbraid") || p.get("wbraid") || p.get("utm_source"));
   }
 
   function pageKind() {
@@ -52,144 +48,126 @@
     }
   }
 
-  var ZONES = "Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso";
-
   var BASE = {
     idraulico: {
-      eyebrow: "Idraulico urgente · Pronto intervento idraulico · H24",
+      eyebrow: "Idraulico urgente · Pronto intervento · H24",
       title: "Idraulico Urgente — Pronto Intervento H24",
       titleCity: function (c) {
         return "Idraulico Urgente H24 a " + c;
       },
-      sub:
-        "Pronto intervento idraulico: perdite, tubo rotto, scarichi otturati. Chiama ora " +
-        TEL +
-        " — " +
-        ZONES +
-        ".",
+      sub: "Perdite · tubo rotto · scarichi otturati · WC intasato",
     },
     scarichi: {
-      eyebrow: "Scarico otturato urgente · WC intasato · Pronto intervento scarichi",
+      eyebrow: "Scarico otturato · WC intasato · Spurgo H24",
       title: "Scarico Otturato Urgente — Sturiamo Ora",
       titleCity: function (c) {
         return "Scarico Otturato Urgente a " + c;
       },
-      sub:
-        "Pronto intervento scarichi: WC intasato, lavandino otturato. Chiama " +
-        TEL +
-        " — partiamo subito in zona.",
+      sub: "WC intasato · lavandino otturato · spurgo urgente",
     },
     perdite: {
-      eyebrow: "Perdita acqua urgente · Tubo rotto · Allagamento H24",
+      eyebrow: "Perdita acqua · Tubo rotto · Allagamento",
       title: "Perdita d'Acqua Urgente — Tubo Rotto",
       titleCity: function (c) {
         return "Perdita d'Acqua Urgente a " + c;
       },
-      sub:
-        "Pronto intervento perdita acqua e allagamento. Chiama " +
-        TEL +
-        " — blocchiamo il danno, costo chiaro al telefono.",
+      sub: "Tubo rotto · allagamento · perdita urgente",
     },
     fabbro: {
-      eyebrow: "Fabbro urgente · Pronto intervento fabbro · Apertura porte H24",
+      eyebrow: "Fabbro urgente · Apertura porte · H24",
       title: "Fabbro Urgente — Pronto Intervento H24",
       titleCity: function (c) {
         return "Fabbro Urgente H24 a " + c;
       },
-      sub:
-        "Pronto intervento fabbro: apertura porte, serratura bloccata, chiave rotta. Chiama " +
-        TEL +
-        " — " +
-        ZONES +
-        ".",
+      sub: "Apertura porte · serratura bloccata · chiave rotta",
     },
   };
 
   var RULES = [
     {
       re: /wc intas|water ottur|water non scarica|disintasare wc/,
-      eyebrow: "WC intasato · Spurgo urgente · Chiama ora",
-      title: "WC Intasato? Chiama Ora — Spurgo H24",
+      eyebrow: "WC intasato · Spurgo urgente · H24",
+      title: "WC Intasato — Spurgo Urgente H24",
       titleCity: function (c) {
-        return "WC Intasato a " + c + " — Chiama Ora";
+        return "WC Intasato a " + c;
       },
-      sub: "Water otturato? Chiama subito " + TEL + " — spurgo professionale, risposta immediata.",
+      sub: "WC intasato · water otturato · spurgo",
     },
     {
       re: /scarico ottur|scarico bloccat|spurgo scarich|stasatura|disottur|lavandino ottur|lavandino cucina|lavandino intas|stappare lavandino|fogna ottur|ingorg/,
-      eyebrow: "Scarico otturato · Spurgo · Chiama ora",
-      title: "Scarico Otturato? Chiama Ora H24",
+      eyebrow: "Scarico otturato · Spurgo · H24",
+      title: "Scarico Otturato — Spurgo Urgente",
       titleCity: function (c) {
-        return "Scarico Otturato a " + c + " — Chiama Ora";
+        return "Scarico Otturato a " + c;
       },
-      sub: "Lavandino o scarico bloccato? Chiama " + TEL + " — arriviamo con attrezzatura da spurgo.",
+      sub: "Scarico otturato · lavandino intasato · spurgo",
     },
     {
       re: /perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|acqua che esce|acqua che perde|riparazione perdita|perdita tubo|tubatura/,
-      eyebrow: "Perdita acqua · Tubo rotto · Chiama ora",
-      title: "Perdita d'Acqua? Chiama Ora — H24",
+      eyebrow: "Perdita acqua · Tubo rotto · H24",
+      title: "Perdita d'Acqua Urgente — Tubo Rotto",
       titleCity: function (c) {
-        return "Perdita d'Acqua Urgente a " + c;
+        return "Perdita d'Acqua a " + c;
       },
-      sub: "Allagamento o tubo rotto? Chiama " + TEL + " — blocchiamo il danno subito.",
+      sub: "Perdita acqua · tubo rotto · allagamento",
     },
     {
       re: /intervento idraulico|pronto intervento idraulico|idraulico pronto intervento/,
-      eyebrow: "Pronto intervento idraulico · Chiama ora · H24",
-      title: "Pronto Intervento Idraulico — Chiama Ora",
+      eyebrow: "Pronto intervento idraulico · H24",
+      title: "Pronto Intervento Idraulico H24",
       titleCity: function (c) {
         return "Pronto Intervento Idraulico a " + c;
       },
-      sub: "Emergenza idraulica? Chiama " + TEL + " — persona reale, prezzo chiaro subito.",
+      sub: "Intervento idraulico · perdite · scarichi",
     },
     {
       re: /idraulico urgente|idraulico h24|idraulico emergenza|emergenza idraulico|idraulico reperibile|idraulico subito|sos idraulico/,
-      eyebrow: "Idraulico urgente · Chiama ora · H24",
-      title: "Idraulico Urgente H24 — Chiama Ora",
+      eyebrow: "Idraulico urgente · H24",
+      title: "Idraulico Urgente H24",
       titleCity: function (c) {
         return "Idraulico Urgente H24 a " + c;
       },
-      sub: "Idraulico urgente disponibile ora. Chiama " + TEL + " — niente call center.",
+      sub: "Idraulico urgente · pronto intervento",
     },
     {
       re: /spurgo lavandino|stappare lavandino|disintasare/,
-      eyebrow: "Spurgo lavandino · Chiama ora · H24",
-      title: "Spurgo Lavandino Urgente — Chiama Ora",
+      eyebrow: "Spurgo lavandino · H24",
+      title: "Spurgo Lavandino Urgente",
       titleCity: function (c) {
-        return "Spurgo Lavandino a " + c + " — Chiama Ora";
+        return "Spurgo Lavandino a " + c;
       },
-      sub: "Lavandino intasato? Chiama " + TEL + " — spurgo in zona, risposta immediata.",
+      sub: "Spurgo lavandino · scarico intasato",
     },
     {
       re: /chiuso fuori|porta blindata|porta sbattuta|serratura bloccat|chiave rotta|chiave spezzat|apertura port|sblocco/,
-      eyebrow: "Chiuso fuori · Apertura porte · Chiama ora",
-      title: "Chiuso Fuori? Fabbro Urgente — Chiama Ora",
+      eyebrow: "Apertura porte · Serratura bloccata",
+      title: "Apertura Porte Urgente — Fabbro H24",
       titleCity: function (c) {
-        return "Fabbro Urgente a " + c + " — Chiama Ora";
+        return "Apertura Porte a " + c;
       },
-      sub: "Porta chiusa o serratura bloccata? Chiama " + TEL + " — apertura rapida, prezzo chiaro.",
+      sub: "Chiuso fuori · serratura bloccata · chiave rotta",
     },
     {
       re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro/,
-      eyebrow: "Fabbro urgente · Pronto intervento · Chiama ora",
-      title: "Fabbro Urgente H24 — Chiama Ora",
+      eyebrow: "Fabbro urgente · Pronto intervento · H24",
+      title: "Fabbro Urgente H24",
       titleCity: function (c) {
         return "Fabbro Urgente H24 a " + c;
       },
-      sub: "Fabbro reperibile ora. Chiama " + TEL + " — persona reale, niente centralino.",
+      sub: "Fabbro urgente · apertura porte · serrature",
     },
     {
       re: /cambio cilindro|cilindro europeo|cambio serratur|sostituzione serratur/,
-      eyebrow: "Cambio serratura · Cilindro · Chiama ora",
-      title: "Cambio Serratura Urgente — Chiama Ora",
+      eyebrow: "Cambio serratura · Cilindro",
+      title: "Cambio Serratura Urgente",
       titleCity: function (c) {
-        return "Cambio Serratura a " + c + " — Chiama Ora";
+        return "Cambio Serratura a " + c;
       },
-      sub: "Serratura o cilindro da sostituire? Chiama " + TEL + " — intervento rapido in zona.",
+      sub: "Cambio serratura · cilindro europeo",
     },
   ];
 
-  function pickCopy(kind, kw, ads) {
+  function pickCopy(kind, kw) {
     var base = BASE[kind] || BASE.idraulico;
     var pack = {
       eyebrow: base.eyebrow,
@@ -213,18 +191,16 @@
 
   function setText(id, text) {
     var el = document.getElementById(id);
-    if (!el || !text) return;
+    if (!el || text == null || text === "") return;
     if (el.textContent !== text) el.textContent = text;
   }
 
   function apply() {
     var p = params();
-    var ads = isAdsTraffic(p);
     var kind = pageKind();
     var kw = getKeyword(p);
     var city = cityName();
-    // Apply keyword match for all visitors when kw present; else strong BASE
-    var copy = pickCopy(kind, kw, ads || !!kw);
+    var copy = pickCopy(kind, kw);
 
     var title = city && copy.titleCity ? copy.titleCity(city) : copy.title;
     var sig = [VER, title, copy.sub, copy.eyebrow].join("\u0001");
@@ -238,6 +214,7 @@
     try {
       document.documentElement.setAttribute("data-gf-qs-ver", VER);
       if (kw) document.documentElement.setAttribute("data-gf-kw-match", "1");
+      if (city) document.documentElement.setAttribute("data-gf-city", city);
     } catch (e) {}
   }
 
