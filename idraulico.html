@@ -616,11 +616,11 @@ img { max-width: 100%; height: auto; }
   <section id="top" class="gf-page-hero gf-page-hero--photo" style="position:relative; min-height:100vh; min-height:100svh; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; background:#0b1a2e url(assets/idraulico-hero-bg.jpg?v=20260829a) center 40%/cover no-repeat; padding:20px 0 24px; box-sizing:border-box;">
     <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,20,40,0.2) 0%, rgba(8,20,40,0.35) 42%, rgba(8,20,40,0.88) 100%); pointer-events:none; z-index:1;"></div>
     <div class="gf-page-hero__copy" style="position:relative; z-index:2; box-sizing:border-box; width:100%; max-width:640px; margin:0 auto; padding:20px 18px 12px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <div id="gf-hero-eyebrow" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#8ec5ff; margin-bottom:10px;">Idraulico urgente · Intervento idraulico · H24</div>
+      <div id="gf-hero-eyebrow" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#8ec5ff; margin-bottom:10px;">Idraulico urgente · Pronto intervento · H24</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:800; color:#fff; font-size:clamp(2rem,7.5vw,3.4rem); line-height:0.96; margin:0 0 10px; letter-spacing:0.01em; max-width:16ch; text-shadow:0 2px 18px rgba(0,0,0,0.35);">
         <span id="gf-hero-title">Idraulico Pronto Intervento H24</span>
       </h1>
-      <p id="gf-hero-sub" style="margin:0 0 14px; font-size:15px; line-height:1.4; color:rgba(255,255,255,0.92); max-width:38ch;">Rispondiamo subito — persona reale al telefono, niente call center. Prezzo chiaro prima di iniziare.</p>
+      <p id="gf-hero-sub" style="margin:0 0 14px; font-size:15px; line-height:1.4; color:rgba(255,255,255,0.92); max-width:38ch;">Chiama ora il 320 114 7517 — persona reale, niente call center. Venezia, Treviso, Udine, Pordenone, Gorizia, Trieste.</p>
       <p class="gf-geo-avail" data-gf-geo-avail hidden></p>
       <div class="idra-cta" style="margin-top:2px; width:100%; max-width:340px;">
         <a data-gf-phone-track="phone_click_hero" class="idra-dial" href="tel:+393201147517" aria-label="Tocca e chiama 320 114 7517" style="width:100%; border-radius:10px; background:#1a7aef; box-shadow:0 14px 32px rgba(0,0,0,0.28);">
@@ -656,9 +656,9 @@ img { max-width: 100%; height: auto; }
             <span style="flex-shrink:0; width:20px; height:20px; border-radius:50%; border:2px solid var(--blue); background:#fff;"></span>
             Allagamento in corso
           </a>
-          <a href="tel:+393201147517" data-gf-phone-track="phone_click_problema" data-gf-pick="Niente acqua calda / scaldabagno" style="display:flex; text-decoration:none; color:inherit; align-items:center; gap:12px; text-align:left; width:100%; background:var(--paper); border:1.5px solid var(--line); border-radius:8px; padding:15px 16px; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink); cursor:pointer;" style-hover="border-color:var(--blue); background:var(--ice);" role="button">
+          <a href="tel:+393201147517" data-gf-phone-track="phone_click_problema" data-gf-pick="Perdita sotto lavello" style="display:flex; text-decoration:none; color:inherit; align-items:center; gap:12px; text-align:left; width:100%; background:var(--paper); border:1.5px solid var(--line); border-radius:8px; padding:15px 16px; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink); cursor:pointer;" style-hover="border-color:var(--blue); background:var(--ice);" role="button">
             <span style="flex-shrink:0; width:20px; height:20px; border-radius:50%; border:2px solid var(--blue); background:#fff;"></span>
-            Niente acqua calda / scaldabagno
+            Perdita sotto lavello
           </a>
           <a href="tel:+393201147517" data-gf-phone-track="phone_click_problema" data-gf-pick="Rubinetti e sanitari" style="display:flex; text-decoration:none; color:inherit; align-items:center; gap:12px; text-align:left; width:100%; background:var(--paper); border:1.5px solid var(--line); border-radius:8px; padding:15px 16px; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink); cursor:pointer;" style-hover="border-color:var(--blue); background:var(--ice);" role="button">
             <span style="flex-shrink:0; width:20px; height:20px; border-radius:50%; border:2px solid var(--blue); background:#fff;"></span>
@@ -1015,7 +1015,7 @@ class Component extends DCLogic {
       "WC intasato",
       "Ricerca perdite",
       "Allagamento in corso",
-      "Niente acqua calda / scaldabagno",
+      "Perdita sotto lavello",
       "Rubinetti e sanitari",
       "Boiler o autoclave",
       "Spurgo urgente / scarichi",
@@ -1101,22 +1101,26 @@ class Component extends DCLogic {
       if (browEl) browEl.textContent = 'Perdita acqua · Tubo rotto · H24';
     } else if (/intervento idraulico|pronto intervento idraulico|idraulico pronto intervento/.test(kw)) {
       title = city ? ('Intervento Idraulico H24 a ' + city) : 'Intervento Idraulico Urgente H24';
-      if (subEl) subEl.textContent = 'Emergenza idraulica? Persona reale al telefono — niente attese, prezzo chiaro subito.';
-      if (browEl) browEl.textContent = 'Pronto intervento idraulico · H24';
+      if (subEl) subEl.textContent = 'Emergenza idraulica? Chiama ora il 320 114 7517 — persona reale, prezzo chiaro subito' + (city ? (' a ' + city + '.') : '.');
+      if (browEl) browEl.textContent = 'Pronto intervento idraulico · Chiama ora · H24';
     } else if (/idraulico urgente|idraulico h24|idraulico emergenza|emergenza idraulico|idraulico reperibile|idraulico subito/.test(kw)) {
       title = city ? ('Idraulico Urgente H24 a ' + city) : 'Idraulico Urgente H24';
-      if (subEl) subEl.textContent = 'Idraulico urgente disponibile ora — rispondiamo noi, senza call center. Chiama il 320.';
-      if (browEl) browEl.textContent = 'Idraulico urgente · H24';
+      if (subEl) subEl.textContent = 'Idraulico urgente disponibile ora — chiama il 320 114 7517. Niente call center' + (city ? (' · ' + city) : '') + '.';
+      if (browEl) browEl.textContent = 'Idraulico urgente · Chiama ora · H24';
     } else if (/riparazioni idrauliche|riparazione idraulica/.test(kw)) {
       title = city ? ('Riparazione Idraulica a ' + city) : 'Riparazione Idraulica Urgente H24';
-      if (subEl) subEl.textContent = 'Guasto idraulico da risolvere subito? Ti diciamo il costo al telefono — poi partiamo.';
-      if (browEl) browEl.textContent = 'Riparazione idraulica · Urgente';
+      if (subEl) subEl.textContent = 'Guasto idraulico urgente? Chiama 320 114 7517 — costo chiaro al telefono, poi partiamo.';
+      if (browEl) browEl.textContent = 'Riparazione idraulica · Chiama ora';
     } else if (/spurgo lavandino|stappare lavandino|disintasare/.test(kw)) {
       title = city ? ('Spurgo Lavandino a ' + city + ' — H24') : 'Spurgo Lavandino Urgente H24';
-      if (subEl) subEl.textContent = 'Lavandino intasato? Spurgo professionale in zona — rispondiamo subito al telefono.';
-      if (browEl) browEl.textContent = 'Spurgo lavandino · Urgente · H24';
+      if (subEl) subEl.textContent = 'Lavandino intasato? Chiama 320 114 7517 — spurgo in zona, risposta immediata.';
+      if (browEl) browEl.textContent = 'Spurgo lavandino · Chiama ora · H24';
     } else if (city) {
       title = 'Idraulico Pronto Intervento H24 a ' + city;
+      if (subEl) subEl.textContent = 'Chiama ora il 320 114 7517 a ' + city + ' — persona reale, niente call center. Prezzo chiaro prima di iniziare.';
+      if (browEl) browEl.textContent = 'Idraulico urgente · ' + city + ' · H24';
+    } else {
+      if (subEl) subEl.textContent = 'Chiama ora il 320 114 7517 — persona reale, niente call center. Venezia, Treviso, Udine, Pordenone, Gorizia, Trieste.';
     }
     titleEl.textContent = title;
   }

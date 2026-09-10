@@ -53,12 +53,12 @@
 
   var BASE = {
     idraulico: {
-      eyebrow: "Idraulico urgente · Intervento idraulico · H24",
+      eyebrow: "Idraulico urgente · Pronto intervento · H24",
       title: "Idraulico Pronto Intervento H24",
       titleCity: function (c) {
         return "Idraulico Pronto Intervento H24 a " + c;
       },
-      sub: "Rispondiamo subito — persona reale al telefono, niente call center. Prezzo chiaro prima di iniziare.",
+      sub: "Chiama ora il 320 114 7517 — persona reale, niente call center. Venezia, Treviso, Udine, Pordenone, Gorizia, Trieste.",
     },
     scarichi: {
       eyebrow: "Scarico otturato · WC intasato · Spurgo H24",
