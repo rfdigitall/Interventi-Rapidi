@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fabbro Pronto Intervento H24 Udine Pordenone Venezia Treviso | Gianfranco &mdash; 320 114 7517</title>
-<meta name="description" content="Fabbro pronto intervento H24: fabbro Trieste, fabbro Pordenone, fabbro Gorizia, Udine, Venezia e Treviso. Apertura porte, cambio serrature. Chiama: 320 114 7517.">
+<title>Fabbro Urgente Pronto Intervento H24 | Chiama 320 114 7517</title>
+<meta name="description" content="Fabbro urgente e pronto intervento H24: apertura porte, cambio serrature, porte blindate. Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso. Chiama ora 320 114 7517.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://interventi-rapidi.it/fabbro.html">
 <meta property="og:url" content="https://interventi-rapidi.it/fabbro.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Fabbro Pronto Intervento H24 &mdash; Veneto e Friuli | 320 114 7517">
-<meta property="og:description" content="Fabbro Trieste, Pordenone, Gorizia, Udine, Venezia e Treviso: pronto intervento H24. Chiama 320 114 7517.">
+<meta property="og:title" content="Fabbro Urgente H24 — Chiama 320 114 7517">
+<meta property="og:description" content="Fabbro urgente: apertura porte e cambio serrature. Chiama ora 320 114 7517.">
 <meta property="og:image" content="https://interventi-rapidi.it/assets/og-image.png">
 <script>
 /* Google Consent Mode v2 &mdash; snippet inline PRIMA di qualsiasi altro script.
@@ -54,6 +54,7 @@
 <script src="/gf-perf.js?v=20260827c" defer></script>
 <script src="/geo-ne.js?v=20260824c"></script>
 <script src="/ads-geo.js?v=20260824e"></script>
+<script src="/ads-qs-match.js?v=20260910qs"></script>
 <script src="/support.js?v=20260817e" defer></script>
 <script src="/tracking-config.js?v=20260826a"></script>
 <script src="/dni-early.js?v=20260820b"></script>
@@ -78,16 +79,16 @@
 <helmet>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fabbro Pronto Intervento H24 Udine Pordenone Venezia Treviso | Gianfranco &mdash; 320 114 7517</title>
-<meta name="description" content="Fabbro pronto intervento H24: fabbro Trieste, fabbro Pordenone, fabbro Gorizia, Udine, Venezia e Treviso. Apertura porte, cambio serrature. Chiama: 320 114 7517.">
+<title>Fabbro Urgente Pronto Intervento H24 | Chiama 320 114 7517</title>
+<meta name="description" content="Fabbro urgente e pronto intervento H24: apertura porte, cambio serrature, porte blindate. Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso. Chiama ora 320 114 7517.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="geo.region" content="IT-34;IT-36">
 <meta name="geo.placename" content="Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso">
 <meta name="author" content="Gianfranco Tuttofare di Cannarile Gianfranco">
 <meta property="og:locale" content="it_IT">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Fabbro Pronto Intervento H24 &mdash; Veneto e Friuli | 320 114 7517">
-<meta property="og:description" content="Fabbro Trieste, Pordenone, Gorizia, Udine, Venezia e Treviso: pronto intervento H24. Chiama 320 114 7517.">
+<meta property="og:title" content="Fabbro Urgente H24 — Chiama 320 114 7517">
+<meta property="og:description" content="Fabbro urgente: apertura porte e cambio serrature. Chiama ora 320 114 7517.">
 <meta name="theme-color" content="#050c18">
 <meta name="format-detection" content="telephone=yes">
 <meta name="keywords" content="fabbro urgente, fabbro pronto intervento, apertura porte, cambio serrature, fabbro h24, porta bloccata, Udine, Venezia, Treviso">
@@ -119,7 +120,7 @@
     {"@type": "AdministrativeArea", "name": "Friuli-Venezia Giulia"},
     {"@type": "AdministrativeArea", "name": "Veneto"}
   ],
-  "knowsAbout": ["Fabbro pronto intervento", "Fabbro urgente", "Fabbro Trieste", "Fabbro Pordenone", "Fabbro Gorizia", "Fabbro Udine", "Apertura porte", "Cambio serrature", "Porte blindate", "Cilindri europei", "Messa in sicurezza"],
+  "knowsAbout": ["Fabbro urgente", "Fabbro pronto intervento", "Apertura porte", "Serratura bloccata", "Cambio serrature", "Cilindri europei", "Porte blindate", "Chiave rotta", "Messa in sicurezza", "Pronto intervento H24"],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -1063,13 +1064,20 @@ class Component extends DCLogic {
     return 'https://wa.me/393201147517?text=' + encodeURIComponent(msg + adsSuffix());
   }
   function paintHero() {
+    if (window.gfApplyAdsQsHero) {
+      window.gfApplyAdsQsHero();
+      return;
+    }
     var el = document.getElementById('gf-hero-title');
     if (!el) return;
     var city = '';
     try { city = window.__gfGeoCity || (window.gfApplyLandingContext && window.gfApplyLandingContext()) || ''; } catch (e) {}
-    el.textContent = city ? ('Fabbro Pronto Intervento H24 a ' + city) : 'Fabbro Pronto Intervento H24';
+    el.textContent = city ? ('Fabbro Urgente H24 a ' + city) : 'Fabbro Urgente — Pronto Intervento H24';
   }
   paintHero();
+  setTimeout(paintHero, 50);
+  setTimeout(paintHero, 400);
+  setTimeout(paintHero, 1200);
   var form = document.getElementById('gf-contact-form');
   if (form) {
     form.addEventListener('submit', function (e) {
