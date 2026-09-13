@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913twin";
+  var VER = "20260913qsmax";
   var lastApplied = "";
 
   function params() {
