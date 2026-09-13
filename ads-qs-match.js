@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913noz";
+  var VER = "20260913static";
   var lastApplied = "";
 
   function params() {
