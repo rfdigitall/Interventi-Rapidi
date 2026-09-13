@@ -91,7 +91,7 @@
 <meta property="og:description" content="Pronto intervento idraulico urgente: perdite, allagamenti, scarichi. Chiama ora 320 114 7517.">
 <meta name="theme-color" content="#050c18">
 <meta name="format-detection" content="telephone=yes">
-<meta name="keywords" content="idraulico urgente, intervento idraulico, idraulico pronto intervento, idraulico h24, perdite acqua, scarichi otturati, tubo rotto, Udine, Venezia, Treviso">
+<meta name="keywords" content="idraulico urgente, intervento idraulico, idraulico pronto intervento, idraulico h24, perdite acqua, scarichi otturati, tubo rotto">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
@@ -111,15 +111,7 @@
   "image": "assets/og-image.png",
   "url": "/",
   "areaServed": [
-    {"@type": "City", "name": "Udine"},
-    {"@type": "City", "name": "Pordenone"},
-    {"@type": "City", "name": "Gorizia"},
-    {"@type": "City", "name": "Trieste"},
-    {"@type": "City", "name": "Venezia"},
-    {"@type": "City", "name": "Treviso"},
-    {"@type": "AdministrativeArea", "name": "Friuli-Venezia Giulia"},
-    {"@type": "AdministrativeArea", "name": "Veneto"}
-  ],
+    ],
   "knowsAbout": ["Idraulico urgente", "Pronto intervento idraulico", "Idraulico H24", "Spurgo lavandino", "WC intasato", "Ricerca perdite", "Perdite d'acqua", "Scarichi otturati", "Allagamenti", "Tubo rotto", "Pronto intervento H24"],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
@@ -148,7 +140,7 @@
   "@type": "Service",
   "serviceType": "Idraulico pronto intervento H24",
   "provider": { "@id": "#idraulico-business" },
-  "areaServed": ["Udine","Pordenone","Gorizia","Trieste","Venezia","Treviso"],
+  "areaServed": "IT",
   "availableChannel": {
     "@type": "ServiceChannel",
     "servicePhone": { "@type": "ContactPoint", "telephone": "+393201147517" }
@@ -165,7 +157,7 @@
       "name": "Quanto tempo impiegate ad arrivare?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Il prima possibile, tempi indicativi in base a traffico e distanza (Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e paesi vicini). Pronto intervento H24, anche di notte e nei giorni festivi."
+        "text": "Il prima possibile, tempi indicativi in base a traffico e distanza. Pronto intervento H24, anche di notte e nei giorni festivi."
       }
     },
     {
@@ -197,7 +189,7 @@
       "name": "In quali zone intervenite come idraulico?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Conferma zona al telefono: Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e i comuni limitrofi."
+        "text": "Al telefono ti confermiamo subito se possiamo intervenire nella tua zona."
       }
     },
     {
@@ -863,7 +855,7 @@ img { max-width: 100%; height: auto; }
       <div>
         <img src="assets/logo-white-160.png" alt="Gianfranco Tuttofare" width="160" height="135" decoding="async" style="height:44px; width:auto; display:block; margin-bottom:18px;">
         <p style="font-size:14px; line-height:1.65; color:rgba(255,255,255,0.72); margin:0 0 14px; max-width:300px;">Pronto intervento <strong style="color:#fff; font-weight:700;">idraulico</strong> H24. Disponibili <strong style="color:#fff; font-weight:700;">24/7</strong> per urgenze reali.</p>
-        <p style="font-size:12.5px; line-height:1.6; color:rgba(255,255,255,0.72); margin:0;">Udine &middot; Pordenone &middot; Gorizia &middot; Trieste &middot; Venezia &middot; Treviso</p>
+        <p style="font-size:12.5px; line-height:1.6; color:rgba(255,255,255,0.72); margin:0;">Pronto intervento urgente H24</p>
       </div>
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#fff; margin-bottom:16px;">Menu</div>
@@ -959,10 +951,10 @@ class Component extends DCLogic {
     var phone = '320 114 7517';
     var title = city
       ? ('Idraulico Pronto Intervento H24 ' + city + ' | Gianfranco &mdash; ' + phone)
-      : 'Idraulico Pronto Intervento H24 | Udine Venezia Treviso | ' + phone;
+      : 'Idraulico Pronto Intervento H24 | Chiama ' + phone;
     var desc = city
       ? ('Idraulico pronto intervento e idraulico urgente H24 a ' + city + ': perdite, allagamenti, tubo rotto. Chiama: ' + phone + '.')
-      : 'Idraulico pronto intervento e idraulico urgente H24: perdite, allagamenti, tubo rotto. Udine, Pordenone, Gorizia, Trieste, Venezia e Treviso. Chiama: ' + phone + '.';
+      : 'Idraulico pronto intervento e idraulico urgente H24: perdite, allagamenti, tubo rotto. Chiama: ' + phone + '.';
     try {
       document.title = title;
       var md = document.querySelector('meta[name="description"]');

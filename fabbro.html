@@ -91,7 +91,7 @@
 <meta property="og:description" content="Fabbro urgente: apertura porte e cambio serrature. Chiama ora 320 114 7517.">
 <meta name="theme-color" content="#050c18">
 <meta name="format-detection" content="telephone=yes">
-<meta name="keywords" content="fabbro urgente, fabbro pronto intervento, apertura porte, cambio serrature, fabbro h24, porta bloccata, Udine, Venezia, Treviso">
+<meta name="keywords" content="fabbro urgente, fabbro pronto intervento, apertura porte, cambio serrature, fabbro h24, porta bloccata">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
@@ -111,15 +111,7 @@
   "image": "assets/og-image.png",
   "url": "/",
   "areaServed": [
-    {"@type": "City", "name": "Udine"},
-    {"@type": "City", "name": "Pordenone"},
-    {"@type": "City", "name": "Gorizia"},
-    {"@type": "City", "name": "Trieste"},
-    {"@type": "City", "name": "Venezia"},
-    {"@type": "City", "name": "Treviso"},
-    {"@type": "AdministrativeArea", "name": "Friuli-Venezia Giulia"},
-    {"@type": "AdministrativeArea", "name": "Veneto"}
-  ],
+    ],
   "knowsAbout": ["Fabbro urgente", "Fabbro pronto intervento", "Apertura porte", "Serratura bloccata", "Cambio serrature", "Cilindri europei", "Porte blindate", "Chiave rotta", "Messa in sicurezza", "Pronto intervento H24"],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
@@ -148,7 +140,7 @@
   "@type": "Service",
   "serviceType": "Fabbro pronto intervento H24",
   "provider": { "@id": "#fabbro-business" },
-  "areaServed": ["Udine","Pordenone","Gorizia","Trieste","Venezia","Treviso"],
+  "areaServed": "IT",
   "availableChannel": {
     "@type": "ServiceChannel",
     "servicePhone": { "@type": "ContactPoint", "telephone": "+393201147517" }
@@ -165,7 +157,7 @@
       "name": "Sono chiuso fuori, in quanto arrivate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Il prima possibile, tempi indicativi in base a traffico e distanza (Udine, Pordenone, Gorizia, Trieste, Venezia, Treviso e paesi vicini). Quando possibile apriamo senza rovinare la porta."
+        "text": "Il prima possibile, tempi indicativi in base a traffico e distanza. Quando possibile apriamo senza rovinare la porta."
       }
     },
     {
@@ -853,7 +845,7 @@ img { max-width: 100%; height: auto; }
       <div>
         <img src="assets/logo-white-160.png" alt="Gianfranco Tuttofare" width="160" height="135" decoding="async" style="height:44px; width:auto; display:block; margin-bottom:18px;">
         <p style="font-size:14px; line-height:1.65; color:rgba(255,255,255,0.72); margin:0 0 14px; max-width:300px;">Pronto intervento <strong style="color:#fff; font-weight:700;">fabbro</strong> H24. Disponibili <strong style="color:#fff; font-weight:700;">24/7</strong> per urgenze reali.</p>
-        <p style="font-size:12.5px; line-height:1.6; color:rgba(255,255,255,0.72); margin:0;">Udine &middot; Pordenone &middot; Gorizia &middot; Trieste &middot; Venezia &middot; Treviso</p>
+        <p style="font-size:12.5px; line-height:1.6; color:rgba(255,255,255,0.72); margin:0;">Pronto intervento urgente H24</p>
       </div>
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#fff; margin-bottom:16px;">Menu</div>
@@ -950,10 +942,10 @@ class Component extends DCLogic {
     var phone = '320 114 7517';
     var title = city
       ? ('Fabbro Pronto Intervento H24 ' + city + ' | Gianfranco &mdash; ' + phone)
-      : 'Fabbro Pronto Intervento H24 Udine Pordenone Venezia Treviso | Gianfranco &mdash; ' + phone;
+      : 'Fabbro Pronto Intervento H24 | Gianfranco — ' + phone;
     var desc = city
       ? ('Fabbro ' + city + ' H24: fabbro pronto intervento, apertura porte e cambio serrature. Chiama ora: ' + phone + '.')
-      : 'Fabbro pronto intervento H24: fabbro Trieste, fabbro Pordenone, fabbro Gorizia, Udine, Venezia e Treviso. Chiama: ' + phone + '.';
+      : 'Fabbro pronto intervento H24: apertura porte e serrature. Chiama: ' + phone + '.';
     try {
       document.title = title;
       var md = document.querySelector('meta[name="description"]');
