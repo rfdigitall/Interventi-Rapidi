@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913brand";
+  var VER = "20260913twin";
   var lastApplied = "";
 
   function params() {
