@@ -1,13 +1,14 @@
 /**
- * Ads QS message-match — hero eyebrow / H1 / subtitle from utm_keyword + city.
- * Load after ads-geo.js.
- * Sub = ONLY keywords (no phone, no zone list — dial is on the CTA button).
+ * Ads QS message-match v10 — Google Help aligned:
+ * - H1 / eyebrow / sub match keyword intent
+ * - document.title + meta description match (ad ↔ page consistency)
+ * Load after ads-geo.js
  */
 (function () {
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260910qs2";
+  var VER = "20260913qs10";
   var lastApplied = "";
 
   function params() {
@@ -56,6 +57,7 @@
         return "Idraulico Urgente H24 a " + c;
       },
       sub: "Perdite · tubo rotto · scarichi otturati · WC intasato",
+      meta: "Idraulico urgente H24: pronto intervento per perdite, tubo rotto, scarichi e WC intasato. Chiama 320 114 7517.",
     },
     scarichi: {
       eyebrow: "Scarico otturato · WC intasato · Spurgo H24",
@@ -64,6 +66,7 @@
         return "Scarico Otturato Urgente a " + c;
       },
       sub: "WC intasato · lavandino otturato · spurgo urgente",
+      meta: "Scarico otturato e WC intasato: spurgo urgente H24. Chiama 320 114 7517.",
     },
     perdite: {
       eyebrow: "Perdita acqua · Tubo rotto · Allagamento",
@@ -72,6 +75,7 @@
         return "Perdita d'Acqua Urgente a " + c;
       },
       sub: "Tubo rotto · allagamento · perdita urgente",
+      meta: "Perdita d'acqua e tubo rotto: pronto intervento H24. Chiama 320 114 7517.",
     },
     fabbro: {
       eyebrow: "Fabbro urgente · Apertura porte · H24",
@@ -80,36 +84,40 @@
         return "Fabbro Urgente H24 a " + c;
       },
       sub: "Apertura porte · serratura bloccata · chiave rotta",
+      meta: "Fabbro urgente H24: apertura porte, serratura bloccata, chiave rotta. Chiama 320 114 7517.",
     },
   };
 
   var RULES = [
     {
-      re: /wc intas|water ottur|water non scarica|disintasare wc/,
+      re: /wc intas|water ottur|water non scarica|disintasare wc|water intas/,
       eyebrow: "WC intasato · Spurgo urgente · H24",
       title: "WC Intasato — Spurgo Urgente H24",
       titleCity: function (c) {
-        return "WC Intasato a " + c;
+        return "WC Intasato Urgente a " + c;
       },
-      sub: "WC intasato · water otturato · spurgo",
+      sub: "WC intasato · water otturato · spurgo professionale",
+      meta: "WC intasato urgente: spurgo professionale H24. Chiama 320 114 7517.",
     },
     {
-      re: /scarico ottur|scarico bloccat|spurgo scarich|stasatura|disottur|lavandino ottur|lavandino cucina|lavandino intas|stappare lavandino|fogna ottur|ingorg/,
+      re: /scarico ottur|scarico bloccat|scarico cucina|spurgo scarich|stasatura|disottur|lavandino ottur|lavandino cucina|lavandino intas|stappare lavandino|fogna ottur|ingorg|otturazione/,
       eyebrow: "Scarico otturato · Spurgo · H24",
       title: "Scarico Otturato — Spurgo Urgente",
       titleCity: function (c) {
         return "Scarico Otturato a " + c;
       },
       sub: "Scarico otturato · lavandino intasato · spurgo",
+      meta: "Scarico otturato e lavandino intasato: spurgo urgente. Chiama 320 114 7517.",
     },
     {
-      re: /perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|acqua che esce|acqua che perde|riparazione perdita|perdita tubo|tubatura/,
+      re: /perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|acqua che esce|acqua che perde|riparazione perdita|perdita tubo|tubatura|perdita urgente|emergenza perdita/,
       eyebrow: "Perdita acqua · Tubo rotto · H24",
       title: "Perdita d'Acqua Urgente — Tubo Rotto",
       titleCity: function (c) {
         return "Perdita d'Acqua a " + c;
       },
       sub: "Perdita acqua · tubo rotto · allagamento",
+      meta: "Perdita d'acqua e allagamento: intervento urgente H24. Chiama 320 114 7517.",
     },
     {
       re: /intervento idraulico|pronto intervento idraulico|idraulico pronto intervento/,
@@ -119,6 +127,7 @@
         return "Pronto Intervento Idraulico a " + c;
       },
       sub: "Intervento idraulico · perdite · scarichi",
+      meta: "Pronto intervento idraulico H24 in zona. Chiama 320 114 7517.",
     },
     {
       re: /idraulico urgente|idraulico h24|idraulico emergenza|emergenza idraulico|idraulico reperibile|idraulico subito|sos idraulico/,
@@ -128,6 +137,17 @@
         return "Idraulico Urgente H24 a " + c;
       },
       sub: "Idraulico urgente · pronto intervento",
+      meta: "Idraulico urgente H24: rispondiamo subito. Chiama 320 114 7517.",
+    },
+    {
+      re: /idraulico (udine|pordenone|gorizia|trieste|venezia|treviso|mestre)/,
+      eyebrow: "Idraulico pronto intervento · H24",
+      title: "Idraulico Pronto Intervento H24",
+      titleCity: function (c) {
+        return "Idraulico Pronto Intervento a " + c;
+      },
+      sub: "Pronto intervento idraulico · perdite · scarichi",
+      meta: "Idraulico pronto intervento in zona. Chiama 320 114 7517.",
     },
     {
       re: /spurgo lavandino|stappare lavandino|disintasare/,
@@ -137,33 +157,47 @@
         return "Spurgo Lavandino a " + c;
       },
       sub: "Spurgo lavandino · scarico intasato",
+      meta: "Spurgo lavandino urgente H24. Chiama 320 114 7517.",
     },
     {
-      re: /chiuso fuori|porta blindata|porta sbattuta|serratura bloccat|chiave rotta|chiave spezzat|apertura port|sblocco/,
+      re: /chiuso fuori|chiusi fuori|mi sono chiuso|rimasto fuori|porta blindata|porta sbattuta|porta bloccata|serratura bloccat|chiave rotta|chiave spezzat|chiave bloccata|apertura port|sblocco serratur/,
       eyebrow: "Apertura porte · Serratura bloccata",
       title: "Apertura Porte Urgente — Fabbro H24",
       titleCity: function (c) {
-        return "Apertura Porte a " + c;
+        return "Apertura Porte Urgente a " + c;
       },
       sub: "Chiuso fuori · serratura bloccata · chiave rotta",
+      meta: "Apertura porte e serratura bloccata: fabbro H24. Chiama 320 114 7517.",
     },
     {
-      re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro/,
+      re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro|fabbro 24/,
       eyebrow: "Fabbro urgente · Pronto intervento · H24",
       title: "Fabbro Urgente H24",
       titleCity: function (c) {
         return "Fabbro Urgente H24 a " + c;
       },
       sub: "Fabbro urgente · apertura porte · serrature",
+      meta: "Fabbro urgente e pronto intervento H24. Chiama 320 114 7517.",
+    },
+    {
+      re: /pronto intervento serratur|sblocco|apertura serratur/,
+      eyebrow: "Pronto intervento serrature · H24",
+      title: "Pronto Intervento Serrature H24",
+      titleCity: function (c) {
+        return "Pronto Intervento Serrature a " + c;
+      },
+      sub: "Serratura bloccata · apertura · sblocco",
+      meta: "Pronto intervento serrature H24. Chiama 320 114 7517.",
     },
     {
       re: /cambio cilindro|cilindro europeo|cambio serratur|sostituzione serratur/,
       eyebrow: "Cambio serratura · Cilindro",
-      title: "Cambio Serratura Urgente",
+      title: "Cambio / Sostituzione Serratura",
       titleCity: function (c) {
-        return "Cambio Serratura a " + c;
+        return "Sostituzione Serratura a " + c;
       },
-      sub: "Cambio serratura · cilindro europeo",
+      sub: "Sostituzione serratura · cilindro",
+      meta: "Sostituzione serratura urgente. Chiama 320 114 7517.",
     },
   ];
 
@@ -174,6 +208,7 @@
       title: base.title,
       titleCity: base.titleCity,
       sub: base.sub,
+      meta: base.meta,
     };
     if (kw) {
       for (var i = 0; i < RULES.length; i++) {
@@ -182,6 +217,7 @@
           pack.title = RULES[i].title;
           pack.titleCity = RULES[i].titleCity || pack.titleCity;
           pack.sub = RULES[i].sub;
+          pack.meta = RULES[i].meta || pack.meta;
           break;
         }
       }
@@ -195,6 +231,28 @@
     if (el.textContent !== text) el.textContent = text;
   }
 
+  function setMetaDescription(text) {
+    if (!text) return;
+    var nodes = document.querySelectorAll('meta[name="description"]');
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].setAttribute("content", text);
+    }
+    var og = document.querySelectorAll('meta[property="og:description"]');
+    for (var j = 0; j < og.length; j++) {
+      og[j].setAttribute("content", text);
+    }
+  }
+
+  function setDocTitle(title) {
+    if (!title) return;
+    var t = title + " | Chiama 320 114 7517";
+    if (document.title !== t) document.title = t;
+    var ogt = document.querySelectorAll('meta[property="og:title"]');
+    for (var i = 0; i < ogt.length; i++) {
+      ogt[i].setAttribute("content", title + " — Chiama 320 114 7517");
+    }
+  }
+
   function apply() {
     var p = params();
     var kind = pageKind();
@@ -203,13 +261,15 @@
     var copy = pickCopy(kind, kw);
 
     var title = city && copy.titleCity ? copy.titleCity(city) : copy.title;
-    var sig = [VER, title, copy.sub, copy.eyebrow].join("\u0001");
+    var sig = [VER, title, copy.sub, copy.eyebrow, copy.meta].join("\u0001");
     if (sig === lastApplied) return;
     lastApplied = sig;
 
     setText("gf-hero-title", title);
     setText("gf-hero-sub", copy.sub);
     setText("gf-hero-eyebrow", copy.eyebrow);
+    setDocTitle(title);
+    setMetaDescription(copy.meta);
 
     try {
       document.documentElement.setAttribute("data-gf-qs-ver", VER);
