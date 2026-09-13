@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913qs10";
+  var VER = "20260913qs10b";
   var lastApplied = "";
 
   function params() {
@@ -90,7 +90,7 @@
 
   var RULES = [
     {
-      re: /wc intas|water ottur|water non scarica|disintasare wc|water intas/,
+      re: /wc intas|wc ottur|water ottur|water non scarica|disintasare wc|water intas|pronto intervento wc/,
       eyebrow: "WC intasato · Spurgo urgente · H24",
       title: "WC Intasato — Spurgo Urgente H24",
       titleCity: function (c) {
@@ -100,7 +100,7 @@
       meta: "WC intasato urgente: spurgo professionale H24. Chiama 320 114 7517.",
     },
     {
-      re: /scarico ottur|scarico bloccat|scarico cucina|spurgo scarich|stasatura|disottur|lavandino ottur|lavandino cucina|lavandino intas|stappare lavandino|fogna ottur|ingorg|otturazione/,
+      re: /scarico ottur|scarichi ottur|scarico intas|scarico bloccat|scarico cucina|spurgo scarich|pronto intervento scarich|stasatura|disottur|lavandino ottur|lavandino cucina|lavandino intas|stappare lavandino|fogna ottur|ingorg|otturazione|tubo intasato/,
       eyebrow: "Scarico otturato · Spurgo · H24",
       title: "Scarico Otturato — Spurgo Urgente",
       titleCity: function (c) {
@@ -110,7 +110,7 @@
       meta: "Scarico otturato e lavandino intasato: spurgo urgente. Chiama 320 114 7517.",
     },
     {
-      re: /perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|acqua che esce|acqua che perde|riparazione perdita|perdita tubo|tubatura|perdita urgente|emergenza perdita/,
+      re: /perdita acqua|perdite acqua|allagamento|tubo rotto|tubo scoppiat|tubo che perde|acqua che esce|acqua che perde|riparazione perdita|perdita tubo|tubatura|perdita urgente|emergenza perdita|pronto intervento perdita|pronto intervento allagamento/,
       eyebrow: "Perdita acqua · Tubo rotto · H24",
       title: "Perdita d'Acqua Urgente — Tubo Rotto",
       titleCity: function (c) {
@@ -130,7 +130,7 @@
       meta: "Pronto intervento idraulico H24 in zona. Chiama 320 114 7517.",
     },
     {
-      re: /idraulico urgente|idraulico h24|idraulico emergenza|emergenza idraulico|idraulico reperibile|idraulico subito|sos idraulico/,
+      re: /idraulico urgente|idraulico h24|idraulico 24|idraulico emergenza|idraulico di emergenza|emergenza idraulico|idraulico reperibile|idraulico subito|idraulico adesso|idraulico notte|chiamare idraulico|sos idraulico/,
       eyebrow: "Idraulico urgente · H24",
       title: "Idraulico Urgente H24",
       titleCity: function (c) {
@@ -160,7 +160,7 @@
       meta: "Spurgo lavandino urgente H24. Chiama 320 114 7517.",
     },
     {
-      re: /chiuso fuori|chiusi fuori|mi sono chiuso|rimasto fuori|porta blindata|porta sbattuta|porta bloccata|serratura bloccat|chiave rotta|chiave spezzat|chiave bloccata|apertura port|sblocco serratur/,
+      re: /chiuso fuori|chiusi fuori|mi sono chiuso|sono chiuso fuori|bloccato fuori|rimasto fuori|rimasto chiuso|porta blindata|porta sbattuta|porta bloccata|serratura bloccat|chiave rotta|chiave spezzat|chiave bloccata|apertura port|sblocco serratur|sblocco porta/,
       eyebrow: "Apertura porte · Serratura bloccata",
       title: "Apertura Porte Urgente — Fabbro H24",
       titleCity: function (c) {
@@ -170,7 +170,7 @@
       meta: "Apertura porte e serratura bloccata: fabbro H24. Chiama 320 114 7517.",
     },
     {
-      re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro|fabbro 24/,
+      re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro|fabbro 24|fabbro notturno|chiamare fabbro|fabbro apertura/,
       eyebrow: "Fabbro urgente · Pronto intervento · H24",
       title: "Fabbro Urgente H24",
       titleCity: function (c) {
@@ -180,7 +180,7 @@
       meta: "Fabbro urgente e pronto intervento H24. Chiama 320 114 7517.",
     },
     {
-      re: /pronto intervento serratur|sblocco|apertura serratur/,
+      re: /pronto intervento serratur|pronto intervento chiavi|pronto intervento mestre|pronto intervento (venezia|treviso|udine|pordenone|gorizia|trieste)|apertura serratur/,
       eyebrow: "Pronto intervento serrature · H24",
       title: "Pronto Intervento Serrature H24",
       titleCity: function (c) {
