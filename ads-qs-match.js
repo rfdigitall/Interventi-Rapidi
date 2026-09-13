@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913qs10b";
+  var VER = "20260913noz";
   var lastApplied = "";
 
   function params() {
@@ -260,7 +260,8 @@
     var city = cityName();
     var copy = pickCopy(kind, kw);
 
-    var title = city && copy.titleCity ? copy.titleCity(city) : copy.title;
+    var title = copy.title;
+    // No city in H1/title — avoid showing zone lists on Ads landings
     var sig = [VER, title, copy.sub, copy.eyebrow, copy.meta].join("\u0001");
     if (sig === lastApplied) return;
     lastApplied = sig;
