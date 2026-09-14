@@ -37,6 +37,11 @@ window.GF_TRACKING = {
      * Inviata su phone_click_* anche senza cookie marketing (Consent Mode cookieless).
      */
     default: 'AW-16810122289/-QLpCPvPidkcELG42M8-',
+    /**
+     * Marisa Click telefono (tap tel:, nu apel vorbit).
+     * GF default rămâne. Numărul nu se schimbă. DNI rămâne oprit.
+     */
+    extra: ['AW-299646523/tQ2nCMGw_LUbELv88I4B'],
     form_submit_whatsapp: '',
     lead_form_completed: ''
   }
