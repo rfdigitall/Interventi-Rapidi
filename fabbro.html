@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" data-gf-qs-ver="20260913qsmax">
+<html lang="it" data-gf-qs-ver="20260917reviews">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,6 +67,61 @@ a:hover { color: #1a72d4; }
 details.gf-faq summary::-webkit-details-marker { display:none; }
 details.gf-faq summary::after { content:'+'; font-size:22px; font-weight:400; color:#1259b0; line-height:1; }
 details.gf-faq[open] summary::after { content:'\2212'; }
+
+.gf-reviews { padding: 52px 20px; background: var(--ice); }
+.gf-reviews__inner { max-width: 820px; margin: 0 auto; }
+.gf-reviews__eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+}
+.gf-reviews__eyebrow span {
+  width: 16px; height: 2px; background: var(--blue); flex-shrink: 0;
+}
+.gf-reviews__title {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  text-transform: uppercase; font-size: clamp(28px, 5.4vw, 40px);
+  line-height: 0.94; margin: 0 0 8px; color: var(--ink);
+}
+.gf-reviews__sub {
+  margin: 0 0 28px; font-size: 15px; line-height: 1.55; color: var(--muted); max-width: 42ch;
+}
+.gf-reviews__list { display: flex; flex-direction: column; gap: 0; }
+.gf-review {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 14px 16px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.gf-review:first-child { border-top: none; padding-top: 4px; }
+.gf-review__mark {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #fff; border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: 18px; color: var(--blue); letter-spacing: 0.02em;
+}
+.gf-review__stars {
+  grid-column: 2; color: var(--blue); font-size: 13px;
+  letter-spacing: 0.12em; line-height: 1; margin: 2px 0 0;
+}
+.gf-review__text {
+  grid-column: 2; margin: 0; font-size: 15.5px; line-height: 1.65;
+  color: var(--ink); font-weight: 500;
+}
+.gf-review__meta {
+  grid-column: 2; margin: 0; font-size: 13px; color: var(--muted);
+  font-weight: 600;
+}
+.gf-review__meta em { font-style: normal; color: var(--blue); font-weight: 700; }
+@media (max-width: 480px) {
+  .gf-review { grid-template-columns: 40px 1fr; gap: 10px 12px; padding: 18px 0; }
+  .gf-review__mark { width: 40px; height: 40px; font-size: 15px; }
+  .gf-review__text { font-size: 14.5px; }
+}
+
 .idra-cta {
   display: flex;
   flex-wrap: wrap;
@@ -666,6 +721,41 @@ html,body{margin:0}
         <li>Privacy: <a href="privacy.html" style="color:var(--blue); text-decoration:underline;">Informativa privacy</a></li>
       </ul>
       <p style="margin:16px 0 0;"><a data-gf-phone-track="phone_click_trust" href="tel:+393201147517" style="display:inline-flex; background:var(--blue); color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:18px; text-transform:uppercase; letter-spacing:0.03em; padding:14px 22px; border-radius:4px;">Chiama ora 320 114 7517</a></p>
+    </div>
+  </section>
+
+
+  <section id="recensioni" class="gf-reviews" aria-labelledby="gf-reviews-title">
+    <div class="gf-reviews__inner">
+      <div class="gf-reviews__eyebrow"><span></span>Clienti</div>
+      <h2 id="gf-reviews-title" class="gf-reviews__title">Cosa dicono<br>i clienti.</h2>
+      <p class="gf-reviews__sub">Esperienze reali di chi ci ha chiamato per un intervento.</p>
+      <div class="gf-reviews__list">
+        <article class="gf-review">
+          <div class="gf-review__mark" aria-hidden="true">D</div>
+          <div class="gf-review__stars" aria-label="5 su 5">★★★★★</div>
+          <p class="gf-review__text">“Chiuso fuori casa con le chiavi dentro. Apertura senza rompere la porta. Seri e veloci.”</p>
+          <p class="gf-review__meta">Davide · <em>Venezia</em></p>
+        </article>
+        <article class="gf-review">
+          <div class="gf-review__mark" aria-hidden="true">S</div>
+          <div class="gf-review__stars" aria-label="5 su 5">★★★★★</div>
+          <p class="gf-review__text">“Serratura bloccata la mattina. Sono venuti, sbloccato tutto, spiegato cosa era successo. Ok.”</p>
+          <p class="gf-review__meta">Sara · <em>Gorizia</em></p>
+        </article>
+        <article class="gf-review">
+          <div class="gf-review__mark" aria-hidden="true">P</div>
+          <div class="gf-review__stars" aria-label="5 su 5">★★★★★</div>
+          <p class="gf-review__text">“Tapparelle che non salivano più. Riparazione fatta bene, ora funzionano. Consigliato.”</p>
+          <p class="gf-review__meta">Paolo · <em>Mestre</em></p>
+        </article>
+        <article class="gf-review">
+          <div class="gf-review__mark" aria-hidden="true">G</div>
+          <div class="gf-review__stars" aria-label="5 su 5">★★★★★</div>
+          <p class="gf-review__text">“Porta del box che non chiudeva. Intervento chiaro, senza giri di parole. Grazie.”</p>
+          <p class="gf-review__meta">Giulia · <em>Trieste</em></p>
+        </article>
+      </div>
     </div>
   </section>
 
