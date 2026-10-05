@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20260913qsmax";
+  var VER = "20261005ecstyle";
   var lastApplied = "";
 
   function params() {
@@ -78,13 +78,13 @@
       meta: "Perdita d'acqua e tubo rotto: pronto intervento H24. Chiama 320 114 7517.",
     },
     fabbro: {
-      eyebrow: "Fabbro urgente · Apertura porte · H24",
+      eyebrow: "Fabbro urgente · Apertura porte · Tapparelle · H24",
       title: "Fabbro Urgente — Pronto Intervento H24",
       titleCity: function (c) {
         return "Fabbro Urgente H24 a " + c;
       },
-      sub: "Apertura porte · serratura bloccata · chiave rotta",
-      meta: "Fabbro urgente H24: apertura porte, serratura bloccata, chiave rotta. Chiama 320 114 7517.",
+      sub: "Apertura porte · serratura · tapparelle · basculanti",
+      meta: "Fabbro urgente H24: apertura porte, serrature, tapparelle e basculanti. Chiama 320 114 7517.",
     },
   };
 
@@ -168,6 +168,16 @@
       },
       sub: "Chiuso fuori · serratura bloccata · chiave rotta",
       meta: "Apertura porte e serratura bloccata: fabbro H24. Chiama 320 114 7517.",
+    },
+    {
+      re: /tapparell|basculant|serranda|garage bloccato|molla basculante|riparazione tapparell|sostituzione tapparell/,
+      eyebrow: "Tapparelle · Basculanti · Serrande H24",
+      title: "Tapparella / Basculante Bloccata — Chiama",
+      titleCity: function (c) {
+        return "Tapparelle e Basculanti Urgenti a " + c;
+      },
+      sub: "Tapparella bloccata · basculante · serranda urgente",
+      meta: "Tapparelle, basculanti e serrande bloccate: intervento urgente H24. Chiama 320 114 7517.",
     },
     {
       re: /fabbro urgente|fabbro h24|pronto intervento fabbro|fabbro pronto|intervento fabbro|emergenza fabbro|fabbro 24|fabbro notturno|chiamare fabbro|fabbro apertura/,
