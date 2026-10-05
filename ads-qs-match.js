@@ -8,7 +8,7 @@
   if (window.__gfAdsQsMatch) return;
   window.__gfAdsQsMatch = true;
 
-  var VER = "20261005ecstyle";
+  var VER = "20261005tappar";
   var lastApplied = "";
 
   function params() {
@@ -30,6 +30,7 @@
 
   function pageKind() {
     var path = (location.pathname || "").toLowerCase();
+    if (path.indexOf("basculanti") >= 0 || path.indexOf("tapparelle") >= 0) return "tapparelle";
     if (path.indexOf("scarichi") >= 0) return "scarichi";
     if (path.indexOf("perdite") >= 0) return "perdite";
     if (path.indexOf("fabbro") >= 0) return "fabbro";
@@ -85,6 +86,15 @@
       },
       sub: "Apertura porte · serratura · tapparelle · basculanti",
       meta: "Fabbro urgente H24: apertura porte, serrature, tapparelle e basculanti. Chiama 320 114 7517.",
+    },
+    tapparelle: {
+      eyebrow: "Basculanti · Tapparelle · Serrande · H24",
+      title: "Pronto Intervento Basculanti e Tapparelle H24",
+      titleCity: function (c) {
+        return "Basculanti e Tapparelle Urgenti a " + c;
+      },
+      sub: "Basculante, garage o tapparella bloccata? Non forzare — chiama.",
+      meta: "Pronto intervento basculanti e tapparelle H24. Chiama 320 114 7517.",
     },
   };
 
